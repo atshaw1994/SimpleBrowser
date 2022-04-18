@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="Global.Background" Color="#24262b"/>
+    <SolidColorBrush x:Key="Global.Foreground" Color="#60ffffff"/>
+    <SolidColorBrush x:Key="MDL2Button.Overlay" Color="#60ffffff" />
+    <SolidColorBrush x:Key="MDL2Button.Overlay.Stop" Color="#90FF0000"/>
+    <SolidColorBrush x:Key="WindowMainPanel.Border" Color="#7Dffffff"/>
+    <SolidColorBrush x:Key="MouseOverOverlayBackgroundBrush" Color="#33ffffff" />
+    <SolidColorBrush x:Key="PressedOverlayBackgroundBrush" Color="#44ffffff" />
+    <SolidColorBrush x:Key="MouseOverWindowCloseButtonBackgroundBrush" Color="#e81123" />
+    <SolidColorBrush x:Key="PressedWindowCloseButtonBackgroundBrush" Color="#f1707a" />
+    <SolidColorBrush x:Key="Caption.Active" Color="#24262b"/>
+    <SolidColorBrush x:Key="Caption.Inactive" Color="#3b3f47"/>
+
+    <SolidColorBrush x:Key="Button.Background" Color="#3F3F46"/>
+    <SolidColorBrush x:Key="Button.Foreground" Color="#FFF1F1F1"/>
+    <SolidColorBrush x:Key="Button.Border" Color="#555555"/>
+    <SolidColorBrush x:Key="Button.Background.MouseOver" Color="#3F3F46"/>
+    <SolidColorBrush x:Key="Button.Border.MouseOver" Color="#007ACC"/>
+    <SolidColorBrush x:Key="Button.Background.Pressed" Color="#007ACC"/>
+    <SolidColorBrush x:Key="Button.Border.Pressed" Color="#007ACC"/>
+    <SolidColorBrush x:Key="Button.Background.Disabled" Color="#FF252526"/>
+    <SolidColorBrush x:Key="Button.Border.Disabled" Color="#FF252526"/>
+    <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="#FF656565"/>
+
+    <SolidColorBrush x:Key="BaseButton.Background" Color="#3F3F46"/>
+    <SolidColorBrush x:Key="BaseButton.Foreground" Color="#FFF1F1F1"/>
+    <SolidColorBrush x:Key="BaseButton.Border" Color="#555555"/>
+    <SolidColorBrush x:Key="BaseButton.Border.MouseOver" Color="#007ACC"/>
+    <SolidColorBrush x:Key="BaseButton.Pressed" Color="#007ACC"/>
+
+
+    <SolidColorBrush x:Key="TabItem.Static.Border" Color="#2295ff"/>
+    <SolidColorBrush x:Key="TabItem.Hover.Background" Color="#2d2e33"/>
+    <SolidColorBrush x:Key="TabItem.MouseOver.Border" Color="#FF3E3E40"/>
+    <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#353539"/>
+    <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#2295ff"/>
+
+    <SolidColorBrush x:Key="TextBox.Background" Color="#FF333337"/>
+    <SolidColorBrush x:Key="TextBox.Foreground" Color="#FFF1F1F1"/>
+    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FF434346"/>
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+
+</ResourceDictionary>

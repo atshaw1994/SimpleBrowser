@@ -1,0 +1,112 @@
+﻿<Window x:Class="SimpleBrowser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Icon="\SimpleBrowser.ico"
+        Loaded="Window_Loaded"
+        SourceInitialized="Window_SourceInitialized"
+        StateChanged="Window_StateChanged"
+        Deactivated="Window_Deactivated"
+        Activated="Window_Activated"
+        WindowStyle="None"
+        Background="Black"
+        Foreground="{DynamicResource Global.Foreground}"
+        Title="SimpleBrowser" 
+        Height="450"
+        Width="800">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="1" />
+    </WindowChrome.WindowChrome>
+    <Border x:Name="baseWindow_Border" Style="{DynamicResource WindowMainPanelStyle}">
+        <Grid x:Name="baseWindow_Grid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="CaptionBar">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="45"/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="CaptionBar_Border" Background="{DynamicResource Caption.Active}" Grid.ColumnSpan="5"/>
+                <Image Source="{Binding Icon,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" Width="24" Height="24"/>
+                <TextBlock Text="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" 
+                       Grid.Column="1" VerticalAlignment="Center" Margin="8,0" Foreground="{DynamicResource Global.Foreground}"/>
+                <Button x:Name="CaptionBar_MinimizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="2" Click="CaptionBar_MinimizeButton_Click">
+                    <Path Data="M18 14 h9" Width="45" Height="29" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                </Button>
+                <Button x:Name="CaptionBar_MaximizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="3" Click="CaptionBar_RestoreButton_Click">
+                    <Path Data="M17,9 h9 v9 h-9 Z" Width="45" Height="29" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                </Button>
+                <Button x:Name="CaptionBar_RestoreButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="3" Visibility="Collapsed" Click="CaptionBar_RestoreButton_Click">
+                    <Path Data="M 17,11 h7 v7 h-7Z M19,11 v-2 h7 v7 h-2" Width="45" Height="30" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                </Button>
+                <Button x:Name="CaptionBar_CloseButton" Style="{DynamicResource TitleBarCloseButtonStyle}" Grid.Column="4" Click="CaptionBar_CloseButton_Click">
+                    <Path Data="M17,9 L26,18 M17,18 L26,9" Width="45" Height="30" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                </Button>
+            </Grid>
+            <Grid x:Name="ButtonBar" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="32"/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="ButtonBar_Border" 
+                        Background="{DynamicResource Global.Background}"
+                        Grid.ColumnSpan="20"
+                        Margin="0,0,0,-32"/>
+                <Button x:Name="BackButton" Click="BackButton_Click" Style="{DynamicResource BackButtonStyle}"/>
+                <Button x:Name="ForwardButton" Click="ForwardButton_Click" Style="{DynamicResource ForwardButtonStyle}" Grid.Column="1"/>
+                <Button x:Name="RefreshButton" Click="RefreshButton_Click" Style="{DynamicResource RefreshButtonStyle}" Grid.Column="2"/>
+                <ComboBox x:Name="Omnibar" IsEditable="True" Text="https://www.google.com/" Style="{DynamicResource ComboBoxStyle}" Grid.Column="3" KeyDown="Omnibar_KeyDown" />
+                <Button x:Name="HomeButton" Click="HomeButton_Click" Style="{DynamicResource HomeButtonStyle}" Grid.Column="4"/>
+                <Button x:Name="BookmarkButton" Style="{DynamicResource BookmarkButtonStyle}" Grid.Column="5"/>
+                <ToggleButton Name="MenuButton" Click="MenuButton_Click" Style="{DynamicResource MenuButtonStyle}" Grid.Column="8"/>
+                <Popup x:Name="MenuButton_Popup" IsOpen="{Binding IsChecked, ElementName=MenuButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=MenuButton}">
+                    <Border BorderThickness="1" BorderBrush="{DynamicResource Button.Border}">
+                        <StackPanel Orientation="Vertical">
+                            <MenuItem x:Name="Menu_NewTab" Header="New Tab" Click="Menu_NewTab_Click"/>
+                            <MenuItem x:Name="Menu_NewWindow" Header="New Window" Click="Menu_NewWindow_Click"/>
+                            <Separator />
+                            <MenuItem x:Name="Menu_History" Header="History" Click="Menu_History_Click"/>
+                            <MenuItem x:Name="Menu_Bookmarks" Header="Bookmarks" Click="Menu_Bookmarks_Click"/>
+                            <MenuItem x:Name="Menu_Downloads" Header="Downloads" Click="Menu_Downloads_Click"/>
+                            <Separator />
+                            <MenuItem x:Name="Menu_ZoomIn" Header="Zoom In" Click="Menu_ZoomIn_Click"/>
+                            <MenuItem x:Name="Menu_ZoomOut" Header="Zoom Out" Click="Menu_ZoomOut_Click"/>
+                            <MenuItem x:Name="Menu_ZoomReset" Header="Zoom Reset" Click="Menu_ZoomReset_Click"/>
+                            <Separator />
+                            <MenuItem x:Name="Menu_Settings" Header="Settings" Click="Menu_Settings_Click"/>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+            <Grid x:Name="ContentArea" Grid.Row="2">
+                <TabControl x:Name="baseTabControl"
+                            Style="{DynamicResource TabControlStyle}" 
+                            IsSynchronizedWithCurrentItem="True"
+                            SelectionChanged="TabChanged">
+                    <TabItem Header="Google" Style="{DynamicResource TabItemStyle}">
+                        <Border Background="Red"/>
+                    </TabItem>
+                    <TabItem Header="Yahoo" Style="{DynamicResource TabItemStyle}">
+                        <Border Background="MediumPurple"/>
+                    </TabItem>
+                    <TabItem Header="Bing" Style="{DynamicResource TabItemStyle}">
+                        <Border Background="CadetBlue"/>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
