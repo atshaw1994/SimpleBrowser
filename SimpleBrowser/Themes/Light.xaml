@@ -14,6 +14,7 @@
     <SolidColorBrush x:Key="PressedOverlayBackgroundBrush" Color="#44000000" />
     <SolidColorBrush x:Key="MouseOverWindowCloseButtonBackgroundBrush" Color="#e81123" />
     <SolidColorBrush x:Key="PressedWindowCloseButtonBackgroundBrush" Color="#f1707a" />
+    <SolidColorBrush x:Key="WindowMainPanel.Border" Color="#7Dffffff"/>
     <SolidColorBrush x:Key="Caption.Active" Color="#b9d1ea"/>
     <SolidColorBrush x:Key="Caption.Inactive" Color="#cddef0"/>
 
@@ -24,9 +25,9 @@
     <SolidColorBrush x:Key="Button.Border.MouseOver" Color="#0078d7"/>
     <SolidColorBrush x:Key="Button.Background.Pressed" Color="#cce4f7"/>
     <SolidColorBrush x:Key="Button.Border.Pressed" Color="#005499"/>
-    <SolidColorBrush x:Key="WindowMainPanel.Border" Color="#7Dffffff"/>
+    <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="#80000000"/>
 
-    <SolidColorBrush x:Key="TabItem.Static.Border" Color="#738393"/>
+    <SolidColorBrush x:Key="TabItem.Static.Border" Color="#80738393"/>
     <SolidColorBrush x:Key="TabItem.MouseOver.Background" Color="#FFC9DEF5"/>
     <SolidColorBrush x:Key="TabItem.MouseOver.Border" Color="#879BB3"/>
     <SolidColorBrush x:Key="TabItem.Selected.Background" Color="White"/>
@@ -35,7 +36,7 @@
     <SolidColorBrush x:Key="TextBox.Background" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="TextBox.Foreground" Color="#FF1E1E1E"/>
     <SolidColorBrush x:Key="TextBox.Static.Border" Color="#738393"/>
-    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
-    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#7EB4EA"/>
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#569DE5"/>
 
 </ResourceDictionary>
