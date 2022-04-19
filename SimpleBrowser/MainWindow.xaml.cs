@@ -253,10 +253,7 @@ namespace SimpleBrowser
 
 		private void BackButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoBack();
 		private void ForwardButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoForward();
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
-        {
-            //selectedBrowser.Load(Properties.Settings.Default.HomePage);
-		}
+        private void HomeButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load(Properties.Settings.Default.HomeURL);
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (SelectedBrowser_IsLoading) selectedBrowser!.BrowserCore.StopLoad();
