@@ -166,7 +166,7 @@
         </Setter>
     </Style>
     <Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}">
-        <Setter Property="Background" Value="{DynamicResource TabItem.Selected.Background}"/>
+        <Setter Property="Background" Value="{DynamicResource Global.Background}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.Border}"/>
         <Setter Property="Padding" Value="2"/>
         <Setter Property="Margin" Value="0"/>
@@ -184,7 +184,13 @@
                             <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
                             <RowDefinition x:Name="RowDefinition1" Height="*"/>
                         </Grid.RowDefinitions>
-                        <TabPanel x:Name="headerPanel" Visibility="Visible" Background="Transparent" Grid.Column="0" IsItemsHost="true" Margin="0,2,-1,-1" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+                        <TabPanel x:Name="headerPanel" Visibility="Visible" Background="Transparent" Grid.Column="0" IsItemsHost="true" Margin="0,2,0,0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1">
+                            <TabPanel.ContextMenu>
+                                <ContextMenu x:Name="HeaderPanel_ContextMenu">
+                                    <MenuItem IsCheckable="True" IsChecked="True" Checked="BookmarkBar_CheckBox_Checked" Unchecked="BookmarkBar_CheckBox_Unchecked" Header="Show Bookmark Bar"/>
+                                </ContextMenu>
+                            </TabPanel.ContextMenu>
+                        </TabPanel>
                         <Border x:Name="ContentBorder" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,0" Background="{TemplateBinding Background}" BorderThickness="0,1,0,0" BorderBrush="{TemplateBinding BorderBrush}">
                             <ContentPresenter x:Name="PART_SelectedContentHost" Grid.Row="1" Grid.ColumnSpan="2" ContentSource="SelectedContent" Margin="4" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>

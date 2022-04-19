@@ -37,6 +37,7 @@ namespace SimpleBrowser
 			baseTabControl.SelectedIndex = 0;
 			if (baseTabControl.Items[0] is TabItem tabItem && tabItem.Content is ChromiumWebBrowser browser)
 				selectedBrowser = browser;
+
 		}
 		private void Window_Deactivated(object sender, EventArgs e)
 		{
@@ -313,6 +314,8 @@ namespace SimpleBrowser
 			MenuButton.IsChecked = false;
 		}
 
-        
-    }
+        private void BookmarkBar_CheckBox_Checked(object sender, RoutedEventArgs e) => BookmarkBar_Row.Height = new GridLength(32);
+
+        private void BookmarkBar_CheckBox_Unchecked(object sender, RoutedEventArgs e) => BookmarkBar_Row.Height = new GridLength(0);
+	}
 }

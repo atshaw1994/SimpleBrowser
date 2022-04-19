@@ -11,7 +11,7 @@
         Deactivated="Window_Deactivated"
         Activated="Window_Activated"
         WindowStyle="None"
-        Background="Black"
+        Background="{DynamicResource Global.Background}"
         Foreground="{DynamicResource Global.Foreground}"
         Title="SimpleBrowser" 
         Height="450"
@@ -62,7 +62,6 @@
                     <ColumnDefinition Width="32"/>
                 </Grid.ColumnDefinitions>
                 <Border x:Name="ButtonBar_Border" 
-                        Background="{DynamicResource Global.Background}"
                         Grid.ColumnSpan="20"
                         Margin="0,0,0,-32"/>
                 <Button x:Name="BackButton" Click="BackButton_Click" Style="{DynamicResource BackButtonStyle}"/>
@@ -92,17 +91,35 @@
                 </Popup>
             </Grid>
             <Grid x:Name="ContentArea" Grid.Row="2">
-                <TabControl x:Name="baseTabControl"
-                            Style="{DynamicResource TabControlStyle}" 
-                            IsSynchronizedWithCurrentItem="True"
-                            SelectionChanged="TabChanged">
-                    <TabItem Header="Gooagagsdgsdagsdgasgsadggle" Style="{DynamicResource TabItemStyle}">
-                        <Border Background="Red"/>
-                    </TabItem>
-                    <TabItem Header="Yahoo" Style="{DynamicResource TabItemStyle}">
-                        <Border Background="MediumPurple"/>
-                    </TabItem>
-                </TabControl>
+                <Grid x:Name="ContentArea_SubGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="BookmarkBar_Row" Height="32"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="8,0" Background="{DynamicResource Global.Background}" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                        <TextBlock Text="Google" Margin="8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Yahoo" Margin="8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Bing" Margin="8,0" VerticalAlignment="Center"/>
+                        <StackPanel.ContextMenu>
+                            <ContextMenu x:Name="HeaderPanel_ContextMenu">
+                                <MenuItem IsCheckable="True" IsChecked="True" Checked="BookmarkBar_CheckBox_Checked" Unchecked="BookmarkBar_CheckBox_Unchecked" Header="Show Bookmark Bar"/>
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
+                    </StackPanel>
+                    
+                    <TabControl x:Name="baseTabControl"
+                                Grid.Row="1"
+                                Style="{DynamicResource TabControlStyle}" 
+                                IsSynchronizedWithCurrentItem="True"
+                                SelectionChanged="TabChanged">
+                        <TabItem Header="Gooagagsdgsdagsdgasgsadggle" Style="{DynamicResource TabItemStyle}">
+                            <Border Background="Red"/>
+                        </TabItem>
+                        <TabItem Header="Yahoo" Style="{DynamicResource TabItemStyle}">
+                            <Border Background="MediumPurple"/>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
             </Grid>
         </Grid>
     </Border>
