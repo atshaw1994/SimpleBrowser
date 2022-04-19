@@ -48,18 +48,17 @@ namespace SimpleBrowser
 			CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Active");
 			ButtonBar_Border.Background = (SolidColorBrush)FindResource("Caption.Active");
 		}
+
 		#region BorderlessMethods
 
 		private void CaptionBar_CloseButton_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
 		}
-
 		private void CaptionBar_RestoreButton_Click(object sender, RoutedEventArgs e)
 		{
 			WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
 		}
-
 		private void CaptionBar_MinimizeButton_Click(object sender, RoutedEventArgs e)
 		{
 			WindowState = WindowState.Minimized;
@@ -82,7 +81,6 @@ namespace SimpleBrowser
 		{
 			RefreshMaximizeRestoreButton();
 		}
-
 		private void Window_SourceInitialized(object sender, EventArgs e)
 		{
 			((HwndSource)PresentationSource.FromVisual(this)).AddHook(HookProc);
@@ -119,17 +117,12 @@ namespace SimpleBrowser
 
 			return IntPtr.Zero;
 		}
-
 		private const int WM_GETMINMAXINFO = 0x0024;
-
 		private const uint MONITOR_DEFAULTTONEAREST = 0x00000002;
-
 		[DllImport("user32.dll")]
 		private static extern IntPtr MonitorFromWindow(IntPtr handle, uint flags);
-
 		[DllImport("user32.dll")]
 		private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
-
 		[Serializable]
 		[StructLayout(LayoutKind.Sequential)]
 		public struct RECT
@@ -147,7 +140,6 @@ namespace SimpleBrowser
 				this.Bottom = bottom;
 			}
 		}
-
 		[StructLayout(LayoutKind.Sequential)]
 		public struct MONITORINFO
 		{
@@ -156,7 +148,6 @@ namespace SimpleBrowser
 			public RECT rcWork;
 			public uint dwFlags;
 		}
-
 		[Serializable]
 		[StructLayout(LayoutKind.Sequential)]
 		public struct POINT
@@ -170,7 +161,6 @@ namespace SimpleBrowser
 				this.Y = y;
 			}
 		}
-
 		[StructLayout(LayoutKind.Sequential)]
 		public struct MINMAXINFO
 		{

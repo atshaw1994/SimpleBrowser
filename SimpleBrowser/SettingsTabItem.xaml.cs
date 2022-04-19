@@ -20,9 +20,11 @@ namespace SimpleBrowser
     /// </summary>
     public partial class SettingsTabItem : UserControl
     {
-        public SettingsTabItem()
+        public SettingsTabItem() => InitializeComponent();
+
+        private void ThemeChanged(object sender, SelectionChangedEventArgs e)
         {
-            InitializeComponent();
+            Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\{(ThemeSelection.SelectedItem as ComboBoxItem)!.Content}.xaml", UriKind.Relative);
         }
     }
 }
