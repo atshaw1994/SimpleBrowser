@@ -102,9 +102,6 @@
                     <TabItem Header="Yahoo" Style="{DynamicResource TabItemStyle}">
                         <Border Background="MediumPurple"/>
                     </TabItem>
-                    <TabItem Header="Settings" Style="{DynamicResource TabItemStyle}">
-                        <simplebrowser:SettingsTabItem Margin="16"/>
-                    </TabItem>
                 </TabControl>
             </Grid>
         </Grid>
