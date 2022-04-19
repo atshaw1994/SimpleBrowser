@@ -131,7 +131,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Global.Foreground}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Static.Border}"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="18,7"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -139,17 +139,18 @@
                     <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition x:Name="CloseTabButtonColumn" Width="32"/>
                         </Grid.ColumnDefinitions>
                         <Border x:Name="mainBorder" Grid.ColumnSpan="2" Margin="1,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <Border x:Name="innerBorder" Grid.ColumnSpan="2" Margin="0,0,0,0" Background="{DynamicResource TabItem.Selected.Background}" BorderBrush="{DynamicResource TabItem.Selected.Border}" BorderThickness="0" Opacity="0"/>
+                            <Border x:Name="innerBorder" Grid.ColumnSpan="2" Background="{DynamicResource TabItem.Selected.Background}" BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="0" Opacity="0"/>
                         </Border>
-                        <ContentPresenter x:Name="contentPresenter" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                        <Button x:Name="CloseTabButton" Click="CloseTabButton_Click" Grid.Column="1" Style="{DynamicResource CloseTabButton}"/>
+                        <TextBlock x:Name="contentPresenter" TextTrimming="WordEllipsis" MaxWidth="100" Text="{TemplateBinding Header}" Focusable="False" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                        <Button x:Name="CloseTabButton" Visibility="Collapsed" Click="CloseTabButton_Click" Grid.Column="1" Style="{DynamicResource CloseTabButton}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false">
                             <Setter Property="BorderThickness" TargetName="mainBorder" Value="0"/>
+                            <Setter Property="Width" TargetName="CloseTabButtonColumn" Value="0"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true">
                             <Setter Property="Panel.ZIndex" Value="1"/>
@@ -158,11 +159,6 @@
                             <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,2,1,0"/>
                             <Setter Property="BorderThickness" TargetName="mainBorder" Value="0"/>
                             <Setter Property="Visibility" TargetName="CloseTabButton" Value="Visible"/>
-                            <Setter Property="Content" TargetName="CloseTabButton">
-                                <Setter.Value>
-                                    <TextBlock Text="&#xEF2C;" FontFamily="Segoe MDL2 Assets" FontSize="8" Foreground="{DynamicResource MDL2Button.Overlay}"/>
-                                </Setter.Value>
-                            </Setter>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -171,7 +167,7 @@
     </Style>
     <Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{DynamicResource TabItem.Selected.Background}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Selected.Border}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.Border}"/>
         <Setter Property="Padding" Value="2"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -189,7 +185,7 @@
                             <RowDefinition x:Name="RowDefinition1" Height="*"/>
                         </Grid.RowDefinitions>
                         <TabPanel x:Name="headerPanel" Visibility="Visible" Background="Transparent" Grid.Column="0" IsItemsHost="true" Margin="0,2,-1,-1" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
-                        <Border x:Name="ContentBorder" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,0" Background="{TemplateBinding Background}" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource TabItem.Static.Border}">
+                        <Border x:Name="ContentBorder" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,0" Background="{TemplateBinding Background}" BorderThickness="0,1,0,0" BorderBrush="{TemplateBinding BorderBrush}">
                             <ContentPresenter x:Name="PART_SelectedContentHost" Grid.Row="1" Grid.ColumnSpan="2" ContentSource="SelectedContent" Margin="4" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
                         <Button x:Name="NewTabButton" Grid.Column="1" Style="{DynamicResource NewTabButton}" Click="newTabButton_Click"/>
@@ -500,7 +496,7 @@
     </Style>
 
     <Style x:Key="Omnibar_TextBoxStyle" TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBox.Foreground}"/>
         <Setter Property="Height" Value="24"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -522,11 +518,9 @@
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Opacity" TargetName="border" Value="0.56"/>
                         </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
+                        <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource TextBox.Focus.Border}"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource Button.Background.MouseOver}"/>
+                            <Setter Property="BorderThickness" TargetName="border" Value="1,1,0,1"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -544,7 +538,7 @@
     </Style>
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
         <Border x:Name="border" Background="{DynamicResource TextBox.Background}" BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="0,1,1,1">
-            <TextBlock x:Name="Glyph" Text="&#xE70D;" Foreground="{DynamicResource MDL2Button.Overlay}" FontFamily="Segoe MDL2 Assets" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock x:Name="Glyph" Text="&#xE70D;" Foreground="{DynamicResource MDL2Button.Overlay}" FontSize="8" FontFamily="Segoe MDL2 Assets" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="UIElement.IsMouseOver" Value="True">
@@ -602,6 +596,9 @@
                         <Trigger Property="IsEditable" Value="True">
                             <Setter Property="Visibility" TargetName="PART_EditableTextBox" Value="Visible"/>
                             <Setter Property="Visibility" TargetName="ContentSite" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource Button.Background.MouseOver}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

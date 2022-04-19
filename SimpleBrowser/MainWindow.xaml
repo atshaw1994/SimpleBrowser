@@ -96,7 +96,7 @@
                             Style="{DynamicResource TabControlStyle}" 
                             IsSynchronizedWithCurrentItem="True"
                             SelectionChanged="TabChanged">
-                    <TabItem Header="Google" Style="{DynamicResource TabItemStyle}">
+                    <TabItem Header="Gooagagsdgsdagsdgasgsadggle" Style="{DynamicResource TabItemStyle}">
                         <Border Background="Red"/>
                     </TabItem>
                     <TabItem Header="Yahoo" Style="{DynamicResource TabItemStyle}">

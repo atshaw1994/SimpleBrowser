@@ -203,14 +203,14 @@ namespace SimpleBrowser
 					if (e.IsLoading)
 					{
 						SelectedBrowser_IsLoading = true;
-							if (RefreshButton.Content is Grid grid && grid.Children[0] is TextBlock RefreshText && grid.Children[1] is TextBlock StopText)
-							{
-								RefreshText.Visibility = Visibility.Collapsed;
-								StopText.Visibility = Visibility.Visible;
-							}
-							Title = e.Browser.MainFrame.Url;
-							(selectedBrowser.Parent as TabItem)!.Header = e.Browser.MainFrame.Url;
-							Omnibar.Text = e.Browser.MainFrame.Url;
+						if (RefreshButton.Content is Grid grid && grid.Children[0] is TextBlock RefreshText && grid.Children[1] is TextBlock StopText)
+						{
+							RefreshText.Visibility = Visibility.Collapsed;
+							StopText.Visibility = Visibility.Visible;
+						}
+						Title = $"{e.Browser.MainFrame.Url} - SimpleBrowser";
+						(selectedBrowser.Parent as TabItem)!.Header = e.Browser.MainFrame.Url;
+						Omnibar.Text = e.Browser.MainFrame.Url;
 					}
 					else
 					{
@@ -220,7 +220,7 @@ namespace SimpleBrowser
 							RefreshText.Visibility = Visibility.Visible;
 							StopText.Visibility = Visibility.Collapsed;
 						}
-						Title = selectedBrowser.Title;
+						Title = $"{selectedBrowser.Title}  - SimpleBrowser";
 						(selectedBrowser.Parent as TabItem)!.Header = selectedBrowser.Title;
 						Omnibar.Text = selectedBrowser.Address;
 					}
@@ -236,8 +236,11 @@ namespace SimpleBrowser
 				{
 					selectedBrowser = webBrowser;
 					if (selectedBrowser.Address is not null)
-						Omnibar.Text = selectedBrowser.Address;
-				}
+                    {
+                        Omnibar.Text = selectedBrowser.Address;
+						Title = $"{selectedTab.Header} - SimpleBrowser";
+                    }
+                }
 			}
 		}
 
@@ -256,7 +259,6 @@ namespace SimpleBrowser
 		}
 		private string EnsureHttps(string url)
 		{
-			MessageBox.Show(Omnibar.Text);
 			if (url.Equals(""))
 				return "about:blank";
 			else if (!url.ToLower().StartsWith("http://") && !url.ToLower().StartsWith("https://"))
