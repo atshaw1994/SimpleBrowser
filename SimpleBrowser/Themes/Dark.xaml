@@ -3,6 +3,8 @@
     <SolidColorBrush x:Key="Global.Background" Color="#24262b"/>
     <SolidColorBrush x:Key="Global.Foreground" Color="#60ffffff"/>
     <SolidColorBrush x:Key="MDL2Button.Overlay" Color="#60ffffff" />
+    <SolidColorBrush x:Key="MDL2Button.Overlay.MouseOver" Color="#90FF0000" />
+    <SolidColorBrush x:Key="MDL2Button.Overlay.Pressed" Color="#80ffffff" />
     <SolidColorBrush x:Key="MDL2Button.Overlay.Stop" Color="#90FF0000"/>
     <SolidColorBrush x:Key="WindowMainPanel.Border" Color="#7Dffffff"/>
     <SolidColorBrush x:Key="MouseOverOverlayBackgroundBrush" Color="#33ffffff" />
@@ -15,7 +17,7 @@
     <SolidColorBrush x:Key="Button.Background" Color="#3F3F46"/>
     <SolidColorBrush x:Key="Button.Foreground" Color="#FFF1F1F1"/>
     <SolidColorBrush x:Key="Button.Border" Color="#555555"/>
-    <SolidColorBrush x:Key="Button.Background.MouseOver" Color="#3F3F46"/>
+    <SolidColorBrush x:Key="Button.Background.MouseOver" Color="#525258"/>
     <SolidColorBrush x:Key="Button.Border.MouseOver" Color="#007ACC"/>
     <SolidColorBrush x:Key="Button.Background.Pressed" Color="#007ACC"/>
     <SolidColorBrush x:Key="Button.Border.Pressed" Color="#007ACC"/>

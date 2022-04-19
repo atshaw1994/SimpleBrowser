@@ -9,6 +9,8 @@
     </LinearGradientBrush>
     <SolidColorBrush x:Key="Global.Foreground" Color="#FF1E1E1E"/>
     <SolidColorBrush x:Key="MDL2Button.Overlay" Color="#cf000000" />
+    <SolidColorBrush x:Key="MDL2Button.Overlay.MouseOver" Color="#80ffffff" />
+    <SolidColorBrush x:Key="MDL2Button.Overlay.Pressed" Color="#80000000" />
     <SolidColorBrush x:Key="MDL2Button.Overlay.Stop" Color="#90FF0000"/>
     <SolidColorBrush x:Key="MouseOverOverlayBackgroundBrush" Color="#33000000" />
     <SolidColorBrush x:Key="PressedOverlayBackgroundBrush" Color="#44000000" />
