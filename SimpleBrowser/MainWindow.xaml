@@ -69,7 +69,7 @@
                 <Button x:Name="RefreshButton" Click="RefreshButton_Click" Style="{DynamicResource RefreshButtonStyle}" Grid.Column="2"/>
                 <ComboBox x:Name="Omnibar" IsEditable="True" Text="https://www.google.com/" BorderThickness="0,1,1,1" Style="{DynamicResource ComboBoxStyle}" Grid.Column="3" KeyDown="Omnibar_KeyDown" />
                 <Button x:Name="HomeButton" Click="HomeButton_Click" Style="{DynamicResource HomeButtonStyle}" Grid.Column="4"/>
-                <Button x:Name="BookmarkButton" Style="{DynamicResource BookmarkButtonStyle}" Grid.Column="5"/>
+                <Button x:Name="BookmarkButton" Style="{DynamicResource BookmarkButtonStyle}" Grid.Column="5" Click="Menu_Bookmarks_Click"/>
                 <ToggleButton Name="MenuButton" Click="MenuButton_Click" Style="{DynamicResource MenuButtonStyle}" Grid.Column="8"/>
                 <Popup x:Name="MenuButton_Popup" IsOpen="{Binding IsChecked, ElementName=MenuButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=MenuButton}">
                     <Border BorderThickness="1" BorderBrush="{DynamicResource Button.Border}">
@@ -96,12 +96,12 @@
                         <RowDefinition x:Name="BookmarkBar_Row" Height="32"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <StackPanel Margin="8,0" Background="{DynamicResource Global.Background}" HorizontalAlignment="Stretch" Orientation="Horizontal">
-                        <TextBlock Text="Google" Margin="8,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="Yahoo" Margin="8,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="Bing" Margin="8,0" VerticalAlignment="Center"/>
+                    <StackPanel x:Name="BookmarkBarStackPanel" Margin="8,0" Background="{DynamicResource Global.Background}" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                        <Button Content="Google" Style="{DynamicResource BookmarkBarButtonStyle}"/>
+                        <Button Content="Yahoo!" Style="{DynamicResource BookmarkBarButtonStyle}"/>
+                        <Button Content="Bing" Style="{DynamicResource BookmarkBarButtonStyle}"/>
                         <StackPanel.ContextMenu>
-                            <ContextMenu x:Name="HeaderPanel_ContextMenu">
+                            <ContextMenu>
                                 <MenuItem IsCheckable="True" IsChecked="True" Checked="BookmarkBar_CheckBox_Checked" Unchecked="BookmarkBar_CheckBox_Unchecked" Header="Show Bookmark Bar"/>
                             </ContextMenu>
                         </StackPanel.ContextMenu>

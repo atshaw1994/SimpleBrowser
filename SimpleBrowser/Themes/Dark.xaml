@@ -36,10 +36,10 @@
     <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#353539"/>
     <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#60ffffff"/>
 
-    <SolidColorBrush x:Key="TextBox.Background" Color="#FF333337"/>
-    <SolidColorBrush x:Key="TextBox.Foreground" Color="#FFF1F1F1"/>
-    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FF434346"/>
-    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
-    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+    <SolidColorBrush x:Key="TextBox.Background" Color="#333337"/>
+    <SolidColorBrush x:Key="TextBox.Foreground" Color="#F1F1F1"/>
+    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#434346"/>
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#7EB4EA"/>
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#569DE5"/>
 
 </ResourceDictionary>
