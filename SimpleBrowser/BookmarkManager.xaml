@@ -68,7 +68,15 @@
                 </TabItem>
                 <TabItem Header="History" Style="{DynamicResource TabItemStyle}">
                     <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
                         <ListBox x:Name="HistoryDisplay" Margin="8"/>
+                        <DockPanel Grid.Row="2">
+                            <Button x:Name="DeleteHistoryItemButton" IsEnabled="False" Content="Delete" Height="24" Width="96" HorizontalAlignment="Left" Style="{DynamicResource BaseButtonStyle}" Click="DeleteHistoryItemButton_Click"/>
+                            <Button x:Name="ClearHistoryButton" Content="Clear" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="ClearHistoryButton_Click"/>
+                        </DockPanel>
                     </Grid>
                 </TabItem>
             </TabControl>

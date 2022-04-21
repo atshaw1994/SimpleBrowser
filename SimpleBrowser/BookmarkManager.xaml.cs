@@ -197,21 +197,12 @@ namespace SimpleBrowser
 		{
 			if (BookmarkDisplay.SelectedItem is ListBoxItem selectedItem && selectedItem.Content is string content)
             {
-				XmlNode node = HistoryXML.SelectSingleNode($"/Bookmarks/[@name='{content[..content.ToString()!.IndexOf(',')]}']")!;
-				// if found....
+				XmlNode node = BookmarkXML.SelectSingleNode($"/Bookmarks/[@name='{content[..content.ToString()!.IndexOf(',')]}']")!;
 				if (node is not null)
 				{
-					// get its parent node
 					XmlNode parent = node.ParentNode!;
-
-					// remove the child node
 					parent.RemoveChild(node);
-
-					// verify the new XML structure
-					string newXML = HistoryXML.OuterXml;
-
-					// save to file or whatever....
-					HistoryXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+                    BookmarkXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
 				}
 			}
 		}
@@ -229,12 +220,27 @@ namespace SimpleBrowser
 				mainWindow.selectedBrowser.Load(content[(content.ToString()!.IndexOf(',') + 2)..]);
 			}
 		}
+		private void DeleteHistoryItemButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (HistoryDisplay.SelectedItem is ListBoxItem selectedItem && selectedItem.Content is string content)
+			{
+				XmlNode node = HistoryXML.SelectSingleNode($"/History/[@name='{content[..content.ToString()!.IndexOf(',')]}']")!;
+				if (node is not null)
+				{
+					XmlNode parent = node.ParentNode!;
+					parent.RemoveChild(node);
+					HistoryXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+				}
+			}
+		}
+        private void ClearHistoryButton_Click(object sender, RoutedEventArgs e) => HistoryXML.DocumentElement!.RemoveAll();
 
-		public void SelectTab(int tabIndex)
+        public void SelectTab(int tabIndex)
         {
 			if (tabIndex == 0) baseTabControl.SelectedIndex = tabIndex;
 			else if (tabIndex == 1) baseTabControl.SelectedIndex = tabIndex - 1;
 			else MessageBox.Show("WTF kinda index is that?!"); // Unreachable code
         }
-	}
+		        
+    }
 }
