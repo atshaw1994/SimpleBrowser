@@ -28,12 +28,13 @@ namespace SimpleBrowser
         internal ChromiumWebBrowser? selectedBrowser;
         private bool SelectedBrowser_IsLoading = false;
         private readonly List<Bookmark> BookmarkList;
+        private readonly List<HistoryItem> HistoryList;
 
         public MainWindow()
         {
             InitializeComponent();
             BookmarkList = new List<Bookmark>();
-
+            HistoryList = new List<HistoryItem>();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
