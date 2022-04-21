@@ -660,7 +660,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource Button.Background.Pressed}"/>
+                <Setter Property="Background" Value="{DynamicResource Button.Background.MouseOver}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

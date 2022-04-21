@@ -266,6 +266,7 @@ namespace SimpleBrowser
         private void AddHistoryItem(string PageURL, string PageTitle)
         {
             doc.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+            Omnibar.Items.Add(PageURL);
             if (HistoryItemExists(PageURL) is XmlNode node && node.Attributes is not null)
                 node.Attributes[2].InnerText = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
             else
