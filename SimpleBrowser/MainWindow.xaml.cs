@@ -27,7 +27,7 @@ namespace SimpleBrowser
     {
         internal ChromiumWebBrowser? selectedBrowser;
         private bool SelectedBrowser_IsLoading = false;
-        private List<Bookmark> BookmarkList;
+        private readonly List<Bookmark> BookmarkList;
 
         public MainWindow()
         {
@@ -186,13 +186,23 @@ namespace SimpleBrowser
             XmlDocument doc = new();
             doc.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
             foreach (XmlNode node in doc.DocumentElement!.ChildNodes)
-                BookmarkList.Add(new Bookmark(node.ChildNodes[0]!.InnerText, node.ChildNodes[1]!.InnerText));
+            {
+                Trace.WriteLine($"{node.Attributes![0].InnerText}, {node.Attributes[1]!.InnerText}");
+                BookmarkList.Add(new Bookmark(node.Attributes![0].InnerText, node.Attributes[1]!.InnerText));
+            }
+
             foreach (Bookmark bookmark in BookmarkList)
             {
                 Button newBookmarkBarButton = new() { Content = bookmark.Title, Style = (Style)FindResource("BookmarkBarButtonStyle"), Tag = bookmark.URL };
                 newBookmarkBarButton.Click += BookmarkBarButton_Click;
                 BookmarkBarStackPanel.Children.Add(newBookmarkBarButton);
             }
+        }
+        private bool IsCurrentPageBookmarked(string URL)
+        {
+            foreach (Bookmark bookmark in BookmarkList)
+                if (bookmark.URL == URL) return true;
+            return false;
         }
         private void BookmarkBarButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load((sender as Button)!.Tag.ToString());
 
@@ -246,6 +256,13 @@ namespace SimpleBrowser
                         Title = $"{selectedBrowser.Title}  - SimpleBrowser";
                         (selectedBrowser.Parent as TabItem)!.Header = selectedBrowser.Title;
                         Omnibar.Text = selectedBrowser.Address;
+                        if (IsCurrentPageBookmarked(selectedBrowser.Address)) BookmarkButton.Content = new TextBlock() 
+                        { 
+                            Text = "\xE735", 
+                            FontSize = 11, 
+                            FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                            Foreground = (SolidColorBrush)FindResource("MDL2Button.Overlay")
+                        };
                     }
                 }
             });
@@ -270,6 +287,10 @@ namespace SimpleBrowser
         private void BackButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoBack();
         private void ForwardButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoForward();
         private void HomeButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load(Properties.Settings.Default.HomeURL);
+        private void BookmarkButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedBrowser_IsLoading) selectedBrowser!.BrowserCore.StopLoad();
@@ -280,7 +301,7 @@ namespace SimpleBrowser
         {
             if (e.Key == Key.Enter) selectedBrowser!.Load(EnsureHttps(Omnibar.Text));
         }
-        private string EnsureHttps(string url)
+        private static string EnsureHttps(string url)
         {
             if (url.Equals(""))
                 return "about:blank";
@@ -338,7 +359,8 @@ namespace SimpleBrowser
         }
 
         private void BookmarkBar_CheckBox_Checked(object sender, RoutedEventArgs e) => BookmarkBar_Row.Height = new GridLength(32);
-
         private void BookmarkBar_CheckBox_Unchecked(object sender, RoutedEventArgs e) => BookmarkBar_Row.Height = new GridLength(0);
+
+        
     }
 }

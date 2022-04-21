@@ -22,23 +22,16 @@ namespace SimpleBrowser
     /// </summary>
     public partial class BookmarkManager : Window
     {
+		private XmlDocument doc;
+
         public BookmarkManager()
         {
             InitializeComponent();
-			LoadBookmarks();
-
-		}
-
-		private void LoadBookmarks()
-		{
-			XmlDocument doc = new();
+			doc = new();
 			doc.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
-			foreach (XmlNode node in doc.DocumentElement!.ChildNodes)
-			{
-				ListBoxItem newBookmarkBarButton = new() { Content = $"{node.ChildNodes[0]!.InnerText}, {node.ChildNodes[1]!.InnerText}" };
-				BookmarkDisplay.Items.Add(newBookmarkBarButton);
-			}
+			LoadBookmarks();
 		}
+
 		#region BorderlessMethods
 
 		private void CaptionBar_CloseButton_Click(object sender, RoutedEventArgs e) => Close();
@@ -138,11 +131,19 @@ namespace SimpleBrowser
 			public POINT ptMaxTrackSize;
 		}
 
-        #endregion
+		#endregion
 
-        private void BookmarkDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void LoadBookmarks()
+		{
+			foreach (XmlNode node in doc.DocumentElement!.ChildNodes)
+			{
+				ListBoxItem newBookmarkBarButton = new() { Content = $"{node.Attributes[0]!.InnerText}, {node.Attributes[1]!.InnerText}" };
+				BookmarkDisplay.Items.Add(newBookmarkBarButton);
+			}
+		}
+
+		private void BookmarkDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-			MessageBox.Show($"selectedItem: {BookmarkDisplay.SelectedItem.ToString()} \nContent: {(BookmarkDisplay.SelectedItem as ListBoxItem).Content}");
 			if (BookmarkDisplay.SelectedItem is ListBoxItem selectedItem && selectedItem.Content is string content)
 			{
 				TitleTextBox.Text = selectedItem.Content.ToString()![..content.ToString()!.IndexOf(',')];
@@ -159,17 +160,14 @@ namespace SimpleBrowser
 				BookmarkDisplay.Items.Add(new ListBoxItem() { Content = $"{title}, {URL}" } );
 				BookmarkDisplay.SelectedIndex = BookmarkDisplay.Items.Count - 1;
             }
-
 		}
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-			XmlDocument doc = new();
-			doc.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
 			XmlElement newElem = doc.CreateElement("Bookmark");
 			newElem.SetAttribute("Title", TitleTextBox.Text);
 			newElem.SetAttribute("URL", URLTextBox.Text);
-			doc.AppendChild(newElem);
+			doc.DocumentElement!.AppendChild(newElem);
 			doc.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
 		}
     }

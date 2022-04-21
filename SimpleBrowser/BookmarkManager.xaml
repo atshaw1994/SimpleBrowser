@@ -45,12 +45,18 @@
                 <RowDefinition Height="48"/>
             </Grid.RowDefinitions>
             <ListBox x:Name="BookmarkDisplay" Margin="8" SelectionChanged="BookmarkDisplay_SelectionChanged"/>
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="8,0" HorizontalAlignment="Stretch">
+            <Grid Grid.Row="1" Margin="8,0" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
                 <TextBlock Text="Title " VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
-                <TextBox x:Name="TitleTextBox" Width="175" Style="{DynamicResource TextBoxStyle}"/>
-                <TextBlock Text="URL " Margin="8,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
-                <TextBox x:Name="URLTextBox" Width="175" Style="{DynamicResource TextBoxStyle}"/>
-            </StackPanel>
+                <TextBox x:Name="TitleTextBox" Margin="8,0" Style="{DynamicResource TextBoxStyle}" Grid.Column="1"/>
+                <TextBlock Text="URL " VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}" Grid.Column="2"/>
+                <TextBox x:Name="URLTextBox" Style="{DynamicResource TextBoxStyle}" Grid.Column="3"/>
+            </Grid>
             <DockPanel Grid.Row="2">
                 <Button x:Name="AddButton" Content="Add" Height="24" Width="96" HorizontalAlignment="Left" Style="{DynamicResource BaseButtonStyle}" Click="AddButton_Click"/>
                 <Button x:Name="SaveButton" Content="Save" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="SaveButton_Click"/>
