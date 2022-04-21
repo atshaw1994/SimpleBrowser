@@ -35,6 +35,18 @@ namespace SimpleBrowser
 			LoadBookmarks();
 			LoadHistory();
 		}
+		public BookmarkManager(int TabIndex)
+		{
+			InitializeComponent();
+			baseTabControl.SelectedIndex = TabIndex;
+			BookmarkXML = new();
+			HistoryXML = new();
+			BookmarkXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+			HistoryXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+			LoadBookmarks();
+			LoadHistory();
+			
+		}
 
 		#region BorderlessMethods
 
@@ -150,7 +162,7 @@ namespace SimpleBrowser
 		{
 			foreach (XmlNode node in HistoryXML.DocumentElement!.ChildNodes)
 			{
-				ListBoxItem newHistoryItem = new() { Content = $"{node.Attributes![0].InnerText}, {node.Attributes![1].InnerText}" };
+				ListBoxItem newHistoryItem = new() { Content = $"{node.Attributes![0].InnerText}, {node.Attributes![1].InnerText},  {node.Attributes![2].InnerText}" };
 				newHistoryItem.MouseDoubleClick -= HistoryItem_MouseDoubleClick;
 				HistoryDisplay.Items.Add(newHistoryItem);
 			}
@@ -218,5 +230,11 @@ namespace SimpleBrowser
 			}
 		}
 
+		public void SelectTab(int tabIndex)
+        {
+			if (tabIndex == 0) baseTabControl.SelectedIndex = tabIndex;
+			else if (tabIndex == 1) baseTabControl.SelectedIndex = tabIndex - 1;
+			else MessageBox.Show("WTF kinda index is that?!"); // Unreachable code
+        }
 	}
 }

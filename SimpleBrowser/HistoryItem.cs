@@ -10,9 +10,9 @@ namespace SimpleBrowser
     {
         public string? Title { get; set; }
         public string? URL { get; set; }
-        public DateTime? LastVisited { get; set; }
+        public DateTime LastVisited { get; set; }
 
-        public HistoryItem(string title = "", string uRL = "", DateTime? lastVisited = null)
+        public HistoryItem(string title, string uRL, DateTime lastVisited)
         {
             Title = title;
             URL = uRL;

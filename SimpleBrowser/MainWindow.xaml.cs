@@ -29,6 +29,7 @@ namespace SimpleBrowser
         private bool SelectedBrowser_IsLoading = false;
         private readonly List<Bookmark> BookmarkList;
         private readonly List<HistoryItem> HistoryList;
+        private readonly XmlDocument doc = new();
 
         public MainWindow()
         {
@@ -256,9 +257,32 @@ namespace SimpleBrowser
                             FontFamily = new FontFamily("Segoe MDL2 Assets"),
                             Foreground = (SolidColorBrush)FindResource("MDL2Button.Overlay")
                         };
+                        AddHistoryItem(selectedBrowser.Address, selectedBrowser.Title);
                     }
                 }
             });
+        }
+
+        private void AddHistoryItem(string PageURL, string PageTitle)
+        {
+            doc.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+            if (HistoryItemExists(PageURL) is XmlNode node && node.Attributes is not null)
+                node.Attributes[2].InnerText = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
+            else
+            {
+                XmlElement newElem = doc.CreateElement("HistoryItem");
+                newElem.SetAttribute("Title", PageTitle);
+                newElem.SetAttribute("URL", PageURL);
+                newElem.SetAttribute("LastVisited", DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"));
+                doc.DocumentElement!.AppendChild(newElem);
+            }
+            doc.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+        }
+        private XmlNode? HistoryItemExists(string URL)
+        {
+            foreach (XmlNode node in doc.DocumentElement!.ChildNodes)
+                if (node.Attributes![1].InnerText.Equals(URL)) return node;
+            return null;
         }
 
         private void TabChanged(object sender, SelectionChangedEventArgs e)
@@ -336,6 +360,8 @@ namespace SimpleBrowser
         }
         private void Menu_History_Click(object sender, RoutedEventArgs e)
         {
+            BookmarkManager manager = new(1);
+            manager.Show();
             MenuButton.IsChecked = false;
         }
         private void Menu_Bookmarks_Click(object sender, RoutedEventArgs e)
