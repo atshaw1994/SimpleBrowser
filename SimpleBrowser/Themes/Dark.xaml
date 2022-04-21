@@ -22,6 +22,8 @@
     <SolidColorBrush x:Key="Button.Background.Pressed" Color="#007ACC"/>
     <SolidColorBrush x:Key="Button.Border.Pressed" Color="#007ACC"/>
     <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="#10ffffff"/>
+    <SolidColorBrush x:Key="Button.Background.Disabled" Color="#05ffffff"/>
+    <SolidColorBrush x:Key="Button.Border.Disabled" Color="#10ffffff"/>
 
     <SolidColorBrush x:Key="BaseButton.Background" Color="#3F3F46"/>
     <SolidColorBrush x:Key="BaseButton.Foreground" Color="#FFF1F1F1"/>

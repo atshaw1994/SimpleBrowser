@@ -11,7 +11,7 @@
         Deactivated="Window_Deactivated"
         Activated="Window_Activated"
         WindowStyle="None"
-        Background="{DynamicResource Global.Background}"
+        Background="Transparent"
         Foreground="{DynamicResource Global.Foreground}"
         Title="SimpleBrowser" 
         Height="450"
@@ -20,126 +20,124 @@
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="1" />
     </WindowChrome.WindowChrome>
     <Border x:Name="baseWindow_Border" Style="{DynamicResource WindowMainPanelStyle}">
-        <Grid x:Name="baseWindow_Grid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid x:Name="CaptionBar">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="32"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="45"/>
-                    <ColumnDefinition Width="45"/>
-                    <ColumnDefinition Width="45"/>
-                </Grid.ColumnDefinitions>
-                <Border x:Name="CaptionBar_Border" Background="{DynamicResource Caption.Active}" Grid.ColumnSpan="5"/>
-                <Image Source="{Binding Icon,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" Width="24" Height="24"/>
-                <TextBlock Text="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" 
+        <Border x:Name="baseWindow_innderBorder" Background="{DynamicResource Global.Background}">
+            <Grid x:Name="baseWindow_Grid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid x:Name="CaptionBar">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="45"/>
+                        <ColumnDefinition Width="45"/>
+                        <ColumnDefinition Width="45"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="CaptionBar_Border" Background="{DynamicResource Caption.Active}" Grid.ColumnSpan="5"/>
+                    <Image Source="{Binding Icon,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" Width="24" Height="24"/>
+                    <TextBlock Text="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" 
                        Grid.Column="1" VerticalAlignment="Center" Margin="8,0" Foreground="{DynamicResource Global.Foreground}"/>
-                <Button x:Name="CaptionBar_MinimizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="2" Click="CaptionBar_MinimizeButton_Click">
-                    <Path Data="M18 14 h9" Width="45" Height="29" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
-                </Button>
-                <Button x:Name="CaptionBar_MaximizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="3" Click="CaptionBar_RestoreButton_Click">
-                    <Path Data="M17,9 h9 v9 h-9 Z" Width="45" Height="29" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
-                </Button>
-                <Button x:Name="CaptionBar_RestoreButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="3" Visibility="Collapsed" Click="CaptionBar_RestoreButton_Click">
-                    <Path Data="M 17,11 h7 v7 h-7Z M19,11 v-2 h7 v7 h-2" Width="45" Height="30" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
-                </Button>
-                <Button x:Name="CaptionBar_CloseButton" Style="{DynamicResource TitleBarCloseButtonStyle}" Grid.Column="4" Click="CaptionBar_CloseButton_Click">
-                    <Path Data="M17,9 L26,18 M17,18 L26,9" Width="45" Height="30" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
-                </Button>
-            </Grid>
-            <Grid x:Name="ButtonBar" Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="32"/>
-                    <ColumnDefinition Width="32"/>
-                    <ColumnDefinition Width="24"/>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="32"/>
-                    <ColumnDefinition Width="24"/>
-                    <ColumnDefinition Width="32"/>
-                </Grid.ColumnDefinitions>
-                <Border x:Name="ButtonBar_Border" 
-                        Grid.ColumnSpan="20"
-                        Margin="0,0,0,-32"/>
-                <Button x:Name="BackButton" Click="BackButton_Click" Style="{DynamicResource BackButtonStyle}"/>
-                <Button x:Name="ForwardButton" Click="ForwardButton_Click" Style="{DynamicResource ForwardButtonStyle}" Grid.Column="1"/>
-                <Button x:Name="RefreshButton" Click="RefreshButton_Click" Style="{DynamicResource RefreshButtonStyle}" Grid.Column="2"/>
-                <ComboBox x:Name="Omnibar" IsEditable="True" Text="https://www.google.com/" BorderThickness="0,1,1,1" Style="{DynamicResource ComboBoxStyle}" Grid.Column="3" KeyDown="Omnibar_KeyDown" />
-                <Button x:Name="HomeButton" Click="HomeButton_Click" Style="{DynamicResource HomeButtonStyle}" Grid.Column="4"/>
-                <ToggleButton x:Name="BookmarkButton" Style="{DynamicResource BookmarkButtonStyle}" Grid.Column="5"/>
-                <Popup x:Name="BookmarkButton_Popup" AllowsTransparency="True" Width="250" Height="200" Opened="BookmarkButton_Popup_Opened" IsOpen="{Binding IsChecked, ElementName=BookmarkButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=BookmarkButton}">
-                    <Border BorderThickness="1" CornerRadius="6" Background="{DynamicResource Global.Background}" BorderBrush="{DynamicResource Button.Border}">
-                        <Grid Margin="16">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="New Bookmark" Foreground="{DynamicResource Global.Foreground}" FontSize="24"/>
-                            <Button x:Name="BookmarkButtonPopup_CloseBookmarkButtonPopup" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{DynamicResource CloseTabButton}" Click = "BookmarkButtonPopup_CloseBookmarkButtonPopup_Click"/>
-                            <TextBlock Text="Title" Grid.Row = "1" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}" FontSize="16"/> 
-                            <TextBox x:Name="BookmarkButtonPopup_TitleTextBox" Margin="42,0,0,0" Grid.Row="1" Style="{DynamicResource TextBoxStyle}"/>
-                            <TextBlock Text="URL" Grid.Row = "2" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}" FontSize="16"/>
-                            <TextBox x:Name="BookmarkButtonPopup_URLTextBox" Margin="42,0,0,0" Grid.Row="2" Style="{DynamicResource TextBoxStyle}"/>
-                            <Button x:Name="BookmarkButtonPopup_AddBookmarkButton" HorizontalAlignment="Right" Width="74" Height="24" Content="Add" Grid.Row="3" Style="{DynamicResource BaseButtonStyle}" Click="BookmarkButtonPopup_AddBookmarkButton_Click"/>
-                        </Grid>
-                    </Border>
-                </Popup>
-                <ToggleButton Name="MenuButton" Style="{DynamicResource MenuButtonStyle}" Grid.Column="8"/>
-                <Popup x:Name="MenuButton_Popup" IsOpen="{Binding IsChecked, ElementName=MenuButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=MenuButton}">
-                    <Border BorderThickness="1" BorderBrush="{DynamicResource Button.Border}">
-                        <StackPanel Orientation="Vertical">
-                            <MenuItem x:Name="Menu_NewTab" Header="New Tab" Click="Menu_NewTab_Click"/>
-                            <MenuItem x:Name="Menu_NewWindow" Header="New Window" Click="Menu_NewWindow_Click"/>
-                            <Separator />
-                            <MenuItem x:Name="Menu_History" Header="History" Click="Menu_History_Click"/>
-                            <MenuItem x:Name="Menu_Bookmarks" Header="Bookmarks" Click="Menu_Bookmarks_Click"/>
-                            <MenuItem x:Name="Menu_Downloads" Header="Downloads" Click="Menu_Downloads_Click"/>
-                            <Separator />
-                            <MenuItem x:Name="Menu_ZoomIn" Header="Zoom In" Click="Menu_ZoomIn_Click"/>
-                            <MenuItem x:Name="Menu_ZoomOut" Header="Zoom Out" Click="Menu_ZoomOut_Click"/>
-                            <MenuItem x:Name="Menu_ZoomReset" Header="Zoom Reset" Click="Menu_ZoomReset_Click"/>
-                            <Separator />
-                            <MenuItem x:Name="Menu_Settings" Header="Settings" Click="Menu_Settings_Click"/>
+                    <Button x:Name="CaptionBar_MinimizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="2" Click="CaptionBar_MinimizeButton_Click">
+                        <Path Data="M18 14 h9" Width="45" Height="29" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                    </Button>
+                    <Button x:Name="CaptionBar_MaximizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="3" Click="CaptionBar_RestoreButton_Click">
+                        <Path Data="M17,9 h9 v9 h-9 Z" Width="45" Height="29" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                    </Button>
+                    <Button x:Name="CaptionBar_RestoreButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="3" Visibility="Collapsed" Click="CaptionBar_RestoreButton_Click">
+                        <Path Data="M 17,11 h7 v7 h-7Z M19,11 v-2 h7 v7 h-2" Width="45" Height="30" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                    </Button>
+                    <Button x:Name="CaptionBar_CloseButton" Style="{DynamicResource TitleBarCloseButtonStyle}" Grid.Column="4" Click="CaptionBar_CloseButton_Click">
+                        <Path Data="M17,9 L26,18 M17,18 L26,9" Width="45" Height="30" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                    </Button>
+                </Grid>
+                <Grid x:Name="ButtonBar" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition Width="32"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BackButton" Click="BackButton_Click" Style="{DynamicResource BackButtonStyle}"/>
+                    <Button x:Name="ForwardButton" Click="ForwardButton_Click" Style="{DynamicResource ForwardButtonStyle}" Grid.Column="1"/>
+                    <Button x:Name="RefreshButton" Click="RefreshButton_Click" Style="{DynamicResource RefreshButtonStyle}" Grid.Column="2"/>
+                    <ComboBox x:Name="Omnibar" IsEditable="True" Text="https://www.google.com/" BorderThickness="0,1,1,1" Style="{DynamicResource ComboBoxStyle}" Grid.Column="3" KeyDown="Omnibar_KeyDown" />
+                    <Button x:Name="HomeButton" Click="HomeButton_Click" Style="{DynamicResource HomeButtonStyle}" Grid.Column="4"/>
+                    <ToggleButton x:Name="BookmarkButton" Style="{DynamicResource BookmarkButtonStyle}" Grid.Column="5"/>
+                    <Popup x:Name="BookmarkButton_Popup" AllowsTransparency="True" Width="250" Height="200" Opened="BookmarkButton_Popup_Opened" IsOpen="{Binding IsChecked, ElementName=BookmarkButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=BookmarkButton}">
+                        <Border BorderThickness="1" CornerRadius="6" Background="{DynamicResource Global.Background}" BorderBrush="{DynamicResource Button.Border}">
+                            <Grid Margin="16">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="New Bookmark" Foreground="{DynamicResource Global.Foreground}" FontSize="24"/>
+                                <Button x:Name="BookmarkButtonPopup_CloseBookmarkButtonPopup" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{DynamicResource CloseTabButton}" Click = "BookmarkButtonPopup_CloseBookmarkButtonPopup_Click"/>
+                                <TextBlock Text="Title" Grid.Row = "1" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}" FontSize="16"/>
+                                <TextBox x:Name="BookmarkButtonPopup_TitleTextBox" Margin="42,0,0,0" Grid.Row="1" Style="{DynamicResource TextBoxStyle}"/>
+                                <TextBlock Text="URL" Grid.Row = "2" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}" FontSize="16"/>
+                                <TextBox x:Name="BookmarkButtonPopup_URLTextBox" Margin="42,0,0,0" Grid.Row="2" Style="{DynamicResource TextBoxStyle}"/>
+                                <Button x:Name="BookmarkButtonPopup_AddBookmarkButton" HorizontalAlignment="Right" Width="74" Height="24" Content="Add" Grid.Row="3" Style="{DynamicResource BaseButtonStyle}" Click="BookmarkButtonPopup_AddBookmarkButton_Click"/>
+                            </Grid>
+                        </Border>
+                    </Popup>
+                    <ToggleButton Name="MenuButton" Style="{DynamicResource MenuButtonStyle}" Grid.Column="8"/>
+                    <Popup x:Name="MenuButton_Popup" IsOpen="{Binding IsChecked, ElementName=MenuButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=MenuButton}">
+                        <Border BorderThickness="1" BorderBrush="{DynamicResource Button.Border}">
+                            <StackPanel Orientation="Vertical">
+                                <MenuItem x:Name="Menu_NewTab" Header="New Tab" Click="Menu_NewTab_Click"/>
+                                <MenuItem x:Name="Menu_NewWindow" Header="New Window" Click="Menu_NewWindow_Click"/>
+                                <Separator />
+                                <MenuItem x:Name="Menu_History" Header="History" Click="Menu_History_Click"/>
+                                <MenuItem x:Name="Menu_Bookmarks" Header="Bookmarks" Click="Menu_Bookmarks_Click"/>
+                                <MenuItem x:Name="Menu_Downloads" Header="Downloads" Click="Menu_Downloads_Click"/>
+                                <Separator />
+                                <MenuItem x:Name="Menu_ZoomIn" Header="Zoom In" Click="Menu_ZoomIn_Click"/>
+                                <MenuItem x:Name="Menu_ZoomOut" Header="Zoom Out" Click="Menu_ZoomOut_Click"/>
+                                <MenuItem x:Name="Menu_ZoomReset" Header="Zoom Reset" Click="Menu_ZoomReset_Click"/>
+                                <Separator />
+                                <MenuItem x:Name="Menu_Settings" Header="Settings" Click="Menu_Settings_Click"/>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+                <Grid x:Name="ContentArea" Grid.Row="2">
+                    <Grid x:Name="ContentArea_SubGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="BookmarkBar_Row" Height="32"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel x:Name="BookmarkBarStackPanel" Margin="8,0" Background="{DynamicResource Global.Background}" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <Button Content="Google" Style="{DynamicResource BookmarkBarButtonStyle}"/>
+                            <Button Content="Yahoo!" Style="{DynamicResource BookmarkBarButtonStyle}"/>
+                            <Button Content="Bing" Style="{DynamicResource BookmarkBarButtonStyle}"/>
+                            <StackPanel.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem IsCheckable="True" IsChecked="True" Checked="BookmarkBar_CheckBox_Checked" Unchecked="BookmarkBar_CheckBox_Unchecked" Header="Show Bookmark Bar"/>
+                                </ContextMenu>
+                            </StackPanel.ContextMenu>
                         </StackPanel>
-                    </Border>
-                </Popup>
-            </Grid>
-            <Grid x:Name="ContentArea" Grid.Row="2">
-                <Grid x:Name="ContentArea_SubGrid">
-                    <Grid.RowDefinitions>
-                        <RowDefinition x:Name="BookmarkBar_Row" Height="32"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <StackPanel x:Name="BookmarkBarStackPanel" Margin="8,0" Background="{DynamicResource Global.Background}" HorizontalAlignment="Stretch" Orientation="Horizontal">
-                        <Button Content="Google" Style="{DynamicResource BookmarkBarButtonStyle}"/>
-                        <Button Content="Yahoo!" Style="{DynamicResource BookmarkBarButtonStyle}"/>
-                        <Button Content="Bing" Style="{DynamicResource BookmarkBarButtonStyle}"/>
-                        <StackPanel.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem IsCheckable="True" IsChecked="True" Checked="BookmarkBar_CheckBox_Checked" Unchecked="BookmarkBar_CheckBox_Unchecked" Header="Show Bookmark Bar"/>
-                            </ContextMenu>
-                        </StackPanel.ContextMenu>
-                    </StackPanel>
-                    
-                    <TabControl x:Name="baseTabControl"
+                        <TabControl x:Name="baseTabControl"
                                 Grid.Row="1"
                                 Style="{DynamicResource TabControlStyle}" 
                                 IsSynchronizedWithCurrentItem="True"
                                 SelectionChanged="TabChanged">
-                        <TabItem Header="Gooagagsdgsdagsdgasgsadggle" Style="{DynamicResource TabItemStyle}">
-                            <Border Background="Red"/>
-                        </TabItem>
-                        <TabItem Header="Yahoo" Style="{DynamicResource TabItemStyle}">
-                            <Border Background="MediumPurple"/>
-                        </TabItem>
-                    </TabControl>
+                            <TabItem Header="Gooagagsdgsdagsdgasgsadggle" Style="{DynamicResource TabItemStyle}">
+                                <Border Background="Red"/>
+                            </TabItem>
+                            <TabItem Header="Yahoo" Style="{DynamicResource TabItemStyle}">
+                                <Border Background="MediumPurple"/>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </Border>
     </Border>
 </Window>

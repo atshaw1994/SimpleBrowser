@@ -20,14 +20,18 @@
     <SolidColorBrush x:Key="Caption.Active" Color="#b9d1ea"/>
     <SolidColorBrush x:Key="Caption.Inactive" Color="#cddef0"/>
 
-    <SolidColorBrush x:Key="Button.Background" Color="#fff"/>
-    <SolidColorBrush x:Key="Button.Foreground" Color="Black"/>
-    <SolidColorBrush x:Key="Button.Border" Color="#738393"/>
-    <SolidColorBrush x:Key="Button.Background.MouseOver" Color="#60ffffff"/>
-    <SolidColorBrush x:Key="Button.Border.MouseOver" Color="#0078d7"/>
-    <SolidColorBrush x:Key="Button.Background.Pressed" Color="#cce4f7"/>
-    <SolidColorBrush x:Key="Button.Border.Pressed" Color="#005499"/>
-    <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="#80000000"/>
+    <SolidColorBrush x:Key="Button.Background" Color="#ECECF0"/>
+    <SolidColorBrush x:Key="Button.Foreground" Color="#1E1E1E"/>
+    <SolidColorBrush x:Key="Button.Border" Color="#CCCEDB"/>
+    <SolidColorBrush x:Key="Button.Background.MouseOver" Color="#C9DEF5"/>
+    <SolidColorBrush x:Key="Button.Border.MouseOver" Color="#CCCEDB"/>
+    <SolidColorBrush x:Key="Button.Background.Pressed" Color="#007ACC"/>
+    <SolidColorBrush x:Key="Button.Border.Pressed" Color="#007ACC"/>
+    <SolidColorBrush x:Key="Button.Background.Defaulted" Color="#C9DEF5"/>
+    <SolidColorBrush x:Key="Button.Border.Defaulted" Color="#3399FF"/>
+    <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="#A2A4A5"/>
+    <SolidColorBrush x:Key="Button.Background.Disabled" Color="#F5F5F5"/>
+    <SolidColorBrush x:Key="Button.Border.Disabled" Color="#CCCEDB"/>
 
     <SolidColorBrush x:Key="TabItem.Static.Border" Color="#80738393"/>
     <SolidColorBrush x:Key="TabItem.MouseOver.Background" Color="#FFC9DEF5"/>

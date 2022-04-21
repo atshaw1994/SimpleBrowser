@@ -22,14 +22,18 @@ namespace SimpleBrowser
     /// </summary>
     public partial class BookmarkManager : Window
     {
-		private readonly XmlDocument doc;
+		private readonly XmlDocument BookmarkXML;
+		private readonly XmlDocument HistoryXML;
 
-        public BookmarkManager()
+		public BookmarkManager()
         {
             InitializeComponent();
-			doc = new();
-			doc.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+			BookmarkXML = new();
+			HistoryXML = new();
+			BookmarkXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+			HistoryXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
 			LoadBookmarks();
+			LoadHistory();
 		}
 
 		#region BorderlessMethods
@@ -135,40 +139,84 @@ namespace SimpleBrowser
 
 		private void LoadBookmarks()
 		{
-			foreach (XmlNode node in doc.DocumentElement!.ChildNodes)
+			foreach (XmlNode node in BookmarkXML.DocumentElement!.ChildNodes)
 			{
-				ListBoxItem newBookmarkBarButton = new() { Content = $"{node.Attributes[0]!.InnerText}, {node.Attributes[1]!.InnerText}" };
-				BookmarkDisplay.Items.Add(newBookmarkBarButton);
+				ListBoxItem newBookmarkItem = new() { Content = $"{node.Attributes![0].InnerText}, {node.Attributes![1].InnerText}" };
+				newBookmarkItem.MouseDoubleClick += BookmarkItem_MouseDoubleClick;
+				BookmarkDisplay.Items.Add(newBookmarkItem);
+			}
+		}
+		private void LoadHistory()
+		{
+			foreach (XmlNode node in HistoryXML.DocumentElement!.ChildNodes)
+			{
+				ListBoxItem newHistoryItem = new() { Content = $"{node.Attributes![0].InnerText}, {node.Attributes![1].InnerText}" };
+				newHistoryItem.MouseDoubleClick -= HistoryItem_MouseDoubleClick;
+				HistoryDisplay.Items.Add(newHistoryItem);
 			}
 		}
 
-		private void BookmarkDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BookmarkDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 			if (BookmarkDisplay.SelectedItem is ListBoxItem selectedItem && selectedItem.Content is string content)
 			{
-				TitleTextBox.Text = selectedItem.Content.ToString()![..content.ToString()!.IndexOf(',')];
-				URLTextBox.Text = selectedItem.Content.ToString()![(content.ToString()!.IndexOf(',') + 2)..];
+				TitleTextBox.Text = content[..content.ToString()!.IndexOf(',')];
+				URLTextBox.Text = content[(content.ToString()!.IndexOf(',') + 2)..];
+				DeleteBookmarkButton.IsEnabled = true;
 			}
 		}
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+		private void AddButton_Click(object sender, RoutedEventArgs e)
         {
 			if (Application.Current.MainWindow is MainWindow mainWindow)
-            {
+			{
 				string title = mainWindow.selectedBrowser!.Title;
 				string URL = mainWindow.selectedBrowser.Address;
-				BookmarkDisplay.Items.Add(new ListBoxItem() { Content = $"{title}, {URL}" } );
+				BookmarkDisplay.Items.Add(new ListBoxItem() { Content = $"{title}, {URL}" });
 				BookmarkDisplay.SelectedIndex = BookmarkDisplay.Items.Count - 1;
-            }
+				XmlElement newElem = BookmarkXML.CreateElement("Bookmark");
+				newElem.SetAttribute("Title", title);
+				newElem.SetAttribute("URL", URL);
+				BookmarkXML.DocumentElement!.AppendChild(newElem);
+				BookmarkXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+			}
+		}
+		private void DeleteBookmarkButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (BookmarkDisplay.SelectedItem is ListBoxItem selectedItem && selectedItem.Content is string content)
+            {
+				XmlNode node = HistoryXML.SelectSingleNode($"/Bookmarks/[@name='{content[..content.ToString()!.IndexOf(',')]}']")!;
+				// if found....
+				if (node is not null)
+				{
+					// get its parent node
+					XmlNode parent = node.ParentNode!;
+
+					// remove the child node
+					parent.RemoveChild(node);
+
+					// verify the new XML structure
+					string newXML = HistoryXML.OuterXml;
+
+					// save to file or whatever....
+					HistoryXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+				}
+			}
+		}
+        private void HistoryItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+		}
+		private void BookmarkItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			if (Application.Current.MainWindow is MainWindow mainWindow &&
+				mainWindow.selectedBrowser is not null &&
+				sender is ListBoxItem selectedItem &&
+				selectedItem.Content is string content)
+			{
+				mainWindow.selectedBrowser.Load(content[(content.ToString()!.IndexOf(',') + 2)..]);
+			}
 		}
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-			XmlElement newElem = doc.CreateElement("Bookmark");
-			newElem.SetAttribute("Title", TitleTextBox.Text);
-			newElem.SetAttribute("URL", URLTextBox.Text);
-			doc.DocumentElement!.AppendChild(newElem);
-			doc.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
-		}
-    }
+	}
 }

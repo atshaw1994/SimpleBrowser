@@ -46,16 +46,8 @@ namespace SimpleBrowser
             LoadBookmarks();
 
         }
-        private void Window_Deactivated(object sender, EventArgs e)
-        {
-            CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Inactive");
-            ButtonBar_Border.Background = (SolidColorBrush)FindResource("Caption.Inactive");
-        }
-        private void Window_Activated(object sender, EventArgs e)
-        {
-            CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Active");
-            ButtonBar_Border.Background = (SolidColorBrush)FindResource("Caption.Active");
-        }
+        private void Window_Deactivated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Inactive");
+        private void Window_Activated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Active");
 
         #region BorderlessMethods
 

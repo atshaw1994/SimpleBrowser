@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="45"/>
             </Grid.ColumnDefinitions>
             <Border x:Name="CaptionBar_Border" Background="{DynamicResource Caption.Active}" Grid.ColumnSpan="5"/>
-            <TextBlock Text="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" 
+            <TextBlock Text="Bookmark Manager - Simple Browser" 
                        VerticalAlignment="Center" Margin="8,0" Foreground="{DynamicResource Global.Foreground}"/>
             <Button x:Name="CaptionBar_MinimizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="1" Click="CaptionBar_MinimizeButton_Click">
                 <Path Data="M18 14 h9" Width="45" Height="29" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
@@ -39,28 +39,39 @@
             </Button>
         </Grid>
         <Grid x:Name="ContentArea" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="48"/>
-            </Grid.RowDefinitions>
-            <ListBox x:Name="BookmarkDisplay" Margin="8" SelectionChanged="BookmarkDisplay_SelectionChanged"/>
-            <Grid Grid.Row="1" Margin="8,0" HorizontalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="24"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="24"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Title " VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
-                <TextBox x:Name="TitleTextBox" Margin="8,0" Style="{DynamicResource TextBoxStyle}" Grid.Column="1"/>
-                <TextBlock Text="URL " VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}" Grid.Column="2"/>
-                <TextBox x:Name="URLTextBox" Style="{DynamicResource TextBoxStyle}" Grid.Column="3"/>
-            </Grid>
-            <DockPanel Grid.Row="2">
-                <Button x:Name="AddButton" Content="Add" Height="24" Width="96" HorizontalAlignment="Left" Style="{DynamicResource BaseButtonStyle}" Click="AddButton_Click"/>
-                <Button x:Name="SaveButton" Content="Save" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="SaveButton_Click"/>
-            </DockPanel>
+            <TabControl x:Name="baseTabControl" Style="{DynamicResource TabControlStyle}">
+                <TabItem Header="Bookmarks" Style="{DynamicResource TabItemStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <ListBox x:Name="BookmarkDisplay" Margin="8" SelectionChanged="BookmarkDisplay_SelectionChanged"/>
+                        <Grid Grid.Row="1" Margin="8,0" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="24"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="24"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Title " VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
+                            <TextBox x:Name="TitleTextBox" Margin="8,0" Style="{DynamicResource TextBoxStyle}" Grid.Column="1"/>
+                            <TextBlock Text="URL " VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}" Grid.Column="2"/>
+                            <TextBox x:Name="URLTextBox" Style="{DynamicResource TextBoxStyle}" Grid.Column="3"/>
+                        </Grid>
+                        <DockPanel Grid.Row="2">
+                            <Button x:Name="DeleteBookmarkButton" IsEnabled="False" Content="Delete" Height="24" Width="96" HorizontalAlignment="Left" Style="{DynamicResource BaseButtonStyle}" Click="DeleteBookmarkButton_Click"/>
+                            <Button x:Name="AddButton" Content="Add" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="AddButton_Click"/>
+                        </DockPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="History" Style="{DynamicResource TabItemStyle}">
+                    <Grid>
+                        <ListBox x:Name="HistoryDisplay" Margin="8"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
         </Grid>
     </Grid>
 </Window>

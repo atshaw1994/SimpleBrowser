@@ -326,7 +326,13 @@
                             <Setter Property="BorderBrush" Value="{DynamicResource Button.Border.Pressed}"/>
                         </Trigger>
                         <Trigger Property="IsDefault" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource Button.Border.Pressed}"/>
+                            <Setter Property="Background" Value="{DynamicResource Button.Background.Defaulted}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource Button.Border.Defaulted}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource Button.Background.Disabled}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource Button.Border.Disabled}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Button.Foreground.Disabled}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -726,9 +732,9 @@
     </Style>
 
     <Style x:Key="{x:Type ListBox}" TargetType="ListBox">
-        <Setter Property="Background" Value="{DynamicResource BaseButton.Background}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BaseButton.Border}"/>
-        <Setter Property="Foreground" Value="{DynamicResource BaseButton.Foreground}"/>
+        <Setter Property="Background" Value="{DynamicResource Button.Background}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Button.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Button.Foreground}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
@@ -778,6 +784,7 @@
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="IsFocused" Value="False"/>
                             </MultiTrigger.Conditions>
+                            <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Focus.Border}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
