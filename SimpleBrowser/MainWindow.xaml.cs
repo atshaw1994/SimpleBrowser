@@ -287,9 +287,30 @@ namespace SimpleBrowser
         private void BackButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoBack();
         private void ForwardButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoForward();
         private void HomeButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load(Properties.Settings.Default.HomeURL);
-        private void BookmarkButton_Click(object sender, RoutedEventArgs e)
+        private void BookmarkButton_Popup_Opened(object sender, EventArgs e)
         {
-
+            if (selectedBrowser is not null)
+            {
+                BookmarkButtonPopup_TitleTextBox.Text = selectedBrowser.Title;
+                BookmarkButtonPopup_URLTextBox.Text = selectedBrowser.Address;
+            }
+        }
+        private void BookmarkButtonPopup_CloseBookmarkButtonPopup_Click(object sender, RoutedEventArgs e)
+        {
+            BookmarkButton_Popup.IsOpen = false;
+            BookmarkButtonPopup_TitleTextBox.Text = "";
+            BookmarkButtonPopup_URLTextBox.Text = "";
+        }
+        private void BookmarkButtonPopup_AddBookmarkButton_Click(object sender, RoutedEventArgs e)
+        {
+            Bookmark newBookmark = new() { Title = BookmarkButtonPopup_TitleTextBox.Text,  URL = BookmarkButtonPopup_URLTextBox.Text };
+            BookmarkList.Add(newBookmark);
+            XmlDocument doc = new();
+            XmlElement newElem = doc.CreateElement("Bookmark");
+            newElem.SetAttribute("Title", newBookmark.Title);
+            newElem.SetAttribute("URL", newBookmark.URL);
+            doc.DocumentElement!.AppendChild(newElem);
+            doc.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
         }
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
@@ -310,9 +331,6 @@ namespace SimpleBrowser
             return url;
         }
 
-        private void MenuButton_Click(object sender, RoutedEventArgs e)
-        {
-        }
         private void Menu_NewTab_Click(object sender, RoutedEventArgs e)
         {
             NewTabButton_Click(this, e);

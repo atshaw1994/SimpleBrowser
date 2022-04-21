@@ -22,7 +22,7 @@ namespace SimpleBrowser
     /// </summary>
     public partial class BookmarkManager : Window
     {
-		private XmlDocument doc;
+		private readonly XmlDocument doc;
 
         public BookmarkManager()
         {
