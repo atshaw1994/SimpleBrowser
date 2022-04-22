@@ -357,8 +357,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Margin="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <TextBlock Text="&#xE72B;" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" Foreground="{TemplateBinding Foreground}"/>
+                    <Border x:Name="Border" Margin="{TemplateBinding Padding}" BorderThickness="1,1,0,0" Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
+                        <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,0,1">
+                            <TextBlock Text="&#xE72B;" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -385,8 +387,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Margin="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <TextBlock Text="&#xE72A;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}"/>
+                    <Border x:Name="Border" Margin="{TemplateBinding Padding}" BorderThickness="0,1,0,0" Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
+                        <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,1,1">
+                            <TextBlock Text="&#xE72A;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -410,8 +414,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}" BorderThickness="1,1,0,0">
+                        <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,0,1">
+                            <TextBlock Text="&#xE80F;" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource MDL2Button.Overlay}"/>
+                        </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -421,23 +427,20 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Content">
-            <Setter.Value>
-                <TextBlock Text="&#xE80F;" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource MDL2Button.Overlay}"/>
-            </Setter.Value>
-        </Setter>
     </Style>
     <Style x:Key="RefreshButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource TextBox.Background}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.Border}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.BorderTL}"/>
         <Setter Property="BorderThickness" Value="1,1,0,1"/>
         <Setter Property="Width" Value="24"/>
         <Setter Property="Height" Value="24"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                    <Border x:Name="Border" BorderThickness="1,1,0,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                        <Border x:Name="brBorder" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TextBox.Static.BorderBR}">
+                            <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -466,8 +469,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                    <Border x:Name="Border" BorderThickness="0,1,0,0" Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
+                        <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,0,1">
+                            <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -494,8 +499,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}" BorderThickness="0,1,0,0">
+                        <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,1,1">
                         <TextBlock Text="&#xEDE3;" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource MDL2Button.Overlay}"/>
+                        </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -535,7 +542,7 @@
     </Style>
 
     <Style x:Key="Omnibar_TextBoxStyle" TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBox.Foreground}"/>
         <Setter Property="Height" Value="24"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -550,7 +557,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                    <Border x:Name="border" BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="0" SnapsToDevicePixels="True">
                         <ScrollViewer x:Name="PART_ContentHost" Padding="{TemplateBinding Padding}" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -576,7 +583,7 @@
         </Style.Triggers>
     </Style>
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
-        <Border x:Name="border" Background="{DynamicResource TextBox.Background}" BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="0,1,1,1">
+        <Border x:Name="border">
             <TextBlock x:Name="Glyph" Text="&#xE70D;" Foreground="{DynamicResource MDL2Button.Overlay}" FontSize="8" FontFamily="Segoe MDL2 Assets" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
         <ControlTemplate.Triggers>
@@ -604,24 +611,27 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="24"/>
-                        </Grid.ColumnDefinitions>
-                        <Border x:Name="border" Grid.ColumnSpan="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
-                        <TextBox x:Name="PART_EditableTextBox" Visibility="Collapsed" Style="{DynamicResource TextBoxStyle}" IsReadOnly="{TemplateBinding IsReadOnly}" />
-                        <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="3,3,23,3" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <ToggleButton x:Name="ToggleButton" Template="{StaticResource ComboBoxToggleButton}" Grid.Column="2" Focusable="false" ClickMode="Press" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
-                            <Grid x:Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                <Border x:Name="DropDownBorder" Background="{DynamicResource TextBox.Background}" BorderThickness="1" BorderBrush="{DynamicResource TextBox.Static.Border}"/>
-                                <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
-                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                </ScrollViewer>
+                    <Border x:Name="outerBorder" Grid.ColumnSpan="3" Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}" BorderThickness="0,1,0,0">
+                        <Border x:Name="innerBorder" Grid.ColumnSpan="3" BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,1,1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="24"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="PART_EditableTextBox" Visibility="Collapsed" Style="{DynamicResource Omnibar_TextBoxStyle}" IsReadOnly="{TemplateBinding IsReadOnly}" />
+                                <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="3,3,23,3" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <ToggleButton x:Name="ToggleButton" Template="{StaticResource ComboBoxToggleButton}" Grid.Column="2" Focusable="false" ClickMode="Press" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                    <Grid x:Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                        <Border x:Name="DropDownBorder" Background="{DynamicResource TextBox.Background}" BorderThickness="1" BorderBrush="{DynamicResource TextBox.Static.Border}"/>
+                                        <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Popup>
                             </Grid>
-                        </Popup>
-                    </Grid>
+                        </Border>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasItems" Value="false">
                             <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95" />
@@ -708,8 +718,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost" Padding="{TemplateBinding Padding}" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    <Border x:Name="border" Background="{DynamicResource TextBox.Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}" BorderThickness="1,1,0,0" SnapsToDevicePixels="True">
+                        <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,1,1">
+                            <ScrollViewer x:Name="PART_ContentHost" Padding="{TemplateBinding Padding}" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">

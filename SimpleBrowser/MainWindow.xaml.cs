@@ -52,7 +52,7 @@ namespace SimpleBrowser
 
         }
         private void Window_Deactivated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Inactive");
-        private void Window_Activated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Active");
+        private void Window_Activated(object sender, EventArgs e) => CaptionBar_Border.Background = new SolidColorBrush(Colors.Transparent);
 
         #region BorderlessMethods
 

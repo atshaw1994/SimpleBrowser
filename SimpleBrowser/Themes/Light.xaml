@@ -39,9 +39,11 @@
     <SolidColorBrush x:Key="TabItem.Selected.Background" Color="White"/>
     <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#879BB3"/>
 
-    <SolidColorBrush x:Key="TextBox.Background" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="TextBox.Background" Color="#80FFFFFF"/>
     <SolidColorBrush x:Key="TextBox.Foreground" Color="#FF1E1E1E"/>
     <SolidColorBrush x:Key="TextBox.Static.Border" Color="#738393"/>
+    <SolidColorBrush x:Key="TextBox.Static.BorderTL" Color="#20000000"/>
+    <SolidColorBrush x:Key="TextBox.Static.BorderBR" Color="#738393"/>
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#7EB4EA"/>
     <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#569DE5"/>
 

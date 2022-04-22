@@ -35,7 +35,7 @@
                         <ColumnDefinition Width="45"/>
                         <ColumnDefinition Width="45"/>
                     </Grid.ColumnDefinitions>
-                    <Border x:Name="CaptionBar_Border" Background="{DynamicResource Caption.Active}" Grid.ColumnSpan="5"/>
+                    <Border x:Name="CaptionBar_Border" Grid.ColumnSpan="5"/>
                     <Image Source="{Binding Icon,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" Width="24" Height="24"/>
                     <TextBlock Text="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" 
                        Grid.Column="1" VerticalAlignment="Center" Margin="8,0" Foreground="{DynamicResource Global.Foreground}"/>
@@ -65,7 +65,7 @@
                     <Button x:Name="BackButton" Click="BackButton_Click" Style="{DynamicResource BackButtonStyle}"/>
                     <Button x:Name="ForwardButton" Click="ForwardButton_Click" Style="{DynamicResource ForwardButtonStyle}" Grid.Column="1"/>
                     <Button x:Name="RefreshButton" Click="RefreshButton_Click" Style="{DynamicResource RefreshButtonStyle}" Grid.Column="2"/>
-                    <ComboBox x:Name="Omnibar" IsEditable="True" Text="https://www.google.com/" BorderThickness="0,1,1,1" Style="{DynamicResource ComboBoxStyle}" Grid.Column="3" KeyDown="Omnibar_KeyDown" />
+                    <ComboBox x:Name="Omnibar" IsEditable="True" Text="https://www.google.com/" Style="{DynamicResource ComboBoxStyle}" Grid.Column="3" KeyDown="Omnibar_KeyDown" />
                     <Button x:Name="HomeButton" Click="HomeButton_Click" Style="{DynamicResource HomeButtonStyle}" Grid.Column="4"/>
                     <ToggleButton x:Name="BookmarkButton" Style="{DynamicResource BookmarkButtonStyle}" Grid.Column="5"/>
                     <Popup x:Name="BookmarkButton_Popup" AllowsTransparency="True" Width="250" Height="200" Opened="BookmarkButton_Popup_Opened" IsOpen="{Binding IsChecked, ElementName=BookmarkButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=BookmarkButton}">
@@ -110,10 +110,10 @@
                 <Grid x:Name="ContentArea" Grid.Row="2">
                     <Grid x:Name="ContentArea_SubGrid">
                         <Grid.RowDefinitions>
-                            <RowDefinition x:Name="BookmarkBar_Row" Height="32"/>
+                            <RowDefinition x:Name="BookmarkBar_Row" Height="24"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <StackPanel x:Name="BookmarkBarStackPanel" Margin="8,0" Background="{DynamicResource Global.Background}" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                        <StackPanel x:Name="BookmarkBarStackPanel" Margin="8,0" HorizontalAlignment="Stretch" Orientation="Horizontal">
                             <Button Content="Google" Style="{DynamicResource BookmarkBarButtonStyle}"/>
                             <Button Content="Yahoo!" Style="{DynamicResource BookmarkBarButtonStyle}"/>
                             <Button Content="Bing" Style="{DynamicResource BookmarkBarButtonStyle}"/>

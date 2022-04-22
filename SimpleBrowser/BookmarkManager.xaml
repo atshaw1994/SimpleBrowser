@@ -62,7 +62,7 @@
                         </Grid>
                         <DockPanel Grid.Row="2">
                             <Button x:Name="DeleteBookmarkButton" IsEnabled="False" Content="Delete" Height="24" Width="96" HorizontalAlignment="Left" Style="{DynamicResource BaseButtonStyle}" Click="DeleteBookmarkButton_Click"/>
-                            <Button x:Name="AddButton" Content="Add" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="AddButton_Click"/>
+                            <Button x:Name="AddButton" Content="Add" IsDefault="True" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="AddButton_Click"/>
                         </DockPanel>
                     </Grid>
                 </TabItem>
