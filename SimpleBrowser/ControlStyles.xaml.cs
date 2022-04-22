@@ -28,5 +28,7 @@ namespace SimpleBrowser
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow!.BookmarkBar_Row.Height = new GridLength(0);
         }
+
+
     }
 }

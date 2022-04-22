@@ -132,20 +132,25 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Static.Border}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="18,7"/>
+        <Setter Property="Padding" Value="0,7"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="FaviconColumn" Width="24"/>
                             <ColumnDefinition/>
                             <ColumnDefinition x:Name="CloseTabButtonColumn" Width="32"/>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="mainBorder" Grid.ColumnSpan="2" Margin="1,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <Border x:Name="innerBorder" Grid.ColumnSpan="2" Background="{DynamicResource TabItem.Selected.Background}" BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="0" Opacity="0"/>
+                        <Border x:Name="mainBorder" Grid.ColumnSpan="3" Margin="1,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Border x:Name="innerBorder" Grid.ColumnSpan="3" Background="{DynamicResource TabItem.Selected.Background}" BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="0" Opacity="0"/>
                         </Border>
-                        <TextBlock x:Name="contentPresenter" TextTrimming="WordEllipsis" MaxWidth="100" Text="{TemplateBinding Header}" Focusable="False" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                        <Button x:Name="CloseTabButton" Visibility="Collapsed" Click="CloseTabButton_Click" Grid.Column="1" Style="{DynamicResource CloseTabButton}"/>
+                        <Grid x:Name="Favicon_Grid" VerticalAlignment="Center" Width="16" Height="16" Margin="4,0">
+                            <TextBlock Text="&#xEB41;" Padding="2" Width="16" Height="16" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
+                            <Image x:Name="FaviconDisplay" Width="16" Height="16"/>
+                        </Grid>
+                        <TextBlock x:Name="contentPresenter" Grid.Column="1" TextTrimming="WordEllipsis" MaxWidth="100" Text="{TemplateBinding Header}" Focusable="False" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                        <Button x:Name="CloseTabButton" Visibility="Collapsed" Click="CloseTabButton_Click" Grid.Column="2" Style="{DynamicResource CloseTabButton}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false">

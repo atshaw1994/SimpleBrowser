@@ -17,6 +17,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 using System.Diagnostics;
+using System.Net.Http;
+using Windows.Storage.Streams;
+using System.Net;
+using HtmlAgilityPack;
 
 namespace SimpleBrowser
 {
@@ -180,8 +184,7 @@ namespace SimpleBrowser
             XmlDocument doc = new();
             doc.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
             foreach (XmlNode node in doc.DocumentElement!.ChildNodes)
-            {
-                Trace.WriteLine($"{node.Attributes![0].InnerText}, {node.Attributes[1]!.InnerText}");
+            { 
                 BookmarkList.Add(new Bookmark(node.Attributes![0].InnerText, node.Attributes[1]!.InnerText));
             }
 
@@ -241,6 +244,7 @@ namespace SimpleBrowser
                     }
                     else
                     {
+                        Icon = LoadFavicon(selectedBrowser.Address);
                         SelectedBrowser_IsLoading = false;
                         if (RefreshButton.Content is Grid grid && grid.Children[0] is TextBlock RefreshText && grid.Children[1] is TextBlock StopText)
                         {
@@ -399,6 +403,14 @@ namespace SimpleBrowser
         private void BookmarkBar_CheckBox_Checked(object sender, RoutedEventArgs e) => BookmarkBar_Row.Height = new GridLength(32);
         private void BookmarkBar_CheckBox_Unchecked(object sender, RoutedEventArgs e) => BookmarkBar_Row.Height = new GridLength(0);
 
-        
+        public BitmapImage LoadFavicon(string URL)
+        {
+            if (URL != "")
+            {
+                var client = new WebClient();
+                return new BitmapImage(new Uri($"http://www.google.com/s2/favicons?domain={URL}"));
+            }
+            return (BitmapImage)FindResource("\\LoadingWebPage.png");
+        }
     }
 }

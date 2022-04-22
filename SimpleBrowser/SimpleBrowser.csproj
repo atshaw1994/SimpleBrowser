@@ -12,11 +12,13 @@
   <ItemGroup>
     <None Remove="Bookmarks.xml" />
     <None Remove="History.xml" />
+    <None Remove="LoadingWebPage.png" />
     <None Remove="SimpleBrowser.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf.NETCore" Version="100.0.140" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +28,7 @@
     <Content Include="History.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="LoadingWebPage.png" />
     <Resource Include="SimpleBrowser.ico" />
   </ItemGroup>
 
