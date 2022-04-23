@@ -89,7 +89,7 @@
     <Style x:Key="CloseTabButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource MDL2Button.Overlay}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Global.Foreground}"/>
         <Setter Property="Width" Value="16"/>
         <Setter Property="Height" Value="16"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -102,10 +102,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MDL2Button.Overlay.Stop}"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MDL2Button.Overlay.Pressed}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Global.Foreground.Stop}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -115,14 +112,14 @@
     <Style x:Key="NewTabButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource MDL2Button.Overlay}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Global.Foreground}"/>
         <Setter Property="Width" Value="32"/>
         <Setter Property="Height" Value="32"/>
         <Setter Property="Margin" Value="3,2,0,-2"/>
         <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
         <Setter Property="Content">
             <Setter.Value>
-                <TextBlock FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Opacity="0.4" Foreground="{DynamicResource MDL2Button.Overlay}" FontSize="12" Text="&#xF8AA;"/>
+                <TextBlock FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Opacity="0.4" Foreground="{DynamicResource Global.Foreground}" FontSize="12" Text="&#xF8AA;"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -345,21 +342,15 @@
         </Setter>
     </Style>
     <Style x:Key="BackButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource TextBox.Background}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.Border}"/>
-        <Setter Property="Foreground" Value="{DynamicResource MDL2Button.Overlay}"/>
-        <Setter Property="BorderThickness" Value="1,1,0,1"/>
-        <Setter Property="IsEnabled" Value="False"/>
         <Setter Property="Width" Value="24"/>
         <Setter Property="Height" Value="24"/>
-        <Setter Property="Padding" Value="0"/>
         <Setter Property="Margin" Value="8,0,0,0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Margin="{TemplateBinding Padding}" BorderThickness="1,1,0,0" Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
+                    <Border x:Name="Border" Background="{DynamicResource TextBox.Background}" BorderThickness="1,1,0,0" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
                         <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,0,1">
-                            <TextBlock Text="&#xE72B;" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" Foreground="{TemplateBinding Foreground}"/>
+                            <TextBlock Text="&#xE72B;" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource Global.Foreground}"/>
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -375,21 +366,15 @@
         </Setter>
     </Style>
     <Style x:Key="ForwardButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource TextBox.Background}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.Border}"/>
-        <Setter Property="Foreground" Value="{DynamicResource MDL2Button.Overlay}"/>
-        <Setter Property="BorderThickness" Value="0,1,1,1"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="IsEnabled" Value="False"/>
         <Setter Property="Width" Value="24"/>
         <Setter Property="Height" Value="24"/>
-        <Setter Property="Padding" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Margin="{TemplateBinding Padding}" BorderThickness="0,1,0,0" Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
+                    <Border x:Name="Border" BorderThickness="0,1,0,0" Background="{DynamicResource TextBox.Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
                         <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,1,1">
-                            <TextBlock Text="&#xE72A;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}"/>
+                            <TextBlock Text="&#xE72A;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -404,41 +389,14 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="HomeButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource TextBox.Background}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.Border}"/>
-        <Setter Property="BorderThickness" Value="1,1,0,1"/>
-        <Setter Property="HorizontalAlignment" Value="Right"/>
-        <Setter Property="Width" Value="24"/>
-        <Setter Property="Height" Value="24"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}" BorderThickness="1,1,0,0">
-                        <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,0,1">
-                            <TextBlock Text="&#xE80F;" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource MDL2Button.Overlay}"/>
-                        </Border>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource Button.Background.MouseOver}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
     <Style x:Key="RefreshButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource TextBox.Background}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.BorderTL}"/>
-        <Setter Property="BorderThickness" Value="1,1,0,1"/>
         <Setter Property="Width" Value="24"/>
         <Setter Property="Height" Value="24"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" BorderThickness="1,1,0,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <Border x:Name="brBorder" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TextBox.Static.BorderBR}">
+                    <Border x:Name="BorderTL" BorderThickness="1,1,0,0" Background="{DynamicResource TextBox.Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
+                        <Border x:Name="BorderBR" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TextBox.Static.BorderBR}">
                             <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
                     </Border>
@@ -453,23 +411,40 @@
         <Setter Property="Content">
             <Setter.Value>
                 <Grid>
-                    <TextBlock Text="&#xE72C;" FontSize="11" Visibility="Visible" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource MDL2Button.Overlay}"/>
-                    <TextBlock Text="&#xE711;" FontSize="11" Visibility="Collapsed" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource MDL2Button.Overlay.Stop}"/>
+                    <TextBlock Text="&#xE72C;" FontSize="11" Visibility="Visible" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource Global.Foreground}"/>
+                    <TextBlock Text="&#xE711;" FontSize="11" Visibility="Collapsed" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource Global.Foreground.Stop}"/>
                 </Grid>
             </Setter.Value>
         </Setter>
-
+    </Style>
+    <Style x:Key="HomeButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{DynamicResource TextBox.Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}" BorderThickness="1,1,0,0">
+                        <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,0,1">
+                            <TextBlock Text="&#xE80F;" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource Global.Foreground}"/>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource Button.Background.MouseOver}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     <Style x:Key="BookmarkButtonStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource TextBox.Background}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.Border}"/>
-        <Setter Property="BorderThickness" Value="0,1,0,1"/>
         <Setter Property="Width" Value="24"/>
         <Setter Property="Height" Value="24"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Border x:Name="Border" BorderThickness="0,1,0,0" Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
+                    <Border x:Name="Border" BorderThickness="0,1,0,0" Background="{DynamicResource TextBox.Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
                         <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,0,1">
                             <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </Border>
@@ -484,24 +459,20 @@
         </Setter>
         <Setter Property="Content">
             <Setter.Value>
-                <TextBlock Text="&#xE734;" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource MDL2Button.Overlay}"/>
+                <TextBlock Text="&#xE734;" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource Global.Foreground}"/>
             </Setter.Value>
         </Setter>
     </Style>
     <Style x:Key="MenuButtonStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource TextBox.Background}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.Border}"/>
-        <Setter Property="BorderThickness" Value="0,1,1,1"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Width" Value="24"/>
         <Setter Property="Height" Value="24"/>
-        <Setter Property="Margin" Value="0,0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Border Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}" BorderThickness="0,1,0,0">
+                    <Border Background="{DynamicResource TextBox.Background}" BorderBrush="{DynamicResource TextBox.Static.BorderTL}" BorderThickness="0,1,0,0">
                         <Border BorderBrush="{DynamicResource TextBox.Static.BorderBR}" BorderThickness="0,0,1,1">
-                        <TextBlock Text="&#xEDE3;" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource MDL2Button.Overlay}"/>
+                            <TextBlock Text="&#xE90F;" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource Global.Foreground}"/>
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -510,11 +481,6 @@
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Content">
-            <Setter.Value>
-                <TextBlock Text="&#xE712;" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource MDL2Button.Overlay}"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -584,7 +550,7 @@
     </Style>
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
         <Border x:Name="border">
-            <TextBlock x:Name="Glyph" Text="&#xE70D;" Foreground="{DynamicResource MDL2Button.Overlay}" FontSize="8" FontFamily="Segoe MDL2 Assets" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock x:Name="Glyph" Text="&#xE70D;" Foreground="{DynamicResource Global.Foreground}" FontSize="8" FontFamily="Segoe MDL2 Assets" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="UIElement.IsMouseOver" Value="True">
