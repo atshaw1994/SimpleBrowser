@@ -214,11 +214,7 @@ namespace SimpleBrowser
             {
                 Address = "https://www.google.com"
             };
-            TabItem newTab = new()
-            {
-                Header = "Loading...",
-                Style = (Style)FindResource("TabItemStyle")
-            };
+            TabItem newTab = new() { Header = "Loading..." };
             newWeb.LoadingStateChanged += NewWeb_LoadingStateChanged;
             newTab.Content = newWeb;
             baseTabControl.SelectedIndex = baseTabControl.Items.Add(newTab);
@@ -256,10 +252,10 @@ namespace SimpleBrowser
                         Omnibar.Text = selectedBrowser.Address;
                         if (IsCurrentPageBookmarked(selectedBrowser.Address)) BookmarkButton.Content = new TextBlock() 
                         { 
-                            Text = "\xE735", 
+                            Text = "\xE7C3", 
                             FontSize = 11, 
                             FontFamily = new FontFamily("Segoe MDL2 Assets"),
-                            Foreground = (SolidColorBrush)FindResource("MDL2Button.Overlay")
+                            Foreground = (SolidColorBrush)FindResource("Button.Foreground")
                         };
                         AddHistoryItem(selectedBrowser.Address, selectedBrowser.Title);
                     }
@@ -395,7 +391,7 @@ namespace SimpleBrowser
         }
         private void Menu_Settings_Click(object sender, RoutedEventArgs e)
         {
-            TabItem newTab = new() { Content = new SettingsTabItem(), Header = "Settings", Style = (Style)FindResource("TabItemStyle") };
+            TabItem newTab = new() { Content = new SettingsTabItem(), Header = "Settings"};
             baseTabControl.SelectedIndex = baseTabControl.Items.Add(newTab);
             MenuButton.IsChecked = false;
         }

@@ -113,53 +113,75 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource Global.Foreground}"/>
-        <Setter Property="Width" Value="32"/>
-        <Setter Property="Height" Value="32"/>
-        <Setter Property="Margin" Value="3,2,0,-2"/>
+        <Setter Property="Opacity" Value="0.4"/>
         <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
-        <Setter Property="Content">
+        <Setter Property="Template">
             <Setter.Value>
-                <TextBlock FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Opacity="0.4" Foreground="{DynamicResource Global.Foreground}" FontSize="12" Text="&#xF8AA;"/>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource Global.Foreground}" FontSize="12" Text="&#xF8AA;"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value="0.2"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="TabItemStyle" TargetType="{x:Type TabItem}">
+    <Style TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle" Value="{DynamicResource FocusVisual}"/>
-        <Setter Property="Foreground" Value="{DynamicResource Global.Foreground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Button.Foreground.Disabled}"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Static.Border}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="0,7"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.BorderTL}"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Margin" Value="4,0,0,0"/>
+        <Setter Property="Padding" Value="0,0,8,0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="FaviconColumn" Width="24"/>
+                            <ColumnDefinition Width="24"/>
                             <ColumnDefinition/>
                             <ColumnDefinition x:Name="CloseTabButtonColumn" Width="32"/>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="mainBorder" Grid.ColumnSpan="3" Margin="1,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <Border x:Name="innerBorder" Grid.ColumnSpan="3" Background="{DynamicResource TabItem.Selected.Background}" BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="0" Opacity="0"/>
+                        <Border x:Name="mainBorder" CornerRadius="4" Margin="4,0" Grid.ColumnSpan="3" Background="{TemplateBinding Background}"/>
+                        <Border x:Name="innerBorder" CornerRadius="4" Grid.ColumnSpan="3" Background="{DynamicResource Button.Background.Defaulted}" BorderBrush="{DynamicResource Button.Border.Defaulted}" BorderThickness="1" Opacity="0"/>
+                        <Border x:Name="FaviconBorder">
+                            <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" FontSize="12" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-                        <Grid x:Name="Favicon_Grid" VerticalAlignment="Center" Width="16" Height="16" Margin="4,0">
-                            <TextBlock Text="&#xEB41;" Padding="2" Width="16" Height="16" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
-                            <Image x:Name="FaviconDisplay" Width="16" Height="16"/>
-                        </Grid>
                         <TextBlock x:Name="contentPresenter" Grid.Column="1" TextTrimming="WordEllipsis" MaxWidth="100" Text="{TemplateBinding Header}" Focusable="False" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                        <Button x:Name="CloseTabButton" Visibility="Collapsed" Click="CloseTabButton_Click" Grid.Column="2" Style="{DynamicResource CloseTabButton}"/>
+                        <Button x:Name="CloseTabButton" Grid.Column="2" Visibility="Collapsed" Click="CloseTabButton_Click" Style="{DynamicResource CloseTabButton}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false">
-                            <Setter Property="BorderThickness" TargetName="mainBorder" Value="0"/>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
                             <Setter Property="Width" TargetName="CloseTabButtonColumn" Value="0"/>
-                        </DataTrigger>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Width" TargetName="CloseTabButtonColumn" Value="0"/>
+                            <Setter Property="Background" Value="{DynamicResource Button.Background.MouseOver}"/>
+                        </MultiDataTrigger>
                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true">
-                            <Setter Property="Panel.ZIndex" Value="1"/>
-                            <Setter Property="Margin" Value="-2,-2,0,-1"/>
+                            <Setter Property="Panel.ZIndex" Value="2"/>
+                            <Setter Property="Margin" Value="4,0,-4,0"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Global.Foreground}"/>
+                            <Setter Property="Opacity" TargetName="mainBorder" Value="0"/>
                             <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
-                            <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,2,1,0"/>
-                            <Setter Property="BorderThickness" TargetName="mainBorder" Value="0"/>
                             <Setter Property="Visibility" TargetName="CloseTabButton" Value="Visible"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
@@ -167,49 +189,36 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}">
+    <Style TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{DynamicResource Global.Background}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Static.Border}"/>
-        <Setter Property="Padding" Value="2"/>
-        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="2,2,2,2"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Margin" Value="4,0,0,0"/>
         <Setter Property="BorderThickness" Value="0,0,0,1"/>
         <Setter Property="Foreground" Value="{DynamicResource Global.Foreground}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
                     <Grid x:Name="templateRoot" ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="ColumnDefinition0"/>
-                            <ColumnDefinition x:Name="ColumnDefinition1" Width="32"/>
-                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                            <RowDefinition x:Name="RowDefinition0" Height="32"/>
                             <RowDefinition x:Name="RowDefinition1" Height="*"/>
                         </Grid.RowDefinitions>
-                        <TabPanel x:Name="headerPanel" Visibility="Visible" Background="Transparent" Grid.Column="0" IsItemsHost="true" Margin="0,2,0,0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1">
-                            <TabPanel.ContextMenu>
-                                <ContextMenu x:Name="HeaderPanel_ContextMenu">
-                                    <MenuItem IsCheckable="True" IsChecked="True" Checked="BookmarkBar_CheckBox_Checked" Unchecked="BookmarkBar_CheckBox_Unchecked" Header="Show Bookmark Bar"/>
-                                </ContextMenu>
-                            </TabPanel.ContextMenu>
-                        </TabPanel>
-                        <Border x:Name="ContentBorder" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,0" Background="{TemplateBinding Background}" BorderThickness="0,1,0,0" BorderBrush="{TemplateBinding BorderBrush}">
-                            <ContentPresenter x:Name="PART_SelectedContentHost" Grid.Row="1" Grid.ColumnSpan="2" ContentSource="SelectedContent" Margin="4" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        <Border x:Name="ContentBorder" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,72,4,4" Background="{DynamicResource TextBox.Background}" BorderThickness="1,1,0,0" BorderBrush="{DynamicResource TextBox.Static.BorderTL}">
+                            <Border x:Name="ContentBorderBR" BorderThickness="0,0,1,1" Background="{DynamicResource TextBox.Background}" BorderBrush="{DynamicResource TextBox.Static.BorderBR}">
+                                <ContentPresenter x:Name="PART_SelectedContentHost" Grid.Row="1" Grid.ColumnSpan="2" ContentSource="SelectedContent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
                         </Border>
-                        <Button x:Name="NewTabButton" Grid.Column="1" Style="{DynamicResource NewTabButton}" Click="newTabButton_Click"/>
+                        <StackPanel Orientation="Horizontal" Margin="32,2,0,0">
+                            <TabPanel x:Name="headerPanel" Margin="4,0,0,-2" Visibility="Visible" IsItemsHost="true" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+                            <Button x:Name="NewTabButton" Grid.Column="1" Style="{DynamicResource NewTabButton}" Click="newTabButton_Click"/>
+                        </StackPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>
-                        <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}" Value="1">
-                            <Setter TargetName="RowDefinition0" Property="Height" Value="0" />
-                            <Setter TargetName="headerPanel" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}" Value="0">
-                            <Setter TargetName="RowDefinition0" Property="Height" Value="0" />
-                            <Setter TargetName="headerPanel" Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
