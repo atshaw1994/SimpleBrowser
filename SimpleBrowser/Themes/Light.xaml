@@ -33,6 +33,21 @@
     <SolidColorBrush x:Key="Button.Background.Disabled" Color="#F5F5F5"/>
     <SolidColorBrush x:Key="Button.Border.Disabled" Color="#CCCEDB"/>
 
+    <SolidColorBrush x:Key="CheckBox.Background" Color="#FEFEFE"/>
+    <SolidColorBrush x:Key="CheckBox.Foreground" Color="#1E1E1E"/>
+    <SolidColorBrush x:Key="CheckBox.Glyph" Color="#1E1E1E"/>
+    <SolidColorBrush x:Key="CheckBox.Border" Color="#717171"/>
+    <SolidColorBrush x:Key="CheckBox.Background.MouseOver" Color="#F3F9FF"/>
+    <SolidColorBrush x:Key="CheckBox.Border.MouseOver" Color="#3399FF"/>
+    <SolidColorBrush x:Key="CheckBox.Background.Pressed" Color="#007ACC"/>
+    <SolidColorBrush x:Key="CheckBox.Border.Pressed" Color="#007ACC"/>
+    <SolidColorBrush x:Key="CheckBox.Background.Defaulted" Color="#FDF4BF"/>
+    <SolidColorBrush x:Key="CheckBox.Border.Defaulted" Color="#3399FF"/>
+    <SolidColorBrush x:Key="CheckBox.Foreground.Disabled" Color="#A2A4A5"/>
+    <SolidColorBrush x:Key="CheckBox.Glyph.Disabled" Color="#A2A4A5"/>
+    <SolidColorBrush x:Key="CheckBox.Background.Disabled" Color="#F6F6F6"/>
+    <SolidColorBrush x:Key="CheckBox.Border.Disabled" Color="#C6C6C6"/>
+
     <SolidColorBrush x:Key="TabItem.Static.Border" Color="#80738393"/>
     <SolidColorBrush x:Key="TabItem.MouseOver.Background" Color="#FFC9DEF5"/>
     <SolidColorBrush x:Key="TabItem.MouseOver.Border" Color="#879BB3"/>
