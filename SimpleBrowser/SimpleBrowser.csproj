@@ -12,7 +12,6 @@
   <ItemGroup>
     <None Remove="Bookmarks.xml" />
     <None Remove="History.xml" />
-    <None Remove="LoadingWebPage.png" />
     <None Remove="SimpleBrowser.ico" />
   </ItemGroup>
 
@@ -28,7 +27,6 @@
     <Content Include="History.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="LoadingWebPage.png" />
     <Resource Include="SimpleBrowser.ico" />
   </ItemGroup>
 
