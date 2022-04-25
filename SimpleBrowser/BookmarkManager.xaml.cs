@@ -163,7 +163,7 @@ namespace SimpleBrowser
 			foreach (XmlNode node in HistoryXML.DocumentElement!.ChildNodes)
 			{
 				ListBoxItem newHistoryItem = new() { Content = $"{node.Attributes![0].InnerText}, {node.Attributes![1].InnerText},  {node.Attributes![2].InnerText}" };
-				newHistoryItem.MouseDoubleClick -= HistoryItem_MouseDoubleClick;
+				newHistoryItem.MouseDoubleClick += HistoryItem_MouseDoubleClick;
 				HistoryDisplay.Items.Add(newHistoryItem);
 			}
 		}
@@ -208,7 +208,13 @@ namespace SimpleBrowser
 		}
         private void HistoryItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+			if (Application.Current.MainWindow is MainWindow mainWindow &&
+				mainWindow.selectedBrowser is not null &&
+				sender is ListBoxItem selectedItem &&
+				selectedItem.Content is string content)
+			{
+				mainWindow.selectedBrowser.Load(content[(content.ToString()!.IndexOf(',') + 2)..]);
+			}
 		}
 		private void BookmarkItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
