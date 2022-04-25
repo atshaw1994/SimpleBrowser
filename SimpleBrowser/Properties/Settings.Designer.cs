@@ -34,5 +34,41 @@ namespace SimpleBrowser.Properties {
                 this["HomeURL"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int StartupMode {
+            get {
+                return ((int)(this["StartupMode"]));
+            }
+            set {
+                this["StartupMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Theme {
+            get {
+                return ((int)(this["Theme"]));
+            }
+            set {
+                this["Theme"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowBookmarkBar {
+            get {
+                return ((bool)(this["ShowBookmarkBar"]));
+            }
+            set {
+                this["ShowBookmarkBar"] = value;
+            }
+        }
     }
 }

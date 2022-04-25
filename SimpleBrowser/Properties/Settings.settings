@@ -5,5 +5,14 @@
     <Setting Name="HomeURL" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://www.google.com/</Value>
     </Setting>
+    <Setting Name="StartupMode" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Theme" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ShowBookmarkBar" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

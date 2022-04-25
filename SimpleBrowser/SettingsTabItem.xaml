@@ -5,21 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SimpleBrowser"
              mc:Ignorable="d" 
-             HorizontalAlignment="Center">
+             Loaded="SettingsTabItem_Loaded"
+             HorizontalAlignment="Center" Unloaded="UserControl_Unloaded">
     <Border Background="{DynamicResource Global.Background}" BorderBrush="{DynamicResource BaseButton.Border}" BorderThickness="1" CornerRadius="6">
         <ScrollViewer>
-            <StackPanel Margin="8">
-                <StackPanel Orientation="Horizontal" Margin="0,8" HorizontalAlignment="Center">
-                    <TextBlock Text="Home Page: " VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
-                    <TextBox Text="http://www.google.com" Width="250" Style="{DynamicResource TextBoxStyle}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="8" HorizontalAlignment="Center">
-                    <TextBlock Text="Theme: " VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
-                    <ComboBox x:Name="ThemeSelection" Text="Dark" IsEditable="False" SelectedIndex="0" Style="{DynamicResource ComboBoxStyle}" SelectionChanged="ThemeChanged">
-                        <ComboBoxItem Content="Dark"/>
-                        <ComboBoxItem Content="Light"/>
+            <StackPanel Margin="16,16,0,16">
+                <StackPanel Orientation="Horizontal" Margin="0,8">
+                    <TextBlock Text="On Startup" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
+                    <ComboBox x:Name="StartupSelection" Text="Dark" IsEditable="False" SelectedIndex="0" Style="{DynamicResource ComboBoxStyle}" SelectionChanged="StartupSelectionChanged">
+                        <ComboBoxItem Content="Homepage"/>
+                        <ComboBoxItem Content="New Tab Page"/>
+                        <ComboBoxItem Content="Blank"/>
                     </ComboBox>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,8">
+                    <TextBlock Text="Home Page" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
+                    <TextBox x:Name="HomeURLTextBox" Text="http://www.google.com" Width="250" Style="{DynamicResource TextBoxStyle}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,8">
+                    <TextBlock Text="Theme" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}"/>
+                    <ComboBox x:Name="ThemeSelection" Text="Light" Width="60" IsEditable="False" SelectedIndex="0" Style="{DynamicResource ComboBoxStyle}" SelectionChanged="ThemeChanged">
+                        <ComboBoxItem Content="Light"/>
+                        <ComboBoxItem Content="Dark"/>
+                    </ComboBox>
+                </StackPanel>
+                <CheckBox x:Name="ShowBookmarkBar" IsChecked="True" Content="Show Bookmark Bar" Checked="ShowBookmarkBar_CheckedChanged" Unchecked="ShowBookmarkBar_CheckedChanged"/>
             </StackPanel>
         </ScrollViewer>
     </Border>

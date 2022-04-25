@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace SimpleBrowser
 {
@@ -20,11 +21,55 @@ namespace SimpleBrowser
     /// </summary>
     public partial class SettingsTabItem : UserControl
     {
-        public SettingsTabItem() => InitializeComponent();
+        private readonly MainWindow _mainWindow;
+
+        public SettingsTabItem()
+        {
+            _mainWindow = (MainWindow)Application.Current.MainWindow;
+            InitializeComponent();
+        }
+        public SettingsTabItem(MainWindow mainWindow)
+        {
+            _mainWindow = mainWindow;
+            InitializeComponent();
+        }
+        private void SettingsTabItem_Loaded(object sender, RoutedEventArgs e) => LoadSettings();
+
+        private void LoadSettings()
+        {
+            StartupSelection.SelectedIndex = Properties.Settings.Default.StartupMode;
+            HomeURLTextBox.Text = Properties.Settings.Default.HomeURL;
+            ThemeSelection.SelectedIndex = Properties.Settings.Default.Theme;
+            ShowBookmarkBar.IsChecked = Properties.Settings.Default.ShowBookmarkBar;
+        }
 
         private void ThemeChanged(object sender, SelectionChangedEventArgs e)
         {
-            Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\{(ThemeSelection.SelectedItem as ComboBoxItem)!.Content}.xaml", UriKind.Relative);
+            if (ThemeSelection is not null && ThemeSelection.SelectedItem is ComboBoxItem item && item.Content is not null)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\{item.Content}.xaml", UriKind.Relative);
+                Properties.Settings.Default.Theme = ThemeSelection.SelectedIndex;
+            }
+            Properties.Settings.Default.Save();
+        }
+
+        private void ShowBookmarkBar_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            if(ShowBookmarkBar.IsChecked == true) _mainWindow.BookmarkBar_Row.Height = new GridLength(24);
+            else _mainWindow.BookmarkBar_Row.Height = new GridLength(0);
+            Properties.Settings.Default.ShowBookmarkBar = ShowBookmarkBar.IsChecked == true;
+            Properties.Settings.Default.Save();
+        }
+
+        private void StartupSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Properties.Settings.Default.StartupMode = StartupSelection.SelectedIndex;
+            Properties.Settings.Default.Save();
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }

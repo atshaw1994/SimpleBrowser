@@ -33,21 +33,31 @@ namespace SimpleBrowser
         private bool SelectedBrowser_IsLoading = false;
         private readonly List<Bookmark> BookmarkList;
         private readonly XmlDocument doc = new();
+        private int StartupMode;
+        private string HomePage;
 
         public MainWindow()
         {
             InitializeComponent();
             BookmarkList = new List<Bookmark>();
+            StartupMode = 0;
+            HomePage = "";
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadSettings();
+            LoadBookmarks();
             baseTabControl.Items.Clear();
             NewTabButton_Click(sender, e);
             baseTabControl.SelectedIndex = 0;
             if (baseTabControl.Items[0] is TabItem tabItem && tabItem.Content is ChromiumWebBrowser browser)
                 selectedBrowser = browser;
-            LoadBookmarks();
-
+            if (selectedBrowser is not null)
+            {
+                if (StartupMode == 0) selectedBrowser.Address = HomePage; // Home Page
+                if (StartupMode == 1) selectedBrowser.Address = "about:blank"; // New Tab Page
+                else if (StartupMode == 2) selectedBrowser.Address = "about:blank"; // Blank
+            }
         }
         private void Window_Deactivated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Inactive");
         private void Window_Activated(object sender, EventArgs e) => CaptionBar_Border.Background = new SolidColorBrush(Colors.Transparent);
@@ -193,6 +203,17 @@ namespace SimpleBrowser
                 BookmarkBarStackPanel.Children.Add(newBookmarkBarButton);
             }
         }
+        private void LoadSettings()
+        {
+            StartupMode = Properties.Settings.Default.StartupMode;
+            HomePage = Properties.Settings.Default.HomeURL;
+            if (Properties.Settings.Default.Theme == 0)
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\Light.xaml", UriKind.Relative);
+            else
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\Dark.xaml", UriKind.Relative);
+            BookmarkBar_Row.Height = Properties.Settings.Default.ShowBookmarkBar ? new GridLength(24) : new GridLength(0);
+        }
+
         private bool IsCurrentPageBookmarked(string URL)
         {
             foreach (Bookmark bookmark in BookmarkList)
@@ -389,7 +410,7 @@ namespace SimpleBrowser
         }
         private void Menu_Settings_Click(object sender, RoutedEventArgs e)
         {
-            TabItem newTab = new() { Content = new SettingsTabItem(), Header = "Settings"};
+            TabItem newTab = new() { Content = new SettingsTabItem(this), Header = "Settings"};
             baseTabControl.SelectedIndex = baseTabControl.Items.Add(newTab);
             MenuButton.IsChecked = false;
         }
