@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:simplebrowser="clr-namespace:SimpleBrowser"
+        xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mc:Ignorable="d"
         Icon="\SimpleBrowser.ico"
         Loaded="Window_Loaded"
@@ -50,14 +51,6 @@
                         <Path Data="M17,9 L26,18 M17,18 L26,9" Width="45" Height="30" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
                     </Button>
                 </Grid>
-                <TabControl x:Name="baseTabControl" Grid.RowSpan="3" IsSynchronizedWithCurrentItem="True" SelectionChanged="TabChanged">
-                    <TabItem Header="Gooagagsdgsdagsdgasgsadggle">
-                        <Border Background="Red"/>
-                    </TabItem>
-                    <TabItem Header="Yahoo">
-                        <Border Background="MediumPurple"/>
-                    </TabItem>
-                </TabControl>
                 <Grid x:Name="ButtonBar" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="32"/>
@@ -129,7 +122,13 @@
                                 </ContextMenu>
                             </StackPanel.ContextMenu>
                         </StackPanel>
-                        
+                        <TabControl x:Name="baseTabControl" Grid.Row="1" IsSynchronizedWithCurrentItem="True" SelectionChanged="TabChanged">
+                            <TabItem Header="Google">
+                                <cefSharp:ChromiumWebBrowser Address="Htts://www.google.com/" />
+                            </TabItem>
+                            <TabItem Header="Yahoo"/>
+                            <TabItem Header="Bing"/>
+                        </TabControl>
                     </Grid>
                 </Grid>
             </Grid>

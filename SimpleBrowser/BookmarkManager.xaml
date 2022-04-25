@@ -39,8 +39,8 @@
             </Button>
         </Grid>
         <Grid x:Name="ContentArea" Grid.Row="1">
-            <TabControl x:Name="baseTabControl" Style="{DynamicResource TabControlStyle}">
-                <TabItem Header="Bookmarks" Style="{DynamicResource TabItemStyle}">
+            <TabControl x:Name="baseTabControl">
+                <TabItem Header="Bookmarks">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -66,7 +66,7 @@
                         </DockPanel>
                     </Grid>
                 </TabItem>
-                <TabItem Header="History" Style="{DynamicResource TabItemStyle}">
+                <TabItem Header="History">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>

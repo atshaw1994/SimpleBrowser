@@ -32,14 +32,12 @@ namespace SimpleBrowser
         internal ChromiumWebBrowser? selectedBrowser;
         private bool SelectedBrowser_IsLoading = false;
         private readonly List<Bookmark> BookmarkList;
-        private readonly List<HistoryItem> HistoryList;
         private readonly XmlDocument doc = new();
 
         public MainWindow()
         {
             InitializeComponent();
             BookmarkList = new List<Bookmark>();
-            HistoryList = new List<HistoryItem>();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -403,7 +401,6 @@ namespace SimpleBrowser
         {
             if (URL != "")
             {
-                var client = new WebClient();
                 return new BitmapImage(new Uri($"http://www.google.com/s2/favicons?domain={URL}"));
             }
             return (BitmapImage)FindResource("\\LoadingWebPage.png");
