@@ -64,6 +64,7 @@
                     <Button x:Name="BackButton" Click="BackButton_Click" Style="{DynamicResource BackButtonStyle}"/>
                     <Button x:Name="ForwardButton" Click="ForwardButton_Click" Style="{DynamicResource ForwardButtonStyle}" Grid.Column="1"/>
                     <Button x:Name="RefreshButton" Click="RefreshButton_Click" Style="{DynamicResource RefreshButtonStyle}" Grid.Column="2"/>
+                    <Border x:Name="OmniBarProgressBar" Width="0" Visibility="Collapsed" HorizontalAlignment="Left" Margin="0,9,0,9" Grid.Column="3" Background="{DynamicResource Button.Border.Defaulted}"/>
                     <ComboBox x:Name="Omnibar" IsEditable="True" Text="https://www.google.com/" Style="{DynamicResource ComboBoxStyle}" Grid.Column="3" KeyDown="Omnibar_KeyDown" />
                     <Button x:Name="HomeButton" Click="HomeButton_Click" Style="{DynamicResource HomeButtonStyle}" Grid.Column="4"/>
                     <ToggleButton x:Name="BookmarkButton" Style="{DynamicResource BookmarkButtonStyle}" Grid.Column="5"/>
