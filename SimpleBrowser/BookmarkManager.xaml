@@ -39,7 +39,7 @@
             </Button>
         </Grid>
         <Grid x:Name="ContentArea" Grid.Row="1">
-            <TabControl x:Name="baseTabControl">
+            <TabControl x:Name="baseTabControl" Style="{DynamicResource BookmarkManagerTabControl}">
                 <TabItem Header="Bookmarks">
                     <Grid>
                         <Grid.RowDefinitions>
