@@ -296,7 +296,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" CornerRadius="4,0,0,4" Background="{DynamicResource TextBox.Background}" BorderThickness="1,1,0,1" BorderBrush="{DynamicResource Button.Border}">
+                    <Border x:Name="Border" CornerRadius="2,0,0,2" Background="{DynamicResource TextBox.Background}" BorderThickness="1,1,0,1" BorderBrush="{DynamicResource Button.Border}">
                         <TextBlock Text="&#xE72B;" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource Button.Foreground}" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -318,7 +318,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" CornerRadius="0,4,4,0" BorderThickness="0,1,1,1" Background="{DynamicResource Button.Background}" BorderBrush="{DynamicResource Button.Border}">
+                    <Border x:Name="Border" CornerRadius="0,2,2,0" BorderThickness="0,1,1,1" Background="{DynamicResource Button.Background}" BorderBrush="{DynamicResource Button.Border}">
                         <TextBlock Text="&#xE72A;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Button.Foreground}" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -341,7 +341,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" CornerRadius="4,0,0,4" BorderThickness="1,1,0,1" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                    <Border x:Name="Border" CornerRadius="2,0,0,2" BorderThickness="1,1,0,1" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
                         <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -370,7 +370,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" CornerRadius="4,0,0,4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,0,1">
+                    <Border x:Name="Border" CornerRadius="2,0,0,2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,0,1">
                         <TextBlock Text="&#xE80F;" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource Button.Foreground}" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -432,7 +432,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Border x:Name="Border" CornerRadius="0,4,4,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1,1,1">
+                    <Border x:Name="Border" CornerRadius="0,2,2,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1,1,1">
                         <TextBlock Text="&#xE90F;" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource Button.Foreground}" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -468,7 +468,7 @@
     </Style>
 
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
-        <Border x:Name="border" CornerRadius="0,4,4,0">
+        <Border x:Name="border" CornerRadius="0,2,2,0">
             <TextBlock x:Name="Glyph" Text="&#xE70D;" Foreground="{DynamicResource Button.Foreground}" FontSize="8" FontFamily="Segoe MDL2 Assets" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Border>
         <ControlTemplate.Triggers>
@@ -496,7 +496,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <Border x:Name="outerBorder" CornerRadius="0,4,4,0" Grid.ColumnSpan="3" Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="0,1,1,1">
+                    <Border x:Name="outerBorder" CornerRadius="0,2,2,0" Grid.ColumnSpan="3" Background="{TemplateBinding Background}" BorderBrush="{DynamicResource TextBox.Static.Border}" BorderThickness="0,1,1,1">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
