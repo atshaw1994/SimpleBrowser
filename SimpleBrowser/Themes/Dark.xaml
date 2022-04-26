@@ -17,7 +17,7 @@
     <SolidColorBrush x:Key="CaptionButton.Close.Background" Color="Transparent" />
     <SolidColorBrush x:Key="CaptionButton.Close.Background.Hover" Color="#e81123" />
     <SolidColorBrush x:Key="CaptionButton.Close.Background.Pressed" Color="#f1707a" />
-    <SolidColorBrush x:Key="WindowMainPanel.Border" Color="#7Dffffff"/>
+    <SolidColorBrush x:Key="WindowMainPanel.Border" Color="#40ffffff"/>
     <SolidColorBrush x:Key="CaptionBar.Background.Active" Color="Transparent"/>
     <SolidColorBrush x:Key="CaptionBar.Background.Inactive" Color="#3b3f47"/>
 
