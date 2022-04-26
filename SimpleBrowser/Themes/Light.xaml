@@ -30,7 +30,7 @@
 
     <!--#region Button-->
 
-    <SolidColorBrush x:Key="Button.Background" Color="#60ffffff"/>
+    <SolidColorBrush x:Key="Button.Background" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="Button.Foreground" Color="#1E1E1E"/>
     <SolidColorBrush x:Key="Button.Border" Color="#738393"/>
     
@@ -81,7 +81,7 @@
 
     <!--#region TabControl-->
 
-    <SolidColorBrush x:Key="TabControl.Background" Color="Transparent"/>
+    <SolidColorBrush x:Key="TabControl.Background" Color="White"/>
     <SolidColorBrush x:Key="TabControl.Border" Color="#3399FF"/>
     <SolidColorBrush x:Key="TabControl.Foreground" Color="#1E1E1E"/>
 
@@ -133,9 +133,9 @@
 
     <!--#region Textbox-->
 
-    <SolidColorBrush x:Key="TextBox.Background" Color="#F1F1F1"/>
+    <SolidColorBrush x:Key="TextBox.Background" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="TextBox.Foreground" Color="#1E1E1E"/>
-    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#1E1E1E"/>
+    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#738393"/>
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#7EB4EA"/>
     <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#569DE5"/>
     
