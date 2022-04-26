@@ -158,9 +158,10 @@
                         </Grid.ColumnDefinitions>
                         <Border x:Name="mainBorder" Margin="0,0,0,3" Grid.ColumnSpan="3" Background="{TemplateBinding Background}" />
                         <Border x:Name="innerBorder" CornerRadius="2,2,0,0" Grid.ColumnSpan="3" Background="{DynamicResource TabItem.Background.Selected}" BorderBrush="{DynamicResource TabItem.Border.Selected}" BorderThickness="1,4,1,0" Opacity="0" />
-                        <Border x:Name="FaviconBorder">
+                        <Grid>
+                            <Image x:Name="HeaderFavicon"/>
                             <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" FontSize="12" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        </Border>
+                        </Grid>
                         <TextBlock x:Name="contentPresenter" Grid.Column="1" TextTrimming="WordEllipsis" MaxWidth="100" Text="{TemplateBinding Header}" Focusable="False" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" />
                         <Button x:Name="CloseTabButton" Grid.Column="2" Visibility="Collapsed" Click="CloseTabButton_Click" Style="{DynamicResource CloseTabButton}" />
                     </Grid>
