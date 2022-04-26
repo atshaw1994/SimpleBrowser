@@ -456,6 +456,26 @@
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="Border" CornerRadius="2" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
                         <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                        <Border.ContextMenu>
+                            <ContextMenu>
+                                <Border BorderThickness="1" BorderBrush="{DynamicResource Button.Border}">
+                                    <StackPanel Orientation="Vertical">
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_NewTab" Header="New Tab" />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_NewWindow" Header="New Window"  />
+                                        <Separator />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_History" Header="History"  />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_Bookmarks" Header="Bookmarks"  />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_Downloads" Header="Downloads"  />
+                                        <Separator />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_ZoomIn" Header="Zoom In"  />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_ZoomOut" Header="Zoom Out"  />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_ZoomReset" Header="Zoom Reset"  />
+                                        <Separator />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_Settings" Header="Settings"  />
+                                    </StackPanel>
+                                </Border>
+                            </ContextMenu>
+                        </Border.ContextMenu>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
