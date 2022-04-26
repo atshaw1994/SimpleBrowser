@@ -1,33 +1,118 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <SolidColorBrush x:Key="Global.Background" Color="#24262b"/>
-    <SolidColorBrush x:Key="Global.Foreground" Color="#60ffffff"/>
-    <SolidColorBrush x:Key="Global.Foreground.Stop" Color="#90FF0000"/>
-    <SolidColorBrush x:Key="WindowMainPanel.Border" Color="#7Dffffff"/>
-    <SolidColorBrush x:Key="MouseOverOverlayBackgroundBrush" Color="#33ffffff" />
-    <SolidColorBrush x:Key="PressedOverlayBackgroundBrush" Color="#44ffffff" />
-    <SolidColorBrush x:Key="MouseOverWindowCloseButtonBackgroundBrush" Color="#e81123" />
-    <SolidColorBrush x:Key="PressedWindowCloseButtonBackgroundBrush" Color="#f1707a" />
-    <SolidColorBrush x:Key="Caption.Active" Color="#24262b"/>
-    <SolidColorBrush x:Key="Caption.Inactive" Color="#3b3f47"/>
 
-    <SolidColorBrush x:Key="Button.Background" Color="#3F3F46"/>
+    <!--#region Global Resources-->
+
+    <SolidColorBrush x:Key="Global.Background" Color="#24262b"/>
+    <SolidColorBrush x:Key="BookmarkManager.Foreground" Color="White"/>
+
+    <!--#endregion-->
+
+    <!--#region CaptionBar-->
+
+    <SolidColorBrush x:Key="CaptionButton.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="CaptionButton.Foreground" Color="White"/>
+    <SolidColorBrush x:Key="CaptionButton.Background.Hover" Color="#33ffffff" />
+    <SolidColorBrush x:Key="CaptionButton.Background.Pressed" Color="#44ffffff" />
+    <SolidColorBrush x:Key="CaptionButton.Close.Background" Color="Transparent" />
+    <SolidColorBrush x:Key="CaptionButton.Close.Background.Hover" Color="#e81123" />
+    <SolidColorBrush x:Key="CaptionButton.Close.Background.Pressed" Color="#f1707a" />
+    <SolidColorBrush x:Key="WindowMainPanel.Border" Color="#7Dffffff"/>
+    <SolidColorBrush x:Key="CaptionBar.Background.Active" Color="Transparent"/>
+    <SolidColorBrush x:Key="CaptionBar.Background.Inactive" Color="#3b3f47"/>
+
+    <!--#endregion-->
+
+    <!--#region Button-->
+
+    <SolidColorBrush x:Key="Button.Background" Color="#333337"/>
     <SolidColorBrush x:Key="Button.Foreground" Color="#FFF1F1F1"/>
     <SolidColorBrush x:Key="Button.Border" Color="#555555"/>
+
     <SolidColorBrush x:Key="Button.Background.MouseOver" Color="#525258"/>
     <SolidColorBrush x:Key="Button.Border.MouseOver" Color="#007ACC"/>
+
     <SolidColorBrush x:Key="Button.Background.Pressed" Color="#007ACC"/>
     <SolidColorBrush x:Key="Button.Border.Pressed" Color="#007ACC"/>
+
     <SolidColorBrush x:Key="Button.Background.Defaulted" Color="#3F3F46"/>
-    <SolidColorBrush x:Key="Button.Border.Defaulted" Color="#007ACC"/>
+    <SolidColorBrush x:Key="Button.Border.Defaulted" Color="#3399FF"/>
+
     <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="#10ffffff"/>
     <SolidColorBrush x:Key="Button.Background.Disabled" Color="#05ffffff"/>
     <SolidColorBrush x:Key="Button.Border.Disabled" Color="#10ffffff"/>
 
-    <SolidColorBrush x:Key="CheckBox.Background" Color="#3F3F46"/>
-    <SolidColorBrush x:Key="CheckBox.Foreground" Color="#FFF1F1F1"/>
-    <SolidColorBrush x:Key="CheckBox.Glyph" Color="#1E1E1E"/>
-    <SolidColorBrush x:Key="CheckBox.Border" Color="#555555"/>
+    <!--#endregion-->
+
+    <!--#region CloseTabButton-->
+
+    <SolidColorBrush x:Key="CloseTabButton.Glyph" Color="#F1F1F1"/>
+    <SolidColorBrush x:Key="CloseTabButton.Glyph.Hover" Color="#90FF0000"/>
+
+    <!--#endregion-->
+
+    <!--#region NewTabButton-->
+
+    <SolidColorBrush x:Key="NewTabButton.Glyph" Color="#F1F1F1"/>
+    <SolidColorBrush x:Key="NewTabButton.Glyph.Hover" Color="#90FF0000"/>
+
+    <!--#endregion-->
+
+    <!--#region TabItem-->
+
+    <SolidColorBrush x:Key="TabItem.Background" Color="Transparent"/>
+    <SolidColorBrush x:Key="TabItem.Border" Color="#007ACC"/>
+    <SolidColorBrush x:Key="TabItem.Foreground" Color="#A2A4A5"/>
+
+    <SolidColorBrush x:Key="TabItem.Background.Hover" Color="#525258"/>
+    <SolidColorBrush x:Key="TabItem.Border.Hover" Color="#80738393"/>
+    <SolidColorBrush x:Key="TabItem.Foreground.Hover" Color="#A2A4A5"/>
+
+    <SolidColorBrush x:Key="TabItem.Background.Selected" Color="#353539"/>
+    <SolidColorBrush x:Key="TabItem.Border.Selected" Color="#007ACC"/>
+    <SolidColorBrush x:Key="TabItem.Foreground.Selected" Color="#F1F1F1"/>
+
+    <!--#endregion-->
+
+    <!--#region TabControl-->
+
+    <SolidColorBrush x:Key="TabControl.Background" Color="Transparent"/>
+    <SolidColorBrush x:Key="TabControl.Border" Color="#007ACC"/>
+    <SolidColorBrush x:Key="TabControl.Foreground" Color="#A2A4A5"/>
+
+    <SolidColorBrush x:Key="TabControl.Background.Hover" Color="#525258"/>
+    <SolidColorBrush x:Key="TabControl.Border.Hover" Color="#80738393"/>
+    <SolidColorBrush x:Key="TabControl.Foreground.Hover" Color="#A2A4A5"/>
+
+    <SolidColorBrush x:Key="TabControl.Background.Selected" Color="#353539"/>
+    <SolidColorBrush x:Key="TabControl.Border.Selected" Color="#007ACC"/>
+    <SolidColorBrush x:Key="TabControl.Foreground.Selected" Color="#F1F1F1"/>
+
+    <!--#endregion-->
+
+    <!--#region TabControl (BookmarkManager Style)-->
+
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Background" Color="White"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Border" Color="#3399FF"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Foreground" Color="#1E1E1E"/>
+
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Background.Hover" Color="#C9DEF5"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Border.Hover" Color="#80738393"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Foreground.Hover" Color="#A2A4A5"/>
+
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Background.Selected" Color="#ECECF0"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Border.Selected" Color="#007ACC"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Foreground.Selected" Color="#1E1E1E"/>
+
+    <!--#endregion-->
+
+
+    <!--#region CheckBox-->
+
+    <SolidColorBrush x:Key="CheckBox.Background" Color="#1E1E1E"/>
+    <SolidColorBrush x:Key="CheckBox.Foreground" Color="#F1F1F1"/>
+    <SolidColorBrush x:Key="CheckBox.Glyph" Color="#F1F1F1"/>
+    <SolidColorBrush x:Key="CheckBox.Border" Color="#F1F1F1"/>
     <SolidColorBrush x:Key="CheckBox.Background.MouseOver" Color="#525258"/>
     <SolidColorBrush x:Key="CheckBox.Border.MouseOver" Color="#007ACC"/>
     <SolidColorBrush x:Key="CheckBox.Background.Pressed" Color="#007ACC"/>
@@ -35,25 +120,20 @@
     <SolidColorBrush x:Key="CheckBox.Background.Defaulted" Color="#3F3F46"/>
     <SolidColorBrush x:Key="CheckBox.Border.Defaulted" Color="#007ACC"/>
     <SolidColorBrush x:Key="CheckBox.Foreground.Disabled" Color="#10ffffff"/>
+    <SolidColorBrush x:Key="CheckBox.Glyph.Disabled" Color="#10ffffff"/>
     <SolidColorBrush x:Key="CheckBox.Background.Disabled" Color="#05ffffff"/>
     <SolidColorBrush x:Key="CheckBox.Border.Disabled" Color="#10ffffff"/>
 
-    <SolidColorBrush x:Key="BaseButton.Background" Color="#3F3F46"/>
-    <SolidColorBrush x:Key="BaseButton.Foreground" Color="#FFF1F1F1"/>
-    <SolidColorBrush x:Key="BaseButton.Border" Color="#555555"/>
-    <SolidColorBrush x:Key="BaseButton.Border.MouseOver" Color="#007ACC"/>
-    <SolidColorBrush x:Key="BaseButton.Pressed" Color="#007ACC"/>
+    <!--#endregion-->
 
-    <SolidColorBrush x:Key="TabItem.Static.Border" Color="#80ffffff"/>
-    <SolidColorBrush x:Key="TabItem.Hover.Background" Color="#2d2e33"/>
-    <SolidColorBrush x:Key="TabItem.MouseOver.Border" Color="#FF3E3E40"/>
-    <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#353539"/>
-    <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#60ffffff"/>
+    <!--#region Textbox-->
 
     <SolidColorBrush x:Key="TextBox.Background" Color="#333337"/>
     <SolidColorBrush x:Key="TextBox.Foreground" Color="#F1F1F1"/>
-    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#434346"/>
+    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#738393"/>
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#7EB4EA"/>
     <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#569DE5"/>
+
+    <!--#endregion-->
 
 </ResourceDictionary>

@@ -13,7 +13,6 @@
         Activated="Window_Activated"
         WindowStyle="None"
         Background="Transparent"
-        Foreground="{DynamicResource Global.Foreground}"
         Title="SimpleBrowser" 
         Height="450"
         Width="800">
@@ -39,16 +38,16 @@
                     <Border x:Name="CaptionBar_Border" Grid.ColumnSpan="5"/>
                     <Image Source="{Binding Icon,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}" Width="24" Height="24"/>
                     <Button x:Name="CaptionBar_MinimizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="2" Click="CaptionBar_MinimizeButton_Click">
-                        <Path Data="M18 14 h9" Width="45" Height="29" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                        <Path Data="M18 14 h9" Width="45" Height="29" Stroke="{DynamicResource CaptionButton.Foreground}" StrokeThickness="1"/>
                     </Button>
                     <Button x:Name="CaptionBar_MaximizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="3" Click="CaptionBar_RestoreButton_Click">
-                        <Path Data="M17,9 h9 v9 h-9 Z" Width="45" Height="29" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                        <Path Data="M17,9 h9 v9 h-9 Z" Width="45" Height="29" Stroke="{DynamicResource CaptionButton.Foreground}" StrokeThickness="1"/>
                     </Button>
                     <Button x:Name="CaptionBar_RestoreButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="3" Visibility="Collapsed" Click="CaptionBar_RestoreButton_Click">
-                        <Path Data="M 17,11 h7 v7 h-7Z M19,11 v-2 h7 v7 h-2" Width="45" Height="30" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                        <Path Data="M 17,11 h7 v7 h-7Z M19,11 v-2 h7 v7 h-2" Width="45" Height="30" Stroke="{DynamicResource CaptionButton.Foreground}" StrokeThickness="1"/>
                     </Button>
                     <Button x:Name="CaptionBar_CloseButton" Style="{DynamicResource TitleBarCloseButtonStyle}" Grid.Column="4" Click="CaptionBar_CloseButton_Click">
-                        <Path Data="M17,9 L26,18 M17,18 L26,9" Width="45" Height="30" Stroke="{DynamicResource Global.Foreground}" StrokeThickness="1"/>
+                        <Path Data="M17,9 L26,18 M17,18 L26,9" Width="45" Height="30" Stroke="{DynamicResource CaptionButton.Foreground}" StrokeThickness="1"/>
                     </Button>
                 </Grid>
                 <Grid x:Name="ButtonBar" Grid.Row="1">
@@ -77,11 +76,11 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="New Bookmark" Foreground="{DynamicResource Global.Foreground}" FontSize="24"/>
+                                <TextBlock Text="New Bookmark" Foreground="{DynamicResource Button.Foreground}" FontSize="24"/>
                                 <Button x:Name="BookmarkButtonPopup_CloseBookmarkButtonPopup" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{DynamicResource CloseTabButton}" Click = "BookmarkButtonPopup_CloseBookmarkButtonPopup_Click"/>
-                                <TextBlock Text="Title" Grid.Row = "1" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}" FontSize="16"/>
+                                <TextBlock Text="Title" Grid.Row = "1" VerticalAlignment="Center" Foreground="{DynamicResource Button.Foreground}" FontSize="16"/>
                                 <TextBox x:Name="BookmarkButtonPopup_TitleTextBox" Margin="42,0,0,0" Grid.Row="1" Style="{DynamicResource TextBoxStyle}"/>
-                                <TextBlock Text="URL" Grid.Row = "2" VerticalAlignment="Center" Foreground="{DynamicResource Global.Foreground}" FontSize="16"/>
+                                <TextBlock Text="URL" Grid.Row = "2" VerticalAlignment="Center" Foreground="{DynamicResource Button.Foreground}" FontSize="16"/>
                                 <TextBox x:Name="BookmarkButtonPopup_URLTextBox" Margin="42,0,0,0" Grid.Row="2" Style="{DynamicResource TextBoxStyle}"/>
                                 <Button x:Name="BookmarkButtonPopup_AddBookmarkButton" HorizontalAlignment="Right" Width="74" Height="24" Content="Add" Grid.Row="3" Style="{DynamicResource BaseButtonStyle}" Click="BookmarkButtonPopup_AddBookmarkButton_Click"/>
                             </Grid>

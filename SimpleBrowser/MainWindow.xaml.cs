@@ -59,8 +59,8 @@ namespace SimpleBrowser
                 else if (StartupMode == 2) selectedBrowser.Address = "about:blank"; // Blank
             }
         }
-        private void Window_Deactivated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Inactive");
-        private void Window_Activated(object sender, EventArgs e) => CaptionBar_Border.Background = new SolidColorBrush(Colors.Transparent);
+        private void Window_Deactivated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Inactive");
+        private void Window_Activated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Active");
 
         #region BorderlessMethods
 
