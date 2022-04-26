@@ -66,8 +66,8 @@
                     <Border x:Name="OmniBarProgressBar" Width="0" Visibility="Collapsed" HorizontalAlignment="Left" Margin="0,9,0,9" Grid.Column="3" Background="{DynamicResource Button.Border.Defaulted}" />
                     <ComboBox x:Name="Omnibar" IsEditable="True" Text="https://www.google.com/" Style="{DynamicResource OmniBarStyle}" Grid.Column="3" KeyDown="Omnibar_KeyDown" />
                     <Button x:Name="HomeButton" Click="HomeButton_Click" Style="{DynamicResource HomeButtonStyle}" Grid.Column="4" />
-                    <ToggleButton x:Name="BookmarkButton" Style="{DynamicResource BookmarkButtonStyle}" Grid.Column="5" />
-                    <Popup x:Name="BookmarkButton_Popup" AllowsTransparency="True" Width="250" Height="200" Opened="BookmarkButton_Popup_Opened" IsOpen="{Binding IsChecked, ElementName=BookmarkButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=BookmarkButton}">
+                    <ToggleButton x:Name="NewBookmarkButton" Style="{DynamicResource NewBookmarkButtonStyle}" Grid.Column="5" />
+                    <Popup x:Name="NewBookmarkPopup" AllowsTransparency="True" Width="250" Height="200" Opened="NewBookmarkButton_Popup_Opened"  IsOpen="{Binding IsChecked, ElementName=NewBookmarkButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=NewBookmarkButton}">
                         <Border BorderThickness="1" CornerRadius="6" Background="{DynamicResource Global.Background}" BorderBrush="{DynamicResource Button.Border}">
                             <Grid Margin="16">
                                 <Grid.RowDefinitions>
@@ -76,13 +76,35 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="New Bookmark" Foreground="{DynamicResource Button.Foreground}" FontSize="24" />
-                                <Button x:Name="BookmarkButtonPopup_CloseBookmarkButtonPopup" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{DynamicResource CloseTabButton}" Click = "BookmarkButtonPopup_CloseBookmarkButtonPopup_Click" />
+                                <TextBlock Text="Bookmark Added" Foreground="{DynamicResource Button.Foreground}" FontSize="24" />
+                                <Button x:Name="NewBookmarkPopup_CloseButton" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{DynamicResource CloseTabButton}" Click="NewBookmarkPopup_CloseButton_Click" />
                                 <TextBlock Text="Title" Grid.Row = "1" VerticalAlignment="Center" Foreground="{DynamicResource Button.Foreground}" FontSize="16" />
-                                <TextBox x:Name="BookmarkButtonPopup_TitleTextBox" Margin="42,0,0,0" Grid.Row="1" Style="{DynamicResource TextBoxStyle}" />
+                                <TextBox x:Name="NewBookmarkPopup_TitleTextBox" Margin="42,0,0,0" Grid.Row="1" Style="{DynamicResource TextBoxStyle}" />
                                 <TextBlock Text="URL" Grid.Row = "2" VerticalAlignment="Center" Foreground="{DynamicResource Button.Foreground}" FontSize="16" />
-                                <TextBox x:Name="BookmarkButtonPopup_URLTextBox" Margin="42,0,0,0" Grid.Row="2" Style="{DynamicResource TextBoxStyle}" />
-                                <Button x:Name="BookmarkButtonPopup_AddBookmarkButton" HorizontalAlignment="Right" Width="74" Height="24" Content="Add" Grid.Row="3" Style="{DynamicResource BaseButtonStyle}" Click="BookmarkButtonPopup_AddBookmarkButton_Click" />
+                                <TextBox x:Name="NewBookmarkPopup_URLTextBox" Margin="42,0,0,0" Grid.Row="2" Style="{DynamicResource TextBoxStyle}" />
+                                <Button x:Name="NewBookmarkPopup_LibraryButton" HorizontalAlignment="Left" Width="74" Height="24" Content="Library..." Grid.Row="3" Style="{DynamicResource BaseButtonStyle}" Click="NewBookmarkPopup_LibraryButton_Click"/>
+                                <Button x:Name="NewBookmarkPopup_AddButton" HorizontalAlignment="Right" Width="74" Height="24" Content="Add" Grid.Row="3" Style="{DynamicResource BaseButtonStyle}" Click="NewBookmarkPopup_AddButton_Click"/>
+                            </Grid>
+                        </Border>
+                    </Popup>
+                    <ToggleButton x:Name="EditBookmarkButton" Style="{DynamicResource EditBookmarkButtonStyle}" Grid.Column="5" />
+                    <Popup x:Name="EditBookmarkPopup" AllowsTransparency="True" Width="250" Height="200" Opened="EditBookmarkButton_Popup_Opened" IsOpen="{Binding IsChecked, ElementName=EditBookmarkButton}" StaysOpen="False" PlacementTarget="{Binding ElementName=EditBookmarkButton}">
+                        <Border BorderThickness="1" CornerRadius="6" Background="{DynamicResource Global.Background}" BorderBrush="{DynamicResource Button.Border}">
+                            <Grid Margin="16">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Edit Bookmark" Foreground="{DynamicResource Button.Foreground}" FontSize="24" />
+                                <Button x:Name="EditBookmarkPopup_CloseButton" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{DynamicResource CloseTabButton}" Click="EditBookmarkPopup_CloseButton_Click" />
+                                <TextBlock Text="Title" Grid.Row = "1" VerticalAlignment="Center" Foreground="{DynamicResource Button.Foreground}" FontSize="16" />
+                                <TextBox x:Name="EditBookmarkPopup_TitleTextBox" Margin="42,0,0,0" Grid.Row="1" Style="{DynamicResource TextBoxStyle}" />
+                                <TextBlock Text="URL" Grid.Row = "2" VerticalAlignment="Center" Foreground="{DynamicResource Button.Foreground}" FontSize="16" />
+                                <TextBox x:Name="EditBookmarkPopup_URLTextBox" Margin="42,0,0,0" Grid.Row="2" Style="{DynamicResource TextBoxStyle}" />
+                                <Button x:Name="EditBookmarkPopup_LibraryButton" HorizontalAlignment="Left" Width="74" Height="24" Content="Library..." Grid.Row="3" Style="{DynamicResource BaseButtonStyle}" Click="EditBookmarkPopup_LibraryButton_Click"/>
+                                <Button x:Name="EditBookmarkPopup_SaveButton" IsDefault="True" HorizontalAlignment="Right" Width="74" Height="24" Content="Save" Grid.Row="3" Style="{DynamicResource BaseButtonStyle}" Click="EditBookmarkPopup_SaveButton_Click" />
                             </Grid>
                         </Border>
                     </Popup>

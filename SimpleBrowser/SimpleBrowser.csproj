@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Bookmarks.xml" />
     <None Remove="History.xml" />
     <None Remove="SimpleBrowser.ico" />
   </ItemGroup>
@@ -21,9 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Bookmarks.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="History.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -39,6 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Bookmarks.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

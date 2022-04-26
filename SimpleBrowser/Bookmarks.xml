@@ -1,5 +1,6 @@
-﻿<Bookmarks>
-	<Bookmark Title="Google" URL="http://www.google.com" />
+﻿<?xml version="1.0"?>
+<Bookmarks>
+	<Bookmark Title="Google" URL="https://www.google.com/?gws_rd=ssl" />
 	<Bookmark Title="Yahoo!" URL="http://www.yahoo.com" />
 	<Bookmark Title="Bing" URL="http://www.bing.com" />
 	<Bookmark Title="Wiki - Wikipedia" URL="https://en.wikipedia.org/wiki/Wiki" />

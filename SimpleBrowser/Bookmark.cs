@@ -16,5 +16,15 @@ namespace SimpleBrowser
             this.Title = Title;
             this.URL = URL;
         }
+
+        public bool Equals(string Title = "", string URL = "")
+        {
+            return this.Title == Title && this.URL == URL;
+        }
+
+        public override bool Equals(object? other)
+        {
+            return other is not null && other is Bookmark item && Title == item.Title && URL == item.URL;
+        }
     }
 }

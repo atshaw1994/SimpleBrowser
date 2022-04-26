@@ -32,7 +32,8 @@ namespace SimpleBrowser
         internal ChromiumWebBrowser? selectedBrowser;
         private bool SelectedBrowser_IsLoading = false;
         private readonly List<Bookmark> BookmarkList;
-        private readonly XmlDocument doc = new();
+        private readonly XmlDocument BookmarkXml;
+        private readonly XmlDocument HistoryXml;
         private int StartupMode;
         private string HomePage;
 
@@ -42,6 +43,8 @@ namespace SimpleBrowser
             BookmarkList = new List<Bookmark>();
             StartupMode = 0;
             HomePage = "";
+            BookmarkXml = new();
+            HistoryXml = new();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -189,13 +192,9 @@ namespace SimpleBrowser
         private void LoadBookmarks()
         {
             BookmarkBarStackPanel.Children.Clear();
-            XmlDocument doc = new();
-            doc.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
-            foreach (XmlNode node in doc.DocumentElement!.ChildNodes)
-            { 
+            BookmarkXml.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+            foreach (XmlNode node in BookmarkXml.DocumentElement!.ChildNodes)
                 BookmarkList.Add(new Bookmark(node.Attributes![0].InnerText, node.Attributes[1]!.InnerText));
-            }
-
             foreach (Bookmark bookmark in BookmarkList)
             {
                 Button newBookmarkBarButton = new() { Content = bookmark.Title, Style = (Style)FindResource("BookmarkBarButtonStyle"), Tag = bookmark.URL };
@@ -214,14 +213,8 @@ namespace SimpleBrowser
             BookmarkBar_Row.Height = Properties.Settings.Default.ShowBookmarkBar ? new GridLength(24) : new GridLength(0);
         }
 
-        private bool IsCurrentPageBookmarked(string URL)
-        {
-            foreach (Bookmark bookmark in BookmarkList)
-                if (bookmark.URL == URL) return true;
-            return false;
-        }
         private void BookmarkBarButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load((sender as Button)!.Tag.ToString());
-
+        
         public void CloseTabButton()
         {
             // TODO: Make it close the tab where the button was clicked, instead of selected tab.
@@ -269,13 +262,8 @@ namespace SimpleBrowser
                         Title = $"{selectedBrowser.Title}  - SimpleBrowser";
                         (selectedBrowser.Parent as TabItem)!.Header = selectedBrowser.Title;
                         Omnibar.Text = selectedBrowser.Address;
-                        if (IsCurrentPageBookmarked(selectedBrowser.Address)) BookmarkButton.Content = new TextBlock() 
-                        { 
-                            Text = "\xE7C3", 
-                            FontSize = 11, 
-                            FontFamily = new FontFamily("Segoe MDL2 Assets"),
-                            Foreground = (SolidColorBrush)FindResource("Button.Foreground")
-                        };
+                        if (BookmarkExists(selectedBrowser.Address) is null) NewBookmarkButton.Visibility = Visibility.Visible;
+                        else EditBookmarkButton.Visibility = Visibility.Visible;
                         AddHistoryItem(selectedBrowser.Address, selectedBrowser.Title);
                     }
                 }
@@ -284,23 +272,23 @@ namespace SimpleBrowser
 
         private void AddHistoryItem(string PageURL, string PageTitle)
         {
-            doc.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+            HistoryXml.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
             Omnibar.Items.Add(PageURL);
             if (HistoryItemExists(PageURL) is XmlNode node && node.Attributes is not null)
                 node.Attributes[2].InnerText = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
             else
             {
-                XmlElement newElem = doc.CreateElement("HistoryItem");
+                XmlElement newElem = HistoryXml.CreateElement("HistoryItem");
                 newElem.SetAttribute("Title", PageTitle);
                 newElem.SetAttribute("URL", PageURL);
                 newElem.SetAttribute("LastVisited", DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"));
-                doc.DocumentElement!.AppendChild(newElem);
+                HistoryXml.DocumentElement!.AppendChild(newElem);
             }
-            doc.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+            HistoryXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
         }
         private XmlNode? HistoryItemExists(string URL)
         {
-            foreach (XmlNode node in doc.DocumentElement!.ChildNodes)
+            foreach (XmlNode node in HistoryXml.DocumentElement!.ChildNodes)
                 if (node.Attributes![1].InnerText.Equals(URL)) return node;
             return null;
         }
@@ -316,6 +304,19 @@ namespace SimpleBrowser
                     {
                         Omnibar.Text = selectedBrowser.Address;
                         Title = $"{selectedTab.Header} - SimpleBrowser";
+                        Icon = LoadFavicon(selectedBrowser.Address);
+                        SelectedBrowser_IsLoading = false;
+                        if (RefreshButton.Content is Grid grid && grid.Children[0] is TextBlock RefreshText && grid.Children[1] is TextBlock StopText)
+                        {
+                            RefreshText.Visibility = Visibility.Visible;
+                            StopText.Visibility = Visibility.Collapsed;
+                        }
+                        Title = $"{selectedBrowser.Title}  - SimpleBrowser";
+                        (selectedBrowser.Parent as TabItem)!.Header = selectedBrowser.Title;
+                        Omnibar.Text = selectedBrowser.Address;
+                        if (BookmarkExists(selectedBrowser.Address) is null) NewBookmarkButton.Visibility = Visibility.Visible;
+                        else EditBookmarkButton.Visibility = Visibility.Visible;
+                        AddHistoryItem(selectedBrowser.Address, selectedBrowser.Title);
                     }
                 }
             }
@@ -324,31 +325,7 @@ namespace SimpleBrowser
         private void BackButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoBack();
         private void ForwardButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoForward();
         private void HomeButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load(Properties.Settings.Default.HomeURL);
-        private void BookmarkButton_Popup_Opened(object sender, EventArgs e)
-        {
-            if (selectedBrowser is not null)
-            {
-                BookmarkButtonPopup_TitleTextBox.Text = selectedBrowser.Title;
-                BookmarkButtonPopup_URLTextBox.Text = selectedBrowser.Address;
-            }
-        }
-        private void BookmarkButtonPopup_CloseBookmarkButtonPopup_Click(object sender, RoutedEventArgs e)
-        {
-            BookmarkButton_Popup.IsOpen = false;
-            BookmarkButtonPopup_TitleTextBox.Text = "";
-            BookmarkButtonPopup_URLTextBox.Text = "";
-        }
-        private void BookmarkButtonPopup_AddBookmarkButton_Click(object sender, RoutedEventArgs e)
-        {
-            Bookmark newBookmark = new() { Title = BookmarkButtonPopup_TitleTextBox.Text,  URL = BookmarkButtonPopup_URLTextBox.Text };
-            BookmarkList.Add(newBookmark);
-            XmlDocument doc = new();
-            XmlElement newElem = doc.CreateElement("Bookmark");
-            newElem.SetAttribute("Title", newBookmark.Title);
-            newElem.SetAttribute("URL", newBookmark.URL);
-            doc.DocumentElement!.AppendChild(newElem);
-            doc.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
-        }
+        
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedBrowser_IsLoading) selectedBrowser!.BrowserCore.StopLoad();
@@ -413,6 +390,78 @@ namespace SimpleBrowser
             TabItem newTab = new() { Content = new SettingsTabItem(this), Header = "Settings"};
             baseTabControl.SelectedIndex = baseTabControl.Items.Add(newTab);
             MenuButton.IsChecked = false;
+        }
+
+        private XmlNode? BookmarkExists(string URL)
+        {
+            if (BookmarkXml.DocumentElement is not null)
+                foreach (XmlNode node in BookmarkXml.DocumentElement!.ChildNodes)
+                    if (node.Attributes![1].InnerText.Equals(URL)) return node;
+            return null;
+        }
+        private void NewBookmarkButton_Popup_Opened(object sender, EventArgs e)
+        {
+            if (selectedBrowser is not null)
+            {
+                NewBookmarkPopup_TitleTextBox.Text = selectedBrowser.Title;
+                NewBookmarkPopup_URLTextBox.Text = selectedBrowser.Address;
+            }
+        }
+        private void NewBookmarkPopup_CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewBookmarkPopup.IsOpen = false;
+            NewBookmarkPopup_TitleTextBox.Text = "";
+            NewBookmarkPopup_URLTextBox.Text = "";
+        }
+        private void NewBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e) => new BookmarkManager().Show();
+        private void NewBookmarkPopup_AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Bookmark newBookmark = new() { Title = NewBookmarkPopup_TitleTextBox.Text, URL = NewBookmarkPopup_URLTextBox.Text };
+            BookmarkList.Add(newBookmark);
+
+            XmlElement newElem = BookmarkXml.CreateElement("Bookmark");
+            newElem.SetAttribute("Title", newBookmark.Title);
+            newElem.SetAttribute("URL", newBookmark.URL);
+            BookmarkXml.DocumentElement!.AppendChild(newElem);
+            BookmarkXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+        }
+        private void EditBookmarkButton_Popup_Opened(object sender, EventArgs e)
+        {
+            if (selectedBrowser is not null)
+            {
+                Bookmark? currentBookMark = null;
+                foreach (var bookmark in BookmarkList.Where(bookmark => bookmark.Equals(selectedBrowser.Title, selectedBrowser.Address)))
+                    currentBookMark = bookmark;
+                if (currentBookMark is not null)
+                {
+                    EditBookmarkPopup_TitleTextBox.Text = currentBookMark.Title;
+                    EditBookmarkPopup_URLTextBox.Text = currentBookMark.URL;
+                }
+            }
+        }
+        private void EditBookmarkPopup_CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditBookmarkPopup.IsOpen = false;
+            EditBookmarkPopup_TitleTextBox.Text = "";
+            EditBookmarkPopup_URLTextBox.Text = "";
+        }
+        private void EditBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e) => new BookmarkManager().Show();
+        private void EditBookmarkPopup_SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            int currentBookMarkIndex = -1;
+            foreach (var bookmark in BookmarkList.Where(bookmark => bookmark.Equals(EditBookmarkPopup_TitleTextBox.Text, EditBookmarkPopup_URLTextBox.Text)))
+                currentBookMarkIndex = BookmarkList.IndexOf(bookmark);
+            if (currentBookMarkIndex != -1)
+            {
+                BookmarkList[currentBookMarkIndex].Title = EditBookmarkPopup_TitleTextBox.Text;
+                BookmarkList[currentBookMarkIndex].URL = EditBookmarkPopup_URLTextBox.Text;
+                if (BookmarkExists(BookmarkList[currentBookMarkIndex].URL!) is XmlNode node && node.Attributes is not null)
+                {
+                    node.Attributes[0].InnerText = EditBookmarkPopup_TitleTextBox.Text;
+                    node.Attributes[1].InnerText = EditBookmarkPopup_URLTextBox.Text;
+                }
+                BookmarkXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+            }
         }
 
         private void BookmarkBar_CheckBox_Checked(object sender, RoutedEventArgs e) => BookmarkBar_Row.Height = new GridLength(32);
