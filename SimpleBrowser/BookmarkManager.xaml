@@ -1,9 +1,8 @@
 ﻿<Window x:Class="SimpleBrowser.BookmarkManager"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SimpleBrowser"
         mc:Ignorable="d"
         SourceInitialized="Window_SourceInitialized"
         Deactivated="Window_Deactivated"
@@ -11,7 +10,7 @@
         WindowStyle="None"
         Background="{DynamicResource Global.Background}"
         Foreground="{DynamicResource BookmarkManager.Foreground}"
-        Title="Bookmark Manager - Simple Browser" 
+        Title="Bookmark Manager - Simple Browser"
         Height="300"
         Width="450">
     <WindowChrome.WindowChrome>
@@ -19,23 +18,23 @@
     </WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
-            <RowDefinition/>
+            <RowDefinition Height="32" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid x:Name="CaptionBar">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="45"/>
-                <ColumnDefinition Width="45"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="45" />
+                <ColumnDefinition Width="45" />
             </Grid.ColumnDefinitions>
-            <Border x:Name="CaptionBar_Border" Background="{DynamicResource CaptionButton.Background}" Grid.ColumnSpan="5"/>
-            <TextBlock Text="Bookmark Manager - Simple Browser" 
-                       VerticalAlignment="Center" Margin="8,0"/>
+            <Border x:Name="CaptionBar_Border" Background="{DynamicResource CaptionButton.Background}" Grid.ColumnSpan="5" />
+            <TextBlock Text="Bookmark Manager - Simple Browser"
+                       VerticalAlignment="Center" Margin="8,0" />
             <Button x:Name="CaptionBar_MinimizeButton" Style="{DynamicResource TitleBarButtonStyle}" Grid.Column="1" Click="CaptionBar_MinimizeButton_Click">
-                <Path Data="M18 14 h9" Width="45" Height="29" Stroke="{DynamicResource BookmarkManager.Foreground}" StrokeThickness="1"/>
+                <Path Data="M18 14 h9" Width="45" Height="29" Stroke="{DynamicResource BookmarkManager.Foreground}" StrokeThickness="1" />
             </Button>
             <Button x:Name="CaptionBar_CloseButton" Style="{DynamicResource TitleBarCloseButtonStyle}" Grid.Column="3" Click="CaptionBar_CloseButton_Click">
-                <Path Data="M17,9 L26,18 M17,18 L26,9" Width="45" Height="30" Stroke="{DynamicResource BookmarkManager.Foreground}" StrokeThickness="1"/>
+                <Path Data="M17,9 L26,18 M17,18 L26,9" Width="45" Height="30" Stroke="{DynamicResource BookmarkManager.Foreground}" StrokeThickness="1" />
             </Button>
         </Grid>
         <Grid x:Name="ContentArea" Grid.Row="1">
@@ -43,39 +42,39 @@
                 <TabItem Header="Bookmarks">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="40"/>
+                            <RowDefinition />
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
-                        <ListBox x:Name="BookmarkDisplay" Margin="8" SelectionChanged="BookmarkDisplay_SelectionChanged"/>
+                        <ListBox x:Name="BookmarkDisplay" Margin="8" SelectionChanged="BookmarkDisplay_SelectionChanged" />
                         <Grid Grid.Row="1" Margin="8,0" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="24"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="24"/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="24" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="24" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Title " VerticalAlignment="Center"/>
-                            <TextBox x:Name="TitleTextBox" Margin="8,0" Style="{DynamicResource TextBoxStyle}" Grid.Column="1"/>
-                            <TextBlock Text="URL " VerticalAlignment="Center" Grid.Column="2"/>
-                            <TextBox x:Name="URLTextBox" Style="{DynamicResource TextBoxStyle}" Grid.Column="3"/>
+                            <TextBlock Text="Title " VerticalAlignment="Center" />
+                            <TextBox x:Name="TitleTextBox" Margin="8,0" Style="{DynamicResource TextBoxStyle}" Grid.Column="1" />
+                            <TextBlock Text="URL " VerticalAlignment="Center" Grid.Column="2" />
+                            <TextBox x:Name="URLTextBox" Style="{DynamicResource TextBoxStyle}" Grid.Column="3" />
                         </Grid>
                         <DockPanel Grid.Row="2">
-                            <Button x:Name="DeleteBookmarkButton" IsEnabled="False" Content="Delete" Height="24" Width="96" HorizontalAlignment="Left" Style="{DynamicResource BaseButtonStyle}" Click="DeleteBookmarkButton_Click"/>
-                            <Button x:Name="AddButton" Content="Add" IsDefault="True" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="AddButton_Click"/>
+                            <Button x:Name="DeleteBookmarkButton" IsEnabled="False" Content="Delete" Height="24" Width="96" HorizontalAlignment="Left" Style="{DynamicResource BaseButtonStyle}" Click="DeleteBookmarkButton_Click" />
+                            <Button x:Name="AddButton" Content="Add" IsDefault="True" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="AddButton_Click" />
                         </DockPanel>
                     </Grid>
                 </TabItem>
                 <TabItem Header="History">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="40"/>
+                            <RowDefinition />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
-                        <ListBox x:Name="HistoryDisplay" Margin="8"/>
+                        <ListBox x:Name="HistoryDisplay" Margin="8" />
                         <DockPanel Grid.Row="2">
-                            <Button x:Name="DeleteHistoryItemButton" IsEnabled="False" Content="Delete" Height="24" Width="96" HorizontalAlignment="Left" Style="{DynamicResource BaseButtonStyle}" Click="DeleteHistoryItemButton_Click"/>
-                            <Button x:Name="ClearHistoryButton" Content="Clear" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="ClearHistoryButton_Click"/>
+                            <Button x:Name="DeleteHistoryItemButton" IsEnabled="False" Content="Delete" Height="24" Width="96" HorizontalAlignment="Left" Style="{DynamicResource BaseButtonStyle}" Click="DeleteHistoryItemButton_Click" />
+                            <Button x:Name="ClearHistoryButton" Content="Clear" Height="24" Width="96" HorizontalAlignment="Right" Style="{DynamicResource BaseButtonStyle}" Click="ClearHistoryButton_Click" />
                         </DockPanel>
                     </Grid>
                 </TabItem>
