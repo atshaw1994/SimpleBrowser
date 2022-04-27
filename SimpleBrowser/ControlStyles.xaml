@@ -159,7 +159,7 @@
                         <Border x:Name="mainBorder" Margin="0,0,0,3" Grid.ColumnSpan="3" Background="{TemplateBinding Background}" />
                         <Border x:Name="innerBorder" CornerRadius="2,2,0,0" Grid.ColumnSpan="3" Background="{DynamicResource TabItem.Background.Selected}" BorderBrush="{DynamicResource TabItem.Border.Selected}" BorderThickness="1,4,1,0" Opacity="0" />
                         <Grid>
-                            <Image x:Name="HeaderFavicon"/>
+                            <Image x:Name="HeaderFavicon" />
                             <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" FontSize="12" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
                         <TextBlock x:Name="contentPresenter" Grid.Column="1" TextTrimming="WordEllipsis" MaxWidth="100" Text="{TemplateBinding Header}" Focusable="False" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" />
@@ -405,7 +405,7 @@
     <Style x:Key="EditBookmarkButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource Button.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Button.Border}" />
-        <Setter Property="Visibility" Value="Collapsed"/>
+        <Setter Property="Visibility" Value="Collapsed" />
         <Setter Property="Width" Value="24" />
         <Setter Property="Height" Value="24" />
         <Setter Property="Template">
@@ -461,17 +461,17 @@
                                 <Border BorderThickness="1" BorderBrush="{DynamicResource Button.Border}">
                                     <StackPanel Orientation="Vertical">
                                         <MenuItem x:Name="BookmarkBarButton_ContextMenu_NewTab" Header="New Tab" />
-                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_NewWindow" Header="New Window"  />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_NewWindow" Header="New Window" />
                                         <Separator />
-                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_History" Header="History"  />
-                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_Bookmarks" Header="Bookmarks"  />
-                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_Downloads" Header="Downloads"  />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_History" Header="History" />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_Bookmarks" Header="Bookmarks" />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_Downloads" Header="Downloads" />
                                         <Separator />
-                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_ZoomIn" Header="Zoom In"  />
-                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_ZoomOut" Header="Zoom Out"  />
-                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_ZoomReset" Header="Zoom Reset"  />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_ZoomIn" Header="Zoom In" />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_ZoomOut" Header="Zoom Out" />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_ZoomReset" Header="Zoom Reset" />
                                         <Separator />
-                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_Settings" Header="Settings"  />
+                                        <MenuItem x:Name="BookmarkBarButton_ContextMenu_Settings" Header="Settings" />
                                     </StackPanel>
                                 </Border>
                             </ContextMenu>
@@ -846,5 +846,61 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.00001*" />
+            </Grid.RowDefinitions>
+            <Track x:Name="PART_Track" IsDirectionReversed="true">
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="2,4" Background="#7dcfcfcf" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.00001*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.ColumnSpan="3" CornerRadius="2" Background="Transparent" />
+            <Track x:Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="0,1,0,1" Background="#cfcfcf" BorderBrush="#cfcfcf">
+                    </Thumb>
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="Height" Value="18" />
+                <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Width" Value="12" />
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
