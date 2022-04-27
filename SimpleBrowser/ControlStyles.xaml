@@ -868,7 +868,7 @@
             </Grid.RowDefinitions>
             <Track x:Name="PART_Track" IsDirectionReversed="true">
                 <Track.Thumb>
-                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="2,4" Background="#7dcfcfcf" />
+                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="2,4" Background="{DynamicResource Scrollbar.Background}" />
                 </Track.Thumb>
             </Track>
         </Grid>
@@ -878,11 +878,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.00001*" />
             </Grid.ColumnDefinitions>
-            <Border Grid.ColumnSpan="3" CornerRadius="2" Background="Transparent" />
             <Track x:Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
                 <Track.Thumb>
-                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="0,1,0,1" Background="#cfcfcf" BorderBrush="#cfcfcf">
-                    </Thumb>
+                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="2,4" Background="{DynamicResource Scrollbar.Background}"/>
                 </Track.Thumb>
             </Track>
         </Grid>

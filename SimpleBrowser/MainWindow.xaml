@@ -145,9 +145,7 @@
                             </StackPanel.ContextMenu>
                         </StackPanel>
                         <TabControl x:Name="baseTabControl" Grid.Row="1" IsSynchronizedWithCurrentItem="True" SelectionChanged="TabChanged">
-                            <TabItem Header="Google">
-                                <cefSharp:ChromiumWebBrowser Address="Htts://www.google.com/" />
-                            </TabItem>
+                            <TabItem Header="Google" />
                             <TabItem Header="Yahoo" />
                             <TabItem Header="Bing" />
                         </TabControl>

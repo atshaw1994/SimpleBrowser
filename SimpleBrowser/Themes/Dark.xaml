@@ -136,4 +136,11 @@
 
     <!--#endregion-->
 
+    <!--#region Scrollbar-->
+
+    <SolidColorBrush x:Key="Scrollbar.Background" Color="#7dcfcfcf"/>
+    <SolidColorBrush x:Key="Scrollbar.Background.MouseOver" Color="#7dcfcfcf"/>
+
+    <!--#endregion-->
+
 </ResourceDictionary>
