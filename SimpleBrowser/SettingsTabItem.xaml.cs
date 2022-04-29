@@ -81,7 +81,7 @@ namespace SimpleBrowser
 
         private void HomeURLTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (HomeURLTextBox.Text is not null)
+            if (HomeURLTextBox.Text is not null && nodes is not null)
             {
                 ((nodes[2] as XElement)!.Nodes().First() as XText)!.Value = HomeURLTextBox.Text;
                 SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
