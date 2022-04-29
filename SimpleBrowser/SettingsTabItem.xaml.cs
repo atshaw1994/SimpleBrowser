@@ -61,22 +61,31 @@ namespace SimpleBrowser
 
         private void ShowBookmarkBar_CheckedChanged(object sender, RoutedEventArgs e)
         {
-            if(ShowBookmarkBar.IsChecked == true) _mainWindow.BookmarkBar_Row.Height = new GridLength(24);
-            else _mainWindow.BookmarkBar_Row.Height = new GridLength(0);
-            ((nodes[1] as XElement)!.Nodes().First() as XText)!.Value = ShowBookmarkBar.IsChecked.ToString()!;
-            SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
+            if (ShowBookmarkBar.IsChecked is not null && nodes is not null)
+            {
+                if (ShowBookmarkBar.IsChecked == true) _mainWindow.BookmarkBar_Row.Height = new GridLength(24);
+                else _mainWindow.BookmarkBar_Row.Height = new GridLength(0);
+                ((nodes[1] as XElement)!.Nodes().First() as XText)!.Value = ShowBookmarkBar.IsChecked.ToString()!;
+                SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
+            }
         }
 
         private void StartupSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ((nodes[0] as XElement)!.Nodes().First() as XText)!.Value = StartupSelection.SelectedIndex.ToString();
-            SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
+            if (StartupSelection.SelectedItem is not null && nodes is not null)
+            {
+                ((nodes[0] as XElement)!.Nodes().First() as XText)!.Value = StartupSelection.SelectedIndex.ToString();
+                SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
+            }
         }
 
         private void HomeURLTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ((nodes[2] as XElement)!.Nodes().First() as XText)!.Value = HomeURLTextBox.Text;
-            SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
+            if (HomeURLTextBox.Text is not null)
+            {
+                ((nodes[2] as XElement)!.Nodes().First() as XText)!.Value = HomeURLTextBox.Text;
+                SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
+            }
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
