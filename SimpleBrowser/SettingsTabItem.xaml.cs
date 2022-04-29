@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace SimpleBrowser
 {
@@ -22,54 +23,65 @@ namespace SimpleBrowser
     public partial class SettingsTabItem : UserControl
     {
         private readonly MainWindow _mainWindow;
+        private readonly XDocument SettingsXml;
+        private readonly List<XNode> nodes;
 
         public SettingsTabItem()
         {
             _mainWindow = (MainWindow)Application.Current.MainWindow;
             InitializeComponent();
+            SettingsXml = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
+            nodes = SettingsXml.Root!.Nodes().ToList();
         }
         public SettingsTabItem(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
             InitializeComponent();
+            SettingsXml = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
+            nodes = SettingsXml.Root!.Nodes().ToList();
         }
-        private void SettingsTabItem_Loaded(object sender, RoutedEventArgs e) => LoadSettings();
-
-        private void LoadSettings()
+        private void SettingsTabItem_Loaded(object sender, RoutedEventArgs e)
         {
-            StartupSelection.SelectedIndex = Properties.Settings.Default.StartupMode;
-            HomeURLTextBox.Text = Properties.Settings.Default.HomeURL;
-            ThemeSelection.SelectedIndex = Properties.Settings.Default.Theme;
-            ShowBookmarkBar.IsChecked = Properties.Settings.Default.ShowBookmarkBar;
+            StartupSelection.SelectedIndex = Convert.ToInt32(((nodes[0] as XElement)!.Nodes().First() as XText)!.Value);
+            ShowBookmarkBar.IsChecked = Convert.ToBoolean(((nodes[1] as XElement)!.Nodes().First() as XText)!.Value);
+            HomeURLTextBox.Text = ((nodes[2] as XElement)!.Nodes().First() as XText)!.Value;
+            string theme = ((nodes[3] as XElement)!.Nodes().First() as XText)!.Value;
+            ThemeSelection.SelectedIndex = theme.Equals("Light", StringComparison.Ordinal) ? 0 : 1;
         }
 
         private void ThemeChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ThemeSelection is not null && ThemeSelection.SelectedItem is ComboBoxItem item && item.Content is not null)
+            if (ThemeSelection.SelectedItem is ComboBoxItem item && nodes is not null)
             {
                 Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\{item.Content}.xaml", UriKind.Relative);
-                Properties.Settings.Default.Theme = ThemeSelection.SelectedIndex;
+                ((nodes[3] as XElement)!.Nodes().First() as XText)!.Value = item.Content.ToString()!;
+                SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
             }
-            Properties.Settings.Default.Save();
         }
 
         private void ShowBookmarkBar_CheckedChanged(object sender, RoutedEventArgs e)
         {
             if(ShowBookmarkBar.IsChecked == true) _mainWindow.BookmarkBar_Row.Height = new GridLength(24);
             else _mainWindow.BookmarkBar_Row.Height = new GridLength(0);
-            Properties.Settings.Default.ShowBookmarkBar = ShowBookmarkBar.IsChecked == true;
-            Properties.Settings.Default.Save();
+            ((nodes[1] as XElement)!.Nodes().First() as XText)!.Value = ShowBookmarkBar.IsChecked.ToString()!;
+            SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
         }
 
         private void StartupSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Properties.Settings.Default.StartupMode = StartupSelection.SelectedIndex;
-            Properties.Settings.Default.Save();
+            ((nodes[0] as XElement)!.Nodes().First() as XText)!.Value = StartupSelection.SelectedIndex.ToString();
+            SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
+        }
+
+        private void HomeURLTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((nodes[2] as XElement)!.Nodes().First() as XText)!.Value = HomeURLTextBox.Text;
+            SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.Save();
         }
+
     }
 }

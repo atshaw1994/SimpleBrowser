@@ -19,7 +19,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,8">
                     <TextBlock Text="Home Page" VerticalAlignment="Center" Foreground="{DynamicResource TextBox.Foreground}" />
-                    <TextBox x:Name="HomeURLTextBox" Text="http://www.google.com" Width="250" Style="{DynamicResource TextBoxStyle}" />
+                    <TextBox x:Name="HomeURLTextBox" Text="http://www.google.com" Width="250" Style="{DynamicResource TextBoxStyle}" TextChanged="HomeURLTextBox_TextChanged"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,8">
                     <TextBlock Text="Theme" VerticalAlignment="Center" Foreground="{DynamicResource TextBox.Foreground}" />

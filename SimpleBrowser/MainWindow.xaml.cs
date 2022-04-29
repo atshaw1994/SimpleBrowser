@@ -21,6 +21,7 @@ using System.Net.Http;
 using Windows.Storage.Streams;
 using System.Net;
 using HtmlAgilityPack;
+using System.Xml.Linq;
 
 namespace SimpleBrowser
 {
@@ -34,6 +35,7 @@ namespace SimpleBrowser
         private readonly List<Bookmark> BookmarkList;
         private readonly XmlDocument BookmarkXml;
         private readonly XmlDocument HistoryXml;
+        private readonly XDocument SettingsXml;
         private int StartupMode;
         private string HomePage;
 
@@ -45,6 +47,7 @@ namespace SimpleBrowser
             HomePage = "";
             BookmarkXml = new();
             HistoryXml = new();
+            SettingsXml = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -204,13 +207,13 @@ namespace SimpleBrowser
         }
         private void LoadSettings()
         {
-            StartupMode = Properties.Settings.Default.StartupMode;
-            HomePage = Properties.Settings.Default.HomeURL;
-            if (Properties.Settings.Default.Theme == 0)
-                Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\Light.xaml", UriKind.Relative);
-            else
-                Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\Dark.xaml", UriKind.Relative);
-            BookmarkBar_Row.Height = Properties.Settings.Default.ShowBookmarkBar ? new GridLength(24) : new GridLength(0);
+            List<XNode> nodes = SettingsXml.Root!.Nodes().ToList();
+            StartupMode = Convert.ToInt32(((nodes[0] as XElement)!.Nodes().First() as XText)!.Value);
+            bool ShowBBar = Convert.ToBoolean(((nodes[1] as XElement)!.Nodes().First() as XText)!.Value);
+            BookmarkBar_Row.Height = ShowBBar ? new GridLength(24) : new GridLength(0);
+            HomePage = ((nodes[2] as XElement)!.Nodes().First() as XText)!.Value;
+            string theme = ((nodes[3] as XElement)!.Nodes().First() as XText)!.Value;
+            Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\{theme}.xaml", UriKind.Relative);
         }
 
         private void BookmarkBarButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load((sender as Button)!.Tag.ToString());
