@@ -55,11 +55,11 @@ namespace SimpleBrowser
         private void Window_SourceInitialized(object sender, EventArgs e) => ((HwndSource)PresentationSource.FromVisual(this)).AddHook(HookProc);
 		private void Window_Deactivated(object sender, EventArgs e)
 		{
-			CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Inactive");
+			CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Inactive");
 		}
 		private void Window_Activated(object sender, EventArgs e)
 		{
-			CaptionBar_Border.Background = (SolidColorBrush)FindResource("Caption.Active");
+			CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Active");
 		}
 
 		public static IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
