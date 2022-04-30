@@ -904,11 +904,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
-                        <Border x:Name="border" Margin="0,4" 
+                        <Border x:Name="border" Margin="2,4" 
                                 Background="{DynamicResource Button.Background}" 
                                 BorderBrush="{DynamicResource Button.Foreground}" 
                                 BorderThickness="1"/>
-                        <Border x:Name="Toggle" Margin="0,0,16,0" Background="{DynamicResource Button.Foreground}"/>
+                        <Border x:Name="Toggle" CornerRadius="8" Margin="0,0,16,0" Background="{DynamicResource Button.Foreground}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
