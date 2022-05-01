@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace SimpleBrowser
 {
@@ -23,7 +25,7 @@ namespace SimpleBrowser
     public partial class BookmarkManager : Window
     {
 		private readonly XmlDocument BookmarkXML;
-		private readonly XmlDocument HistoryXML;
+		private readonly XDocument HistoryXML;
 
 		public BookmarkManager()
         {
@@ -31,7 +33,7 @@ namespace SimpleBrowser
 			BookmarkXML = new();
 			HistoryXML = new();
 			BookmarkXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
-			HistoryXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+			HistoryXML = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
 			LoadBookmarks();
 			LoadHistory();
 		}
@@ -42,7 +44,7 @@ namespace SimpleBrowser
 			BookmarkXML = new();
 			HistoryXML = new();
 			BookmarkXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
-			HistoryXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+			HistoryXML = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
 			LoadBookmarks();
 			LoadHistory();
 			
@@ -53,14 +55,8 @@ namespace SimpleBrowser
 		private void CaptionBar_CloseButton_Click(object sender, RoutedEventArgs e) => Close();
         private void CaptionBar_MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
         private void Window_SourceInitialized(object sender, EventArgs e) => ((HwndSource)PresentationSource.FromVisual(this)).AddHook(HookProc);
-		private void Window_Deactivated(object sender, EventArgs e)
-		{
-			CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Inactive");
-		}
-		private void Window_Activated(object sender, EventArgs e)
-		{
-			CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Active");
-		}
+		private void Window_Deactivated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Inactive");
+		private void Window_Activated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Active");
 
 		public static IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
@@ -160,9 +156,15 @@ namespace SimpleBrowser
 		}
 		private void LoadHistory()
 		{
-			foreach (XmlNode node in HistoryXML.DocumentElement!.ChildNodes)
+			foreach (XNode HistoryItem in HistoryXML.Root!.Nodes().ToList())
 			{
-				ListBoxItem newHistoryItem = new() { Content = $"{node.Attributes![0].InnerText}, {node.Attributes![1].InnerText},  {node.Attributes![2].InnerText}" };
+				XElement node = (XElement)HistoryItem;
+				DateTime dt = DateTime.ParseExact(node.Descendants("LastVisited").First().Value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+				ListBoxItem newHistoryItem = new()
+				{
+					
+					Content = $"Title: {node.Descendants("Title").First().Value}\nURL: {node.Descendants("URL").First().Value}\nLast Visited: {dt}" 
+				};
 				newHistoryItem.MouseDoubleClick += HistoryItem_MouseDoubleClick;
 				HistoryDisplay.Items.Add(newHistoryItem);
 			}
@@ -213,7 +215,7 @@ namespace SimpleBrowser
 				sender is ListBoxItem selectedItem &&
 				selectedItem.Content is string content)
 			{
-				mainWindow.selectedBrowser.Load(content[(content.ToString()!.IndexOf(',') + 2)..]);
+				mainWindow.selectedBrowser.Load(content[(content.ToString()!.IndexOf("URL: ") + 5)..]);
 			}
 		}
 		private void BookmarkItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -230,16 +232,23 @@ namespace SimpleBrowser
 		{
 			if (HistoryDisplay.SelectedItem is ListBoxItem selectedItem && selectedItem.Content is string content)
 			{
-				XmlNode node = HistoryXML.SelectSingleNode($"/History/[@name='{content[..content.ToString()!.IndexOf(',')]}']")!;
-				if (node is not null)
-				{
-					XmlNode parent = node.ParentNode!;
-					parent.RemoveChild(node);
-					HistoryXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
-				}
+				string url = content[(content.ToString()!.IndexOf(',') + 2)..];
+				foreach (XNode item in HistoryXML.Nodes().ToList())
+                {
+					if ((item as XElement)!.Descendants("URL").First().Value.Equals(url))
+                    {
+						item.Remove();
+                    }
+                }
+				HistoryXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
 			}
 		}
-        private void ClearHistoryButton_Click(object sender, RoutedEventArgs e) => HistoryXML.DocumentElement!.RemoveAll();
+        private void ClearHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            HistoryXML.Root!.Remove();
+			HistoryXML.Add(new XElement("History"));
+			HistoryXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+		}
 
         public void SelectTab(int tabIndex)
         {

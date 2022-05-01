@@ -34,7 +34,7 @@ namespace SimpleBrowser
         private bool SelectedBrowser_IsLoading = false;
         private readonly List<Bookmark> BookmarkList;
         private readonly XmlDocument BookmarkXml;
-        private readonly XmlDocument HistoryXml;
+        private readonly XDocument HistoryXml;
         private readonly XDocument SettingsXml;
         private int StartupMode;
         private string HomePage;
@@ -46,7 +46,7 @@ namespace SimpleBrowser
             StartupMode = 0;
             HomePage = "";
             BookmarkXml = new();
-            HistoryXml = new();
+            HistoryXml = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
             SettingsXml = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -267,33 +267,44 @@ namespace SimpleBrowser
                         Omnibar.Text = selectedBrowser.Address;
                         if (BookmarkExists(selectedBrowser.Address) is null) NewBookmarkButton.Visibility = Visibility.Visible;
                         else EditBookmarkButton.Visibility = Visibility.Visible;
-                        AddHistoryItem(selectedBrowser.Address, selectedBrowser.Title);
                     }
+                    AddHistoryItem(selectedBrowser.Address, selectedBrowser.Title);
                 }
             });
         }
 
         private void AddHistoryItem(string PageURL, string PageTitle)
         {
-            HistoryXml.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
-            Omnibar.Items.Add(PageURL);
-            if (HistoryItemExists(PageURL) is XmlNode node && node.Attributes is not null)
-                node.Attributes[2].InnerText = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
+            if (HistoryItemExists(PageURL))
+            {
+                List<XNode> nodes = HistoryXml.Root!.Nodes().ToList();
+                foreach (var node in nodes.Where(node => (node as XElement)!.Descendants("URL")!.First().Value.Equals(PageURL)))
+                    (node as XElement)!.Descendants("LastVisited")!.First().Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+            }
             else
             {
-                XmlElement newElem = HistoryXml.CreateElement("HistoryItem");
-                newElem.SetAttribute("Title", PageTitle);
-                newElem.SetAttribute("URL", PageURL);
-                newElem.SetAttribute("LastVisited", DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"));
-                HistoryXml.DocumentElement!.AppendChild(newElem);
+                Omnibar.Items.Add(PageURL);
+                XElement newHistoryItem =
+                new("HistoryItem",
+                    new XElement("Title", PageTitle),
+                    new XElement("URL", PageURL),
+                    new XElement("LastVisited", DateTime.Now.ToString("yyyyMMddHHmmss"))
+                );
+                HistoryXml.Root!.Add(newHistoryItem);
             }
             HistoryXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
         }
-        private XmlNode? HistoryItemExists(string URL)
+        private bool HistoryItemExists(string URL = "")
         {
-            foreach (XmlNode node in HistoryXml.DocumentElement!.ChildNodes)
-                if (node.Attributes![1].InnerText.Equals(URL)) return node;
-            return null;
+            List<XNode> nodes = HistoryXml.Root!.NodesAfterSelf().ToList();
+            foreach (XNode node in nodes)
+            {
+                if ((node as XElement)!.Descendants("URL").First().Value.Equals(URL))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void TabChanged(object sender, SelectionChangedEventArgs e)
