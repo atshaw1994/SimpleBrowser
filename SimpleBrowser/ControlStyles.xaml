@@ -790,6 +790,7 @@
                             </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{DynamicResource TextBox.Focus.Border}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Focus.Border}" />
+                            <Setter Property="CornerRadius" TargetName="Border" Value="4"/>
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -797,6 +798,7 @@
                                 <Condition Property="IsFocused" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter Property="BorderBrush" Value="{DynamicResource TextBox.Focus.Border}" />
+                            <Setter Property="CornerRadius" TargetName="Border" Value="4"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
