@@ -158,10 +158,7 @@
                         </Grid.ColumnDefinitions>
                         <Border x:Name="mainBorder" Margin="0,0,0,3" Grid.ColumnSpan="3" Background="{TemplateBinding Background}" />
                         <Border x:Name="innerBorder" CornerRadius="2,2,0,0" Grid.ColumnSpan="3" Background="{DynamicResource TabItem.Background.Selected}" BorderBrush="{DynamicResource TabItem.Border.Selected}" BorderThickness="1,4,1,0" Opacity="0" />
-                        <Grid>
-                            <Image x:Name="HeaderFavicon" />
-                            <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" FontSize="12" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        </Grid>
+                        
                         <TextBlock x:Name="contentPresenter" Grid.Column="1" TextTrimming="WordEllipsis" MaxWidth="100" Text="{TemplateBinding Header}" Focusable="False" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" />
                         <Button x:Name="CloseTabButton" Grid.Column="2" Visibility="Collapsed" Click="CloseTabButton_Click" Style="{DynamicResource CloseTabButton}" />
                     </Grid>
@@ -193,6 +190,21 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Header">
+            <Setter.Value>
+                <Grid>
+                    <Image x:Name="HeaderFavicon" Visibility="Collapsed"/>
+                    <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" Style="{DynamicResource HeaderTextBlock}"/>
+                    <TextBlock Text="{Binding Header}" FontFamily="Arial" Style="{DynamicResource HeaderTextBlock}"/>
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="HeaderTextBlock" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{DynamicResource TabItem.Foreground}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
     <Style TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{DynamicResource TabControl.Background}" />
