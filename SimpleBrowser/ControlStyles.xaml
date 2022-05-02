@@ -158,7 +158,15 @@
                         </Grid.ColumnDefinitions>
                         <Border x:Name="mainBorder" Margin="0,0,0,3" Grid.ColumnSpan="3" Background="{TemplateBinding Background}" />
                         <Border x:Name="innerBorder" CornerRadius="2,2,0,0" Grid.ColumnSpan="3" Background="{DynamicResource TabItem.Background.Selected}" BorderBrush="{DynamicResource TabItem.Border.Selected}" BorderThickness="1,4,1,0" Opacity="0" />
-                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Image x:Name="HeaderFavicon" Visibility="Collapsed"/>
+                            <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" Style="{DynamicResource HeaderTextBlock}"/>
+                            <TextBlock Text="{Binding Header}" Grid.Column="1" FontFamily="Arial" Style="{DynamicResource HeaderTextBlock}"/>
+                        </Grid>
                         <TextBlock x:Name="contentPresenter" Grid.Column="1" TextTrimming="WordEllipsis" MaxWidth="100" Text="{TemplateBinding Header}" Focusable="False" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" />
                         <Button x:Name="CloseTabButton" Grid.Column="2" Visibility="Collapsed" Click="CloseTabButton_Click" Style="{DynamicResource CloseTabButton}" />
                     </Grid>
@@ -188,15 +196,6 @@
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Header">
-            <Setter.Value>
-                <Grid>
-                    <Image x:Name="HeaderFavicon" Visibility="Collapsed"/>
-                    <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" Style="{DynamicResource HeaderTextBlock}"/>
-                    <TextBlock Text="{Binding Header}" FontFamily="Arial" Style="{DynamicResource HeaderTextBlock}"/>
-                </Grid>
             </Setter.Value>
         </Setter>
     </Style>

@@ -239,7 +239,8 @@ namespace SimpleBrowser
         {
             Dispatcher.Invoke(() =>
             {
-                if (selectedBrowser is not null && selectedBrowser.Address is not null && selectedBrowser.Title is not null)
+                if (selectedBrowser is not null && selectedBrowser.Address is not null && 
+                selectedBrowser.Title is not null && selectedBrowser.Parent is TabItem parentTab)
                 {
                     if (e.IsLoading)
                     {
