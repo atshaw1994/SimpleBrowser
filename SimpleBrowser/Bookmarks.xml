@@ -1,7 +1,19 @@
 ﻿<?xml version="1.0"?>
 <Bookmarks>
-	<Bookmark Title="Google" URL="https://www.google.com/?gws_rd=ssl" />
-	<Bookmark Title="Yahoo!" URL="http://www.yahoo.com" />
-	<Bookmark Title="Bing" URL="http://www.bing.com" />
-	<Bookmark Title="Wiki - Wikipedia" URL="https://en.wikipedia.org/wiki/Wiki" />
+	<Bookmark>
+		<Title>Google</Title>
+		<URL>https://www.google.com/?gws_rd=ssl</URL>
+	</Bookmark>
+	<Bookmark>
+		<Title>Yahoo!</Title>
+		<URL>http://www.yahoo.com</URL>
+	</Bookmark>
+	<Bookmark>
+		<Title>Bing</Title>
+		<URL>http://www.bing.com</URL>
+	</Bookmark>
+	<Bookmark>
+		<Title>Wiki - Wikipedia</Title>
+		<URL>https://en.wikipedia.org/wiki/Wiki</URL>
+	</Bookmark>
 </Bookmarks>
