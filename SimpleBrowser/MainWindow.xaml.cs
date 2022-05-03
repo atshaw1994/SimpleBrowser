@@ -1,26 +1,15 @@
-﻿using System;
-using CefSharp.Wpf;
+﻿using CefSharp.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
-using System.Diagnostics;
-using System.Net.Http;
-using Windows.Storage.Streams;
-using System.Net;
-using HtmlAgilityPack;
 using System.Xml.Linq;
 
 namespace SimpleBrowser
@@ -57,16 +46,35 @@ namespace SimpleBrowser
             NewTabButton_Click(sender, e);
             baseTabControl.SelectedIndex = 0;
             if (baseTabControl.Items[0] is TabItem tabItem && tabItem.Content is ChromiumWebBrowser browser)
+            {
                 selectedBrowser = browser;
+            }
+
             if (selectedBrowser is not null)
             {
-                if (StartupMode == 0) selectedBrowser.Address = HomePage; // Home Page
-                if (StartupMode == 1) selectedBrowser.Address = "about:blank"; // New Tab Page
-                else if (StartupMode == 2) selectedBrowser.Address = "about:blank"; // Blank
+                if (StartupMode == 0)
+                {
+                    selectedBrowser.Address = HomePage; // Home Page
+                }
+
+                if (StartupMode == 1)
+                {
+                    selectedBrowser.Address = "about:blank"; // New Tab Page
+                }
+                else if (StartupMode == 2)
+                {
+                    selectedBrowser.Address = "about:blank"; // Blank
+                }
             }
         }
-        private void Window_Deactivated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Inactive");
-        private void Window_Activated(object sender, EventArgs e) => CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Active");
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Inactive");
+        }
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            CaptionBar_Border.Background = (SolidColorBrush)FindResource("CaptionBar.Background.Active");
+        }
 
         #region BorderlessMethods
 
@@ -197,7 +205,10 @@ namespace SimpleBrowser
             BookmarkBarStackPanel.Children.Clear();
             BookmarkXml.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
             foreach (XmlNode node in BookmarkXml.DocumentElement!.ChildNodes)
+            {
                 BookmarkList.Add(new Bookmark(node.Attributes![0].InnerText, node.Attributes[1]!.InnerText));
+            }
+
             foreach (Bookmark bookmark in BookmarkList)
             {
                 Button newBookmarkBarButton = new() { Content = bookmark.Title, Style = (Style)FindResource("BookmarkBarButtonStyle"), Tag = bookmark.URL };
@@ -216,8 +227,11 @@ namespace SimpleBrowser
             Application.Current.Resources.MergedDictionaries[0].Source = new Uri($"\\Themes\\{theme}.xaml", UriKind.Relative);
         }
 
-        private void BookmarkBarButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load((sender as Button)!.Tag.ToString());
-        
+        private void BookmarkBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            selectedBrowser!.Load((sender as Button)!.Tag.ToString());
+        }
+
         public void CloseTabButton()
         {
             // TODO: Make it close the tab where the button was clicked, instead of selected tab.
@@ -239,7 +253,7 @@ namespace SimpleBrowser
         {
             Dispatcher.Invoke(() =>
             {
-                if (selectedBrowser is not null && selectedBrowser.Address is not null && 
+                if (selectedBrowser is not null && selectedBrowser.Address is not null &&
                 selectedBrowser.Title is not null && selectedBrowser.Parent is TabItem parentTab)
                 {
                     if (e.IsLoading)
@@ -257,6 +271,7 @@ namespace SimpleBrowser
                     else
                     {
                         Icon = LoadFavicon(selectedBrowser.Address);
+
                         SelectedBrowser_IsLoading = false;
                         if (RefreshButton.Content is Grid grid && grid.Children[0] is TextBlock RefreshText && grid.Children[1] is TextBlock StopText)
                         {
@@ -266,8 +281,14 @@ namespace SimpleBrowser
                         Title = $"{selectedBrowser.Title}  - SimpleBrowser";
                         (selectedBrowser.Parent as TabItem)!.Header = selectedBrowser.Title;
                         Omnibar.Text = selectedBrowser.Address;
-                        if (BookmarkExists(selectedBrowser.Address) is null) NewBookmarkButton.Visibility = Visibility.Visible;
-                        else EditBookmarkButton.Visibility = Visibility.Visible;
+                        if (BookmarkExists(selectedBrowser.Address) is null)
+                        {
+                            NewBookmarkButton.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            EditBookmarkButton.Visibility = Visibility.Visible;
+                        }
                     }
                     AddHistoryItem(selectedBrowser.Address, selectedBrowser.Title);
                 }
@@ -280,7 +301,9 @@ namespace SimpleBrowser
             {
                 List<XNode> nodes = HistoryXml.Root!.Nodes().ToList();
                 foreach (var node in nodes.Where(node => (node as XElement)!.Descendants("URL")!.First().Value.Equals(PageURL)))
+                {
                     (node as XElement)!.Descendants("LastVisited")!.First().Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+                }
             }
             else
             {
@@ -329,34 +352,66 @@ namespace SimpleBrowser
                         Title = $"{selectedBrowser.Title}  - SimpleBrowser";
                         (selectedBrowser.Parent as TabItem)!.Header = selectedBrowser.Title;
                         Omnibar.Text = selectedBrowser.Address;
-                        if (BookmarkExists(selectedBrowser.Address) is null) NewBookmarkButton.Visibility = Visibility.Visible;
-                        else EditBookmarkButton.Visibility = Visibility.Visible;
+                        if (BookmarkExists(selectedBrowser.Address) is null)
+                        {
+                            NewBookmarkButton.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            EditBookmarkButton.Visibility = Visibility.Visible;
+                        }
+
                         AddHistoryItem(selectedBrowser.Address, selectedBrowser.Title);
                     }
                 }
             }
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoBack();
-        private void ForwardButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoForward();
-        private void HomeButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load(Properties.Settings.Default.HomeURL);
-        
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            selectedBrowser!.BrowserCore.GoBack();
+        }
+
+        private void ForwardButton_Click(object sender, RoutedEventArgs e)
+        {
+            selectedBrowser!.BrowserCore.GoForward();
+        }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            selectedBrowser!.Load(Properties.Settings.Default.HomeURL);
+        }
+
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedBrowser_IsLoading) selectedBrowser!.BrowserCore.StopLoad();
-            else selectedBrowser!.BrowserCore.Reload();
+            if (SelectedBrowser_IsLoading)
+            {
+                selectedBrowser!.BrowserCore.StopLoad();
+            }
+            else
+            {
+                selectedBrowser!.BrowserCore.Reload();
+            }
         }
 
         private void Omnibar_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter) selectedBrowser!.Load(EnsureHttps(Omnibar.Text));
+            if (e.Key == Key.Enter)
+            {
+                selectedBrowser!.Load(EnsureHttps(Omnibar.Text));
+            }
         }
         private static string EnsureHttps(string url)
         {
             if (url.Equals(""))
+            {
                 return "about:blank";
+            }
             else if (!url.ToLower().StartsWith("http://") && !url.ToLower().StartsWith("https://"))
+            {
                 return url.Insert(0, "http://");
+            }
+
             return url;
         }
 
@@ -402,7 +457,7 @@ namespace SimpleBrowser
         }
         private void Menu_Settings_Click(object sender, RoutedEventArgs e)
         {
-            TabItem newTab = new() { Content = new SettingsTabItem(this), Header = "Settings"};
+            TabItem newTab = new() { Content = new SettingsTabItem(this), Header = "Settings" };
             baseTabControl.SelectedIndex = baseTabControl.Items.Add(newTab);
             MenuButton.IsChecked = false;
         }
@@ -410,8 +465,16 @@ namespace SimpleBrowser
         private XmlNode? BookmarkExists(string URL)
         {
             if (BookmarkXml.DocumentElement is not null)
+            {
                 foreach (XmlNode node in BookmarkXml.DocumentElement!.ChildNodes)
-                    if (node.Attributes![1].InnerText.Equals(URL)) return node;
+                {
+                    if (node.Attributes![1].InnerText.Equals(URL))
+                    {
+                        return node;
+                    }
+                }
+            }
+
             return null;
         }
         private void NewBookmarkButton_Popup_Opened(object sender, EventArgs e)
@@ -428,7 +491,11 @@ namespace SimpleBrowser
             NewBookmarkPopup_TitleTextBox.Text = "";
             NewBookmarkPopup_URLTextBox.Text = "";
         }
-        private void NewBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e) => new BookmarkManager().Show();
+        private void NewBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e)
+        {
+            new BookmarkManager().Show();
+        }
+
         private void NewBookmarkPopup_AddButton_Click(object sender, RoutedEventArgs e)
         {
             Bookmark newBookmark = new() { Title = NewBookmarkPopup_TitleTextBox.Text, URL = NewBookmarkPopup_URLTextBox.Text };
@@ -446,7 +513,10 @@ namespace SimpleBrowser
             {
                 Bookmark? currentBookMark = null;
                 foreach (var bookmark in BookmarkList.Where(bookmark => bookmark.Equals(selectedBrowser.Title, selectedBrowser.Address)))
+                {
                     currentBookMark = bookmark;
+                }
+
                 if (currentBookMark is not null)
                 {
                     EditBookmarkPopup_TitleTextBox.Text = currentBookMark.Title;
@@ -460,12 +530,19 @@ namespace SimpleBrowser
             EditBookmarkPopup_TitleTextBox.Text = "";
             EditBookmarkPopup_URLTextBox.Text = "";
         }
-        private void EditBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e) => new BookmarkManager().Show();
+        private void EditBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e)
+        {
+            new BookmarkManager().Show();
+        }
+
         private void EditBookmarkPopup_SaveButton_Click(object sender, RoutedEventArgs e)
         {
             int currentBookMarkIndex = -1;
             foreach (var bookmark in BookmarkList.Where(bookmark => bookmark.Equals(EditBookmarkPopup_TitleTextBox.Text, EditBookmarkPopup_URLTextBox.Text)))
+            {
                 currentBookMarkIndex = BookmarkList.IndexOf(bookmark);
+            }
+
             if (currentBookMarkIndex != -1)
             {
                 BookmarkList[currentBookMarkIndex].Title = EditBookmarkPopup_TitleTextBox.Text;
@@ -479,8 +556,15 @@ namespace SimpleBrowser
             }
         }
 
-        private void BookmarkBar_CheckBox_Checked(object sender, RoutedEventArgs e) => BookmarkBar_Row.Height = new GridLength(32);
-        private void BookmarkBar_CheckBox_Unchecked(object sender, RoutedEventArgs e) => BookmarkBar_Row.Height = new GridLength(0);
+        private void BookmarkBar_CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            BookmarkBar_Row.Height = new GridLength(32);
+        }
+
+        private void BookmarkBar_CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            BookmarkBar_Row.Height = new GridLength(0);
+        }
 
         public BitmapImage LoadFavicon(string URL)
         {
