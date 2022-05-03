@@ -22,32 +22,28 @@ namespace SimpleBrowser
     /// <summary>
     /// Interaction logic for BookmarkManager.xaml
     /// </summary>
-    public partial class BookmarkManager : Window
+    public partial class LibraryWindow : Window
     {
-		private readonly XmlDocument BookmarkXML;
-		private readonly XDocument HistoryXML;
+		private readonly XDocument BookmarkXml;
+		private readonly XDocument HistoryXml;
 
-		public BookmarkManager()
+		public LibraryWindow()
         {
             InitializeComponent();
-			BookmarkXML = new();
-			HistoryXML = new();
-			BookmarkXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
-			HistoryXML = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
-			LoadBookmarks();
-			LoadHistory();
+			BookmarkXml = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+			HistoryXml = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
 		}
-		public BookmarkManager(int TabIndex)
+		public LibraryWindow(int TabIndex)
 		{
 			InitializeComponent();
 			baseTabControl.SelectedIndex = TabIndex;
-			BookmarkXML = new();
-			HistoryXML = new();
-			BookmarkXML.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
-			HistoryXML = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+			BookmarkXml = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+			HistoryXml = XDocument.Load($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+		}
+		private void LibraryWindow_Loaded(object sender, RoutedEventArgs e)
+		{
 			LoadBookmarks();
 			LoadHistory();
-			
 		}
 
 		#region BorderlessMethods
@@ -147,30 +143,42 @@ namespace SimpleBrowser
 
 		private void LoadBookmarks()
 		{
-			foreach (XmlNode node in BookmarkXML.DocumentElement!.ChildNodes)
+			foreach (XElement element in BookmarkXml.Root!.Elements())
 			{
-				ListBoxItem newBookmarkItem = new() { Content = $"{node.Attributes![0].InnerText}, {node.Attributes![1].InnerText}" };
+				ListBoxItem newBookmarkItem = new() 
+				{ 
+					Content = $"{element.Descendants("Title").First().Value}, {element.Descendants("URL").First().Value}" 
+				};
 				newBookmarkItem.MouseDoubleClick += BookmarkItem_MouseDoubleClick;
 				BookmarkDisplay.Items.Add(newBookmarkItem);
 			}
 		}
 		private void LoadHistory()
 		{
-			foreach (XNode HistoryItem in HistoryXML.Root!.Nodes().ToList())
+			foreach (XElement HistoryItem in HistoryXml.Root!.Nodes().ToList())
 			{
-				XElement node = (XElement)HistoryItem;
-				DateTime dt = DateTime.ParseExact(node.Descendants("LastVisited").First().Value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
-				ListBoxItem newHistoryItem = new()
+                ListBoxItem newHistoryItem = new()
 				{
 					
-					Content = $"Title: {node.Descendants("Title").First().Value}\nURL: {node.Descendants("URL").First().Value}\nLast Visited: {dt}" 
+					Content = $"Title: {HistoryItem.Descendants("Title").First().Value}\n" +
+                    $"URL: {HistoryItem.Descendants("URL").First().Value}\n" +
+                    $"Last Visited: {DateTime.ParseExact(HistoryItem.Descendants("LastVisited").First().Value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture)}" 
 				};
 				newHistoryItem.MouseDoubleClick += HistoryItem_MouseDoubleClick;
 				HistoryDisplay.Items.Add(newHistoryItem);
 			}
 		}
 
-        private void BookmarkDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private XElement? BookmarkExists(string URL, string Title)
+		{
+			if (BookmarkXml.Root is not null)
+				foreach (XElement node in BookmarkXml.Root!.Elements())
+					if (node.Descendants("Title").First().Value.Equals(Title) && node.Descendants("URL").First().Value.Equals(URL))
+						return node;
+			return null;
+		}
+
+		private void BookmarkDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 			if (BookmarkDisplay.SelectedItem is ListBoxItem selectedItem && selectedItem.Content is string content)
 			{
@@ -182,29 +190,35 @@ namespace SimpleBrowser
 
 		private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-			if (Application.Current.MainWindow is MainWindow mainWindow)
-			{
-				string title = mainWindow.selectedBrowser!.Title;
-				string URL = mainWindow.selectedBrowser.Address;
-				BookmarkDisplay.Items.Add(new ListBoxItem() { Content = $"{title}, {URL}" });
+			if (TitleTextBox.Text.Length > 1 && URLTextBox.Text.ToLower().Remove(0, URLTextBox.Text.IndexOf("www")).StartsWith("www.") &&
+				URLTextBox.Text.ToLower().EndsWith(".com"))
+            {
+				BookmarkDisplay.Items.Add(new ListBoxItem() { Content = $"{TitleTextBox.Text}, {URLTextBox.Text}" });
 				BookmarkDisplay.SelectedIndex = BookmarkDisplay.Items.Count - 1;
-				XmlElement newElem = BookmarkXML.CreateElement("Bookmark");
-				newElem.SetAttribute("Title", title);
-				newElem.SetAttribute("URL", URL);
-				BookmarkXML.DocumentElement!.AppendChild(newElem);
-				BookmarkXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+				XElement newBookmark =
+					new("Bookmark",
+					new XElement("Title", TitleTextBox.Text),
+					new XElement("URL", URLTextBox.Text)
+				);
+				BookmarkXml.Root!.Add(newBookmark);
+				BookmarkXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
 			}
+			else
+            {
+				MessageBox.Show("Please enter a valid URL in the URL textbox.");
+            }
 		}
 		private void DeleteBookmarkButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (BookmarkDisplay.SelectedItem is ListBoxItem selectedItem && selectedItem.Content is string content)
             {
-				XmlNode node = BookmarkXML.SelectSingleNode($"/Bookmarks/[@name='{content[..content.ToString()!.IndexOf(',')]}']")!;
-				if (node is not null)
-				{
-					XmlNode parent = node.ParentNode!;
-					parent.RemoveChild(node);
-                    BookmarkXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
+				string Title = content[..(content.IndexOf(",") - 1)];
+				string URL = content[(content.IndexOf(",") + 2)..];
+				if (BookmarkExists(URL, Title) is XElement item) 
+				{ 
+					item.Remove();
+					BookmarkDisplay.Items.Remove(selectedItem);
+					BookmarkXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Bookmarks.xml");
 				}
 			}
 		}
@@ -233,21 +247,17 @@ namespace SimpleBrowser
 			if (HistoryDisplay.SelectedItem is ListBoxItem selectedItem && selectedItem.Content is string content)
 			{
 				string url = content[(content.ToString()!.IndexOf(',') + 2)..];
-				foreach (XNode item in HistoryXML.Nodes().ToList())
-                {
-					if ((item as XElement)!.Descendants("URL").First().Value.Equals(url))
-                    {
+				foreach (XElement item in HistoryXml.Elements())
+					if (item!.Descendants("URL").First().Value.Equals(url))
 						item.Remove();
-                    }
-                }
-				HistoryXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+				HistoryXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
 			}
 		}
         private void ClearHistoryButton_Click(object sender, RoutedEventArgs e)
         {
-            HistoryXML.Root!.Remove();
-			HistoryXML.Add(new XElement("History"));
-			HistoryXML.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
+            HistoryXml.Root!.Remove();
+			HistoryXml.Add(new XElement("History"));
+			HistoryXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\History.xml");
 		}
 
         public void SelectTab(int tabIndex)
@@ -256,6 +266,5 @@ namespace SimpleBrowser
 			else if (tabIndex == 1) baseTabControl.SelectedIndex = tabIndex - 1;
 			else MessageBox.Show("WTF kinda index is that?!"); // Unreachable code
         }
-		        
     }
 }

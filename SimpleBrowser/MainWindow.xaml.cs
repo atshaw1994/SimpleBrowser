@@ -188,7 +188,7 @@ namespace SimpleBrowser
         private void LoadBookmarks()
         {
             BookmarkBarStackPanel.Children.Clear();
-            foreach (XElement node in BookmarkXml.Root!.ElementsAfterSelf())
+            foreach (XElement node in BookmarkXml.Root!.Elements())
             {
                 Button newBkBarButton = new() 
                 { 
@@ -403,13 +403,12 @@ namespace SimpleBrowser
         }
         private void Menu_History_Click(object sender, RoutedEventArgs e)
         {
-            BookmarkManager manager = new(1);
-            manager.Show();
+            new LibraryWindow(1).Show();
             MenuButton.IsChecked = false;
         }
         private void Menu_Bookmarks_Click(object sender, RoutedEventArgs e)
         {
-            new BookmarkManager().Show();
+            new LibraryWindow().Show();
             MenuButton.IsChecked = false;
         }
         private void Menu_Downloads_Click(object sender, RoutedEventArgs e)
@@ -441,7 +440,7 @@ namespace SimpleBrowser
         private XElement? BookmarkExists(string URL, string Title)
         {
             if (BookmarkXml.Root is not null)
-                foreach (XElement node in BookmarkXml.Root!.ElementsAfterSelf())
+                foreach (XElement node in BookmarkXml.Root!.Elements())
                     if (node.Descendants("Title").First().Value.Equals(Title) && node.Descendants("URL").First().Value.Equals(URL)) 
                         return node;
             return null;
@@ -460,7 +459,7 @@ namespace SimpleBrowser
             NewBookmarkPopup_TitleTextBox.Text = "";
             NewBookmarkPopup_URLTextBox.Text = "";
         }
-        private void NewBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e) => new BookmarkManager().Show();
+        private void NewBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e) => new LibraryWindow().Show();
 
         private void NewBookmarkPopup_AddButton_Click(object sender, RoutedEventArgs e)
         {
@@ -484,7 +483,7 @@ namespace SimpleBrowser
         {
             if (selectedBrowser is not null)
             {
-                foreach (XElement bookmark in BookmarkXml.Root!.ElementsAfterSelf())
+                foreach (XElement bookmark in BookmarkXml.Root!.Elements())
                 {
                     if(bookmark.Descendants("Title").First().Value.Equals(selectedBrowser.Title) &&
                         bookmark.Descendants("URL").First().Value.Equals(selectedBrowser.Address))
@@ -502,7 +501,7 @@ namespace SimpleBrowser
             EditBookmarkPopup_TitleTextBox.Text = "";
             EditBookmarkPopup_URLTextBox.Text = "";
         }
-        private void EditBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e) => new BookmarkManager().Show();
+        private void EditBookmarkPopup_LibraryButton_Click(object sender, RoutedEventArgs e) => new LibraryWindow().Show();
         private void EditBookmarkPopup_SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (BookmarkExists(EditBookmarkPopup_URLTextBox.Text, EditBookmarkPopup_TitleTextBox.Text) is XElement element)
