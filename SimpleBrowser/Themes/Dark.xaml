@@ -76,7 +76,7 @@
 
     <!--#region TabControl-->
 
-    <SolidColorBrush x:Key="TabControl.Background" Color="Transparent"/>
+    <SolidColorBrush x:Key="TabControl.Background" Color="#353539"/>
     <SolidColorBrush x:Key="TabControl.Border" Color="#007ACC"/>
     <SolidColorBrush x:Key="TabControl.Foreground" Color="#A2A4A5"/>
 
@@ -92,20 +92,19 @@
 
     <!--#region TabControl (BookmarkManager Style)-->
 
-    <SolidColorBrush x:Key="BookmarkManagerTabControl.Background" Color="White"/>
-    <SolidColorBrush x:Key="BookmarkManagerTabControl.Border" Color="#3399FF"/>
-    <SolidColorBrush x:Key="BookmarkManagerTabControl.Foreground" Color="#1E1E1E"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Background" Color="#353539"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Border" Color="#007ACC"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Foreground" Color="#A2A4A5"/>
 
-    <SolidColorBrush x:Key="BookmarkManagerTabControl.Background.Hover" Color="#C9DEF5"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Background.Hover" Color="#525258"/>
     <SolidColorBrush x:Key="BookmarkManagerTabControl.Border.Hover" Color="#80738393"/>
     <SolidColorBrush x:Key="BookmarkManagerTabControl.Foreground.Hover" Color="#A2A4A5"/>
 
-    <SolidColorBrush x:Key="BookmarkManagerTabControl.Background.Selected" Color="#ECECF0"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Background.Selected" Color="#353539"/>
     <SolidColorBrush x:Key="BookmarkManagerTabControl.Border.Selected" Color="#007ACC"/>
-    <SolidColorBrush x:Key="BookmarkManagerTabControl.Foreground.Selected" Color="#1E1E1E"/>
+    <SolidColorBrush x:Key="BookmarkManagerTabControl.Foreground.Selected" Color="#F1F1F1"/>
 
     <!--#endregion-->
-
 
     <!--#region CheckBox-->
 
@@ -128,7 +127,7 @@
 
     <!--#region Textbox-->
 
-    <SolidColorBrush x:Key="TextBox.Background" Color="#333337"/>
+    <SolidColorBrush x:Key="TextBox.Background" Color="#cf333337"/>
     <SolidColorBrush x:Key="TextBox.Foreground" Color="#F1F1F1"/>
     <SolidColorBrush x:Key="TextBox.Static.Border" Color="#555555"/>
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#7EB4EA"/>

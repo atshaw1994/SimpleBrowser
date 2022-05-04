@@ -1,6 +1,7 @@
 ﻿using CefSharp.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -23,7 +24,7 @@ namespace SimpleBrowser
         private bool SelectedBrowser_IsLoading = false;
         private readonly XDocument BookmarkXml;
         private readonly XDocument HistoryXml;
-        private readonly XDocument SettingsXml;
+        private XDocument SettingsXml;
         private int StartupMode;
         private string HomePage;
 
@@ -229,6 +230,7 @@ namespace SimpleBrowser
             };
             TabItem newTab = new() { Header = "Loading..." };
             newWeb.LoadingStateChanged += NewWeb_LoadingStateChanged;
+            newWeb.DownloadHandler = new DownloadHandler();
             newTab.Content = newWeb;
             baseTabControl.SelectedIndex = baseTabControl.Items.Add(newTab);
         }
@@ -242,6 +244,7 @@ namespace SimpleBrowser
                 {
                     if (e.IsLoading)
                     {
+                        UpdateOmniBarProgressBar(e.Browser.GetFrameNames().IndexOf(e.Browser.MainFrame.Name), e.Browser.GetFrameNames().Count);
                         SelectedBrowser_IsLoading = true;
                         if (RefreshButton.Content is Grid grid && grid.Children[0] is TextBlock RefreshText && grid.Children[1] is TextBlock StopText)
                         {
@@ -255,7 +258,7 @@ namespace SimpleBrowser
                     else
                     {
                         Icon = LoadFavicon(selectedBrowser.Address);
-
+                        UpdateOmniBarProgressBar(0.0, 0.0);
                         SelectedBrowser_IsLoading = false;
                         if (RefreshButton.Content is Grid grid && grid.Children[0] is TextBlock RefreshText && grid.Children[1] is TextBlock StopText)
                         {
@@ -279,6 +282,21 @@ namespace SimpleBrowser
                     AddHistoryItem(selectedBrowser.Address, selectedBrowser.Title);
                 }
             });
+        }
+
+        private void UpdateOmniBarProgressBar(double CurrentIndex, double TotalProgress)
+        {
+            if (CurrentIndex == 0.0 && TotalProgress == 0.0)
+            {
+                OmniBarProgressBar.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                OmniBarProgressBar.Visibility = Visibility.Visible;
+                double ratio = Omnibar.ActualWidth / TotalProgress;
+                CurrentIndex *= ratio;
+                OmniBarProgressBar.Width = CurrentIndex;
+            }
         }
 
         private void AddHistoryItem(string PageURL, string PageTitle)
@@ -357,7 +375,12 @@ namespace SimpleBrowser
 
         private void BackButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoBack();
         private void ForwardButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.BrowserCore.GoForward();
-        private void HomeButton_Click(object sender, RoutedEventArgs e) => selectedBrowser!.Load(Properties.Settings.Default.HomeURL);
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsXml = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "\\Settings.xml");
+            selectedBrowser!.Load(SettingsXml.Root.Element("HomePage").Value);
+        }
+
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedBrowser_IsLoading)

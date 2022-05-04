@@ -30,7 +30,7 @@
 
     <!--#region Button-->
 
-    <SolidColorBrush x:Key="Button.Background" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="Button.Background" Color="#60FFFFFF"/>
     <SolidColorBrush x:Key="Button.Foreground" Color="#1E1E1E"/>
     <SolidColorBrush x:Key="Button.Border" Color="#738393"/>
     
@@ -43,8 +43,8 @@
     <SolidColorBrush x:Key="Button.Background.Defaulted" Color="#C9DEF5"/>
     <SolidColorBrush x:Key="Button.Border.Defaulted" Color="#3399FF"/>
     
-    <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="#A2A4A5"/>
-    <SolidColorBrush x:Key="Button.Background.Disabled" Color="#F5F5F5"/>
+    <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="#b1000000"/>
+    <SolidColorBrush x:Key="Button.Background.Disabled" Color="#10000000"/>
     <SolidColorBrush x:Key="Button.Border.Disabled" Color="#CCCEDB"/>
     
     <!--#endregion-->
@@ -132,7 +132,7 @@
 
     <!--#region Textbox-->
 
-    <SolidColorBrush x:Key="TextBox.Background" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TextBox.Background" Color="#60FFFFFF"/>
     <SolidColorBrush x:Key="TextBox.Foreground" Color="#1E1E1E"/>
     <SolidColorBrush x:Key="TextBox.Static.Border" Color="#738393"/>
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#7EB4EA"/>
