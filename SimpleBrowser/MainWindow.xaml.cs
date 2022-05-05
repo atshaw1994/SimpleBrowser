@@ -230,7 +230,7 @@ namespace SimpleBrowser
             };
             TabItem newTab = new() { Header = "Loading..." };
             newWeb.LoadingStateChanged += NewWeb_LoadingStateChanged;
-            newWeb.DownloadHandler = new DownloadHandler();
+            newWeb.DownloadHandler = new DownloadHandler(progressBar: OmniBarProgressBar, omniBarWidth: Omnibar.ActualWidth);
             newTab.Content = newWeb;
             baseTabControl.SelectedIndex = baseTabControl.Items.Add(newTab);
         }
