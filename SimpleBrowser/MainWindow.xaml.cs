@@ -378,7 +378,7 @@ namespace SimpleBrowser
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
             SettingsXml = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "\\Settings.xml");
-            selectedBrowser!.Load(SettingsXml.Root.Element("HomePage").Value);
+            selectedBrowser!.Load(SettingsXml.Root!.Element("HomePage")!.Value);
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)

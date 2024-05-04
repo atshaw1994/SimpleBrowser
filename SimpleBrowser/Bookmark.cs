@@ -26,5 +26,10 @@ namespace SimpleBrowser
         {
             return other is not null && other is Bookmark item && Title == item.Title && URL == item.URL;
         }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -83,9 +83,9 @@ namespace SimpleBrowser
         {
             if (HomeURLTextBox.Text is not null && SettingsXml is not null)
             {
-                SettingsXml.Root.Element("HomePage").Value = HomeURLTextBox.Text;
+                SettingsXml.Root!.Element("HomePage")!.Value = HomeURLTextBox.Text;
                 SettingsXml.Save($"{AppDomain.CurrentDomain.BaseDirectory}\\Settings.xml");
-                MessageBox.Show(SettingsXml.Root.Element("HomePage").Value);
+                MessageBox.Show(SettingsXml.Root.Element("HomePage")!.Value);
             }
         }
 
