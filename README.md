@@ -2,6 +2,9 @@
 
 A lightweight, tab-based desktop web browser built with C# and .NET 10, powered by the Avalonia UI framework.
 
+On Linux, firefox is slow to start, and Chrome is a memory hog that requires keyrings and password entering all the time. 
+SimpleBrowser is designed to be fast, efficient, and user-friendly, providing essential browsing features without unnecessary bloat.
+
 <img src="Assets/screenshot.png" alt="Main Window" />
 
 ## Features
