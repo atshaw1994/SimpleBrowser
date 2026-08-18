@@ -1,0 +1,259 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ic="using:FluentIcons.Avalonia"
+        xmlns:models="using:SimpleBrowser.Models"
+        xmlns:viewModels="using:SimpleBrowser.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SimpleBrowser.Views.MainWindow"
+        x:DataType="viewModels:MainViewModel"
+        WindowDecorations="Full"
+        Background="Transparent"
+        Icon="/Assets/SimpleBrowser.ico"
+        Title="SimpleBrowser">
+
+    <Design.DataContext>
+        <viewModels:MainViewModel>
+            <viewModels:MainViewModel.Tabs>
+                <viewModels:TabViewModel Title="Design Tab" IsSelected="True" />
+            </viewModels:MainViewModel.Tabs>
+        </viewModels:MainViewModel>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,*" Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}">
+        <!-- Toolbar -->
+        <Grid Margin="8" ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+            <!-- Back Button -->
+            <Button Command="{Binding GoBackCommand}" CornerRadius="3,0,0,3" Margin="0,0,-1,0">
+                <ic:FluentIcon Icon="ChevronLeft" IconSize="Size16" />
+            </Button>
+
+            <!-- Forward Button -->
+            <Button Grid.Column="1" CornerRadius="0,3,3,0" Command="{Binding GoForwardCommand}">
+                <ic:FluentIcon Icon="ChevronRight" IconSize="Size16" />
+            </Button>
+
+            <!-- Refresh Button (Visible when NOT loading) -->
+            <Button Grid.Column="2" 
+                    Command="{Binding RefreshCommand}" 
+                    IsVisible="{Binding !IsLoading}" 
+                    Margin="5,0,0,0"
+                    ToolTip.Tip="Refresh">
+                <ic:FluentIcon Icon="ArrowClockwise" IconSize="Size16"/>
+            </Button>
+
+            <!-- Stop Button (Visible when loading) -->
+            <Button Grid.Column="2" 
+                    Command="{Binding StopCommand}" 
+                    IsVisible="{Binding IsLoading}" 
+                    Margin="5,0,0,0"
+                    ToolTip.Tip="Stop loading">
+                <ic:FluentIcon Icon="Dismiss" IconSize="Size16" />
+            </Button>
+
+            <!-- Loading Bar -->
+            <ProgressBar 
+                Grid.Column="3" 
+                Margin="5,0,0,0" 
+                Height="31" 
+                Opacity="0.5"
+                IsHitTestVisible="False"
+                Value="{Binding LoadingProgress}"
+                IsVisible="{Binding IsLoading}"/>
+
+            <!-- AddressBar -->
+            <TextBox x:Name="AddressBar"
+                Grid.Column="3" 
+                Text="{Binding AddressBarUrl, Mode=TwoWay}" 
+                Margin="5,0,0,0" 
+                MaxLines="1">
+                <TextBox.KeyBindings>
+                    <KeyBinding Gesture="Enter" 
+                                Command="{Binding NavigateCommand}" 
+                                CommandParameter="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}" />
+                </TextBox.KeyBindings>
+            </TextBox>
+
+            <!-- Hamburger Menu -->
+            <Button Grid.Column="4" Margin="8,0,0,0" Flyout="{StaticResource MainMenuFlyout}">
+                <Button.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                    </Style>
+                </Button.Styles>
+                <ic:FluentIcon Icon="MoreVertical" IconSize="Size16" />
+            </Button>
+        </Grid>
+        
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,*" Margin="0,0,0,0" >
+            <!-- Bookmarks SideBar -->  
+            <Grid 
+                RowDefinitions="Auto,*" 
+                Width="200" 
+                IsVisible="{Binding IsBookmarksShown}"
+                Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                <!-- Bookmarks Header -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4,4,4,0">
+                    <TextBlock Text="Bookmarks" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <Button Command="{Binding AddBookmarkCommand}"
+                            CommandParameter="{Binding $parent[Window]}"
+                            Width="32" 
+                            Height="32" 
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            ToolTip.Tip="Add Bookmark">
+                        <ic:FluentIcon Icon="Add" IconSize="Resizable" Width="12" Height="12"/>
+                    </Button>
+                </StackPanel>
+                <Button Command="{Binding ToggleBookmarksSidebarCommand}"
+                        Width="32" Height="32" Margin="4,4,4,0"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Background="Transparent"
+                        ToolTip.Tip="Close Sidebar">
+                    <ic:FluentIcon Icon="Dismiss" IconSize="Resizable" Width="12" Height="12"/>
+                </Button>
+                <!-- Bookmarks List -->
+                <ListBox Grid.Row="1" ItemsSource="{Binding Bookmarks}" Margin="8">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="models:BookmarkModel">
+                            <TextBlock Text="{Binding Name}" FontSize="14"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <!-- History SideBar -->
+            <Grid 
+                Grid.Column="1"
+                RowDefinitions="Auto,*"
+                Width="200" 
+                IsVisible="{Binding IsHistoryShown}"
+                Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                <!-- History Header -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4,4,4,0">
+                    <TextBlock Text="History" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <Button Command="{Binding ClearHistoryCommand}"
+                            CommandParameter="{Binding $parent[Window]}"
+                            Width="32" 
+                            Height="32" 
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            ToolTip.Tip="Clear History">
+                        <ic:FluentIcon Icon="Broom" IconSize="Resizable" Width="12" Height="12"/>
+                    </Button>
+                </StackPanel> 
+                <Button Command="{Binding ToggleHistorySidebarCommand}"
+                        Width="32" Height="32" Margin="4,4,4,0"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Background="Transparent"
+                        ToolTip.Tip="Close Sidebar">
+                    <ic:FluentIcon Icon="Dismiss" IconSize="Resizable" Width="12" Height="12"/>
+                </Button> 
+                <!-- History List -->
+                <ListBox Grid.Row="1" ItemsSource="{Binding RecentHistory}" Margin="8">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="models:HistoryItemModel">
+                            <TextBlock Text="{Binding DisplayTitle}" FontSize="14"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <!-- TabControl -->
+            <Grid Grid.Column="2" RowDefinitions="Auto, *" Margin="0,0,0,0">
+                <!-- Tab Headers -->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+                                VerticalScrollBarVisibility="Disabled"
+                                AllowAutoHide="False">
+                              
+                    <StackPanel Orientation="Horizontal">
+                        <TabStrip ItemsSource="{Binding Tabs}"
+                                    SelectedItem="{Binding SelectedTab}"
+                                    Margin="0,0,0,0">
+                            <TabStrip.Styles>
+                                <!-- Base Style -->
+                                <Style Selector="TabStripItem">
+                                    <Setter Property="Margin" Value="0,-12,0,0" />
+                                    <Setter Property="Padding" Value="0" />
+                                    <!-- Unselected Tab Background -->
+                                    <Setter Property="Background" Value="#10FFFFFF" />
+                                </Style>
+
+                                <!-- Active/Selected Tab Style -->
+                                <Style Selector="TabStripItem:selected">
+                                    <!-- Selected Tab Background -->
+                                    <Setter Property="Background" Value="#40FFFFFF" />
+                                </Style>
+        
+                                <!-- Hover State -->
+                                <Style Selector="TabStripItem:pointerover /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="#30FFFFFF" />
+                                </Style>
+                            </TabStrip.Styles>
+
+                            <TabStrip.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="0"/>
+                                </ItemsPanelTemplate>
+                            </TabStrip.ItemsPanel>
+
+                            <TabStrip.ItemTemplate>
+                                <DataTemplate DataType="viewModels:TabViewModel">
+                                    <Border Background="{Binding $parent[TabStripItem].Background}" 
+                                            BorderBrush="#40FFFFFF" 
+                                            BorderThickness="1,1,1,0" 
+                                            Margin="0,7,0,0" 
+                                            Padding="16,4,8,4">
+                                        <StackPanel Orientation="Horizontal" Spacing="16">
+                                            <TextBlock Text="{Binding Title}" 
+                                                        FontSize="16"
+                                                        Margin="0,1,0,0"
+                                                        VerticalAlignment="Center"/>
+                                            <Button Command="{Binding CloseTabCommand}" 
+                                                    CommandParameter="{Binding}"
+                                                    Width="24" Height="24" 
+                                                    Padding="0"
+                                                    Background="Transparent">
+                                                <ic:FluentIcon Icon="Dismiss" IconSize="Resizable" Width="8" Height="8"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </TabStrip.ItemTemplate>
+                        </TabStrip>
+                    
+                        <Button Command="{Binding AddTabCommand}"
+                                Width="32" 
+                                Height="32" 
+                                Margin="4,0,0,0"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                ToolTip.Tip="New Tab">
+                            <ic:FluentIcon Icon="Add" IconSize="Resizable" Width="12" Height="12"/>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Tab Contents: Each tab gets its OWN persistent WebView -->
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding Tabs}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Panel /> <!-- Overlaps all tab contents in the same grid space -->
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="viewModels:TabViewModel">
+                            <!-- Only show the WebView belonging to the active tab -->
+                            <ContentControl Content="{Binding Content[0]}"
+                                            IsVisible="{Binding IsSelected}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

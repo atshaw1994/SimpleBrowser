@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>SimpleBrowser</RootNamespace>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.0" />
+    <PackageReference Include="Avalonia.Controls.WebView" Version="12.0.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.0" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.0" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.0" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="FluentIcons.Avalonia" Version="2.1.337" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+  </ItemGroup>
+
+	<!-- Build Linux .tar.gz Archive Target -->
+	<Target Name="PackageLinuxTarGz" AfterTargets="Publish" Condition="'$(RuntimeIdentifier)' != '' And $(RuntimeIdentifier.StartsWith('linux'))">
+		<PropertyGroup>
+			<!-- Resolve absolute path for the output tar.gz in the build output parent directory -->
+			<PublishDirAbs>$([System.IO.Path]::GetFullPath('$(PublishDir)'))</PublishDirAbs>
+			<TarGzFileName>$([System.IO.Path]::GetFullPath('$(PublishDir)..\SimpleBrowser-linux-x64-v$(Version).tar.gz'))</TarGzFileName>
+		</PropertyGroup>
+
+		<!-- Clean unwanted files BEFORE creating the archive -->
+		<Delete Files="$(PublishDir)SimpleBrowser.dll.config" Condition="Exists('$(PublishDir)SimpleBrowser.dll.config')" />
+
+		<!-- Safe PowerShell invocation using Get-ChildItem and absolute paths -->
+		<Exec Command="powershell -NoProfile -Command &quot;Set-Location '$(PublishDirAbs)'; tar -czf '$(TarGzFileName)' (Get-ChildItem .)&quot;" />
+
+		<Message Text="Successfully created archive: $(TarGzFileName)" Importance="high" />
+	</Target>
+
+	<!-- Custom Publish Shortcut: Publish-Linux -->
+	<Target Name="PublishLinux">
+		<MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Restore;Publish" Properties="Configuration=Release;RuntimeIdentifier=linux-x64;SelfContained=true;PublishSingleFile=true;IncludeNativeLibrariesForSelfExtract=true;DebugType=embedded" />
+	</Target>
+</Project>

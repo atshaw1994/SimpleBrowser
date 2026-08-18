@@ -1,0 +1,81 @@
+﻿<Application xmlns="https://github.com/avaloniaui"
+             xmlns:ic="using:FluentIcons.Avalonia"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SimpleBrowser.App"
+             xmlns:local="using:SimpleBrowser"
+             xmlns:models="using:SimpleBrowser.Models"
+             xmlns:viewmodels="using:SimpleBrowser.ViewModels"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.DataTemplates>
+        <local:ViewLocator />
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+    <Application.Resources>
+        <MenuFlyout x:Key="MainMenuFlyout" Placement="BottomEdgeAlignedRight">
+            <MenuItem Header="New Tab" Command="{ReflectionBinding $parent[Window].DataContext.AddTabCommand}">
+                <MenuItem.Icon>
+                    <ic:SymbolIcon Symbol="TabAdd" FontSize="16" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="New Window" Command="{ReflectionBinding $parent[Window].DataContext.NewWindowCommand}">
+                <MenuItem.Icon>
+                    <ic:FluentIcon Icon="WindowNew" IconSize="Size16" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator/>
+            <MenuItem Header="History" Command="{ReflectionBinding $parent[Window].DataContext.ToggleHistorySidebarCommand}">
+                <MenuItem.Icon>
+                    <ic:FluentIcon Icon="History" IconSize="Size16" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Bookmarks" Command="{ReflectionBinding $parent[Window].DataContext.ToggleBookmarksSidebarCommand}">
+                <MenuItem.Icon>
+                    <ic:FluentIcon Icon="Bookmark" IconSize="Size16" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Downloads" Command="{ReflectionBinding $parent[Window].DataContext.OpenDownloadsFolderCommand}">
+                <MenuItem.Icon>
+                    <ic:FluentIcon Icon="ArrowDownload" IconSize="Size16" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator/>
+            <MenuItem>
+                <MenuItem.Header>
+                    <Grid ColumnDefinitions="*,Auto,*,Auto" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Zoom" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <Button Content="-" Grid.Column="1" Width="32"/>
+                        <Button Content="100%" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                        <Button Content="+" Grid.Column="3" Width="32"/>
+                    </Grid>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <ic:FluentIcon Icon="Search" IconSize="Size16" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator/>
+            <MenuItem Header="About" Command="{ReflectionBinding $parent[Window].DataContext.OpenAboutCommand}">
+                <MenuItem.Icon>
+                    <ic:FluentIcon Icon="QuestionCircle" IconSize="Size16" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Settings" Command="{ReflectionBinding $parent[Window].DataContext.OpenSettingsCommand}">
+                <MenuItem.Icon>
+                    <ic:FluentIcon Icon="Settings" IconSize="Size16" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator/>
+            <MenuItem Header="Exit" Command="{ReflectionBinding $parent[Window].DataContext.ExitCommand}">
+                <MenuItem.Icon>
+                    <ic:FluentIcon Icon="ArrowExit" IconSize="Size16" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </MenuFlyout>
+    </Application.Resources>
+
+</Application>

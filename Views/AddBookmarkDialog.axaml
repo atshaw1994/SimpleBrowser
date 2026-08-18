@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" SizeToContent="WidthAndHeight"
+        xmlns:vm="using:SimpleBrowser.ViewModels"
+        x:Class="SimpleBrowser.Views.AddBookmarkDialog"
+        x:DataType="vm:AddBookmarkViewModel"
+        Title="AddBookmarkDialog">
+
+    <Design.DataContext>
+        <vm:AddBookmarkViewModel />
+    </Design.DataContext>
+
+    <StackPanel>
+        <TextBlock Text="Name:" Margin="5"/>
+        <TextBox x:Name="NameTextBox" Text="{Binding BookmarkName}" Margin="5" Width="350"/>
+        <TextBlock Text="URL:" Margin="5"/>
+        <TextBox x:Name="UrlTextBox" Text="{Binding BookmarkUrl}" Width="350" Margin="5"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Cancel" Width="75" Margin="5" Command="{Binding CancelCommand}"/>
+            <Button Content="OK" Width="75" Margin="5" Command="{Binding OkCommand}"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
