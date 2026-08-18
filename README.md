@@ -2,10 +2,20 @@
 
 A lightweight, tab-based desktop web browser built with C# and .NET 10, powered by the Avalonia UI framework.
 
-On Linux, firefox is slow to start, and Chrome is a memory hog that requires keyrings and password entering all the time. 
-So I built a simple browser that is fast, lightweight, and has all the features I need for my daily browsing with none of the bloat.
+On Linux, Firefox is slow to start, and Chrome is a memory hog that requires keyring authentication and password management. 
+SimpleBrowser is fast, lightweight, and built with core daily browsing features and none of the bloat.
 
 <img src="Assets/screenshot.png" alt="Main Window" />
+
+## Demo
+
+<video src="https://github.com/user-attachments/assets/f6972c79-9774-4db5-b661-5b28bead7ad8" autoplay loop muted playsinline width="100%"></video>
+
+*Launch speed benchmark recorded on a fresh Arch Linux VM with LXQt in VMware Workstation Pro:*
+
+* **RAM:** 16 GB assigned (32 GB Host)
+* **CPU:** 4 Cores (Intel i5-12400F Host)
+* **Integration:** VMware Tools installed
 
 ## Features
 
@@ -26,41 +36,8 @@ So I built a simple browser that is fast, lightweight, and has all the features 
 | .NET | 10.0 |
 | Avalonia UI | 12.1.0 |
 | CommunityToolkit.Mvvm | 8.4.2 |
-| FluentIcons.Avalonia | latest |
+| FluentIcons.Avalonia | Latest |
 
 ## Architecture
 
 The project follows the **MVVM** pattern with a dedicated service layer:
-
-```
-SimpleBrowser/
-├── Models/             # BookmarkModel, HistoryItemModel
-├── ViewModels/         # MainViewModel, TabViewModel, AddBookmarkViewModel
-├── Views/              # MainWindow, AddBookmarkDialog (Avalonia AXAML)
-└── Services/
-    ├── Abstractions/   # IBookmarkService, IHistoryService interfaces
-    ├── BookmarkService.cs
-    ├── HistoryService.cs
-    ├── JsonBookmarksRepository.cs
-    └── JsonHistoryItemRepository.cs
-```
-
-Data is persisted via a repository pattern backed by local JSON files.
-
-## Getting Started
-
-### Prerequisites
-
-- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
-
-### Build & Run
-
-```powershell
-git clone https://github.com/atshaw1994/SimpleBrowser.git
-cd SimpleBrowser
-dotnet run
-```
-
-## License
-
-See [LICENSE.txt](LICENSE.txt) for details.
