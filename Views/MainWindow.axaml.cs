@@ -1,11 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Threading;
 using SimpleBrowser.ViewModels;
 using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace SimpleBrowser.Views;
 

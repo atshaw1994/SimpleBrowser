@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,8 @@ using SimpleBrowser.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -195,33 +198,35 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public static void OpenDownloadsFolder()
+    public static async Task OpenDownloadsFolder()
     {
-        var downloadsPath = System.IO.Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            "Downloads"
-        );
-        if (System.IO.Directory.Exists(downloadsPath))
+        // 1. Get TopLevel via Application Lifetime (avoids passing ViewModel as Visual)
+        TopLevel? topLevel = null;
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            topLevel = TopLevel.GetTopLevel(desktop.MainWindow);
+
+        // 2. Launch via Avalonia StorageProvider / ILauncher
+        if (topLevel?.StorageProvider != null && topLevel.Launcher != null)
         {
-            try
+            var downloadsFolder = await topLevel.StorageProvider.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads);
+            if (downloadsFolder != null)
             {
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                {
-                    FileName = downloadsPath,
-                    UseShellExecute = true,
-                    Verb = "open"
-                });
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions (e.g., log the error or show a message to the user)
-                Console.WriteLine($"Error opening downloads folder: {ex.Message}");
+                // Use LaunchUriAsync with the folder's Uri
+                await topLevel.Launcher.LaunchUriAsync(downloadsFolder.Path);
+                return;
             }
         }
-        else
+
+        // 3. Fallback: Direct System Launch
+        var defaultPath = Path.Combine( Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+
+        if (Directory.Exists(defaultPath))
         {
-            // Handle the case where the Downloads folder does not exist
-            Console.WriteLine("Downloads folder does not exist.");
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = defaultPath,
+                UseShellExecute = true
+            });
         }
     }
 
@@ -232,6 +237,8 @@ public partial class MainViewModel : ObservableObject
             desktop.Shutdown();
     }
     #endregion
+
+    public Action? OpenDownloadsFolderRequested { get; set; }
 
     public MainViewModel() => Services = null!;
 

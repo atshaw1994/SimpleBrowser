@@ -106,6 +106,8 @@ namespace SimpleBrowser.ViewModels
                 }
             };
             Content.Add(WebView);
+
+
         }
 
         #region Commands
