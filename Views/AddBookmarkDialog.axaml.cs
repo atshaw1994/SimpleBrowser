@@ -26,6 +26,14 @@ namespace SimpleBrowser.Views
             DataContext = _viewModel;
         }
 
+        public AddBookmarkDialog(BookmarkModel bookmark)
+        {
+            InitializeComponent();
+            _viewModel = new AddBookmarkViewModel(bookmark);
+            _viewModel.AcceptAndCloseRequested += OnAcceptAndCloseRequested;
+            DataContext = _viewModel;
+        }
+
         private void OnAcceptAndCloseRequested(BookmarkModel? bookmark)
         {
             _viewModel.AcceptAndCloseRequested -= OnAcceptAndCloseRequested;

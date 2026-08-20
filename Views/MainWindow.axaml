@@ -5,21 +5,15 @@
         xmlns:ic="using:FluentIcons.Avalonia"
         xmlns:models="using:SimpleBrowser.Models"
         xmlns:viewModels="using:SimpleBrowser.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
         x:Class="SimpleBrowser.Views.MainWindow"
         x:DataType="viewModels:MainViewModel"
+        Design.DataContext="{StaticResource DesignMainViewModel}"
+        Width="800" Height="450"
         WindowDecorations="Full"
         Background="Transparent"
         Icon="/Assets/SimpleBrowser.ico"
         Title="SimpleBrowser">
-
-    <Design.DataContext>
-        <viewModels:MainViewModel>
-            <viewModels:MainViewModel.Tabs>
-                <viewModels:TabViewModel Title="Design Tab" IsSelected="True" />
-            </viewModels:MainViewModel.Tabs>
-        </viewModels:MainViewModel>
-    </Design.DataContext>
 
     <Grid RowDefinitions="Auto,*" Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}">
         <!-- Toolbar -->
@@ -89,79 +83,140 @@
         
         <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,*" Margin="0,0,0,0" >
             <!-- Bookmarks SideBar -->  
-            <Grid 
-                RowDefinitions="Auto,*" 
-                Width="200" 
-                IsVisible="{Binding IsBookmarksShown}"
-                Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
-                <!-- Bookmarks Header -->
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4,4,4,0">
-                    <TextBlock Text="Bookmarks" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
-                    <Button Command="{Binding AddBookmarkCommand}"
-                            CommandParameter="{Binding $parent[Window]}"
-                            Width="32" 
-                            Height="32" 
-                            Margin="4,0,0,0"
-                            VerticalAlignment="Center"
+            <Border 
+                Background="{DynamicResource SystemControlBackgroundListLowBrush}" 
+                BorderBrush="Black" 
+                BorderThickness="0,1,1,0">
+                <Grid 
+                    RowDefinitions="Auto,*" 
+                    IsVisible="{Binding IsBookmarksShown}">
+                    <!-- Bookmarks Header -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4,4,4,0">
+                        <TextBlock Text="Bookmarks" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <Button Command="{Binding AddBookmarkCommand}"
+                                CommandParameter="{Binding $parent[Window]}"
+                                Width="32" 
+                                Height="32" 
+                                Margin="4,0,0,0"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                ToolTip.Tip="Add Bookmark">
+                            <ic:FluentIcon Icon="Add" IconSize="Resizable" Width="12" Height="12"/>
+                        </Button>
+                    </StackPanel>
+                    <Button Command="{Binding ToggleBookmarksSidebarCommand}"
+                            Width="32" Height="32" Margin="4,4,4,0"
+                            HorizontalAlignment="Right" VerticalAlignment="Center"
                             Background="Transparent"
-                            ToolTip.Tip="Add Bookmark">
-                        <ic:FluentIcon Icon="Add" IconSize="Resizable" Width="12" Height="12"/>
+                            ToolTip.Tip="Close Sidebar">
+                        <ic:FluentIcon Icon="Dismiss" IconSize="Resizable" Width="12" Height="12"/>
                     </Button>
-                </StackPanel>
-                <Button Command="{Binding ToggleBookmarksSidebarCommand}"
-                        Width="32" Height="32" Margin="4,4,4,0"
-                        HorizontalAlignment="Right" VerticalAlignment="Center"
-                        Background="Transparent"
-                        ToolTip.Tip="Close Sidebar">
-                    <ic:FluentIcon Icon="Dismiss" IconSize="Resizable" Width="12" Height="12"/>
-                </Button>
-                <!-- Bookmarks List -->
-                <ListBox Grid.Row="1" ItemsSource="{Binding Bookmarks}" Margin="8">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="models:BookmarkModel">
-                            <TextBlock Text="{Binding Name}" FontSize="14"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
+                    <!-- Bookmarks List -->
+                    <ListBox Grid.Row="1"
+                             Background="{DynamicResource SystemControlBackgroundListMediumBrush}"
+                             ItemsSource="{Binding Bookmarks}" 
+                             Margin="2,4,2,2">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="models:BookmarkModel">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock Text="{Binding Name}" FontSize="14" VerticalAlignment="Center"/>
+                                    <Button Command="{Binding $parent[Window].DataContext.EditBookmarkCommand}"
+                                            CommandParameter="{Binding}"
+                                            VerticalAlignment="Center"
+                                            Background="Transparent"
+                                            ToolTip.Tip="Edit Bookmark">
+                                        <ic:FluentIcon Icon="Edit" IconSize="Size12"/>
+                                    </Button>
+                                    <Button Command="{Binding $parent[Window].DataContext.DeleteBookmarkCommand}"
+                                            CommandParameter="{Binding}"
+                                            VerticalAlignment="Center"
+                                            Background="Transparent"
+                                            ToolTip.Tip="Delete Bookmark">
+                                        <ic:FluentIcon Icon="Delete" IconSize="Size12"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
 
             <!-- History SideBar -->
-            <Grid 
+            <Border 
                 Grid.Column="1"
-                RowDefinitions="Auto,*"
-                Width="200" 
-                IsVisible="{Binding IsHistoryShown}"
-                Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
-                <!-- History Header -->
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4,4,4,0">
-                    <TextBlock Text="History" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
-                    <Button Command="{Binding ClearHistoryCommand}"
-                            CommandParameter="{Binding $parent[Window]}"
-                            Width="32" 
-                            Height="32" 
-                            Margin="4,0,0,0"
-                            VerticalAlignment="Center"
+                Background="{DynamicResource SystemControlBackgroundListLowBrush}" 
+                BorderBrush="Black" 
+                BorderThickness="0,1,1,0">
+                <Grid 
+                    RowDefinitions="Auto,*"
+                    IsVisible="{Binding IsHistoryShown}">
+                    <!-- History Header -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4,4,4,0">
+                        <TextBlock Text="History" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <Button Command="{Binding ClearHistoryCommand}"
+                                CommandParameter="{Binding $parent[Window]}"
+                                Width="32" 
+                                Height="32" 
+                                Margin="4,0,0,0"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                ToolTip.Tip="Clear History">
+                            <ic:FluentIcon Icon="Broom" IconSize="Resizable" Width="12" Height="12"/>
+                        </Button>
+                    </StackPanel> 
+                    <Button Command="{Binding ToggleHistorySidebarCommand}"
+                            Width="32" Height="32" Margin="4,4,4,0"
+                            HorizontalAlignment="Right" VerticalAlignment="Center"
                             Background="Transparent"
-                            ToolTip.Tip="Clear History">
-                        <ic:FluentIcon Icon="Broom" IconSize="Resizable" Width="12" Height="12"/>
-                    </Button>
-                </StackPanel> 
-                <Button Command="{Binding ToggleHistorySidebarCommand}"
-                        Width="32" Height="32" Margin="4,4,4,0"
-                        HorizontalAlignment="Right" VerticalAlignment="Center"
-                        Background="Transparent"
-                        ToolTip.Tip="Close Sidebar">
-                    <ic:FluentIcon Icon="Dismiss" IconSize="Resizable" Width="12" Height="12"/>
-                </Button> 
-                <!-- History List -->
-                <ListBox Grid.Row="1" ItemsSource="{Binding RecentHistory}" Margin="8">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="models:HistoryItemModel">
-                            <TextBlock Text="{Binding DisplayTitle}" FontSize="14"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
+                            ToolTip.Tip="Close Sidebar">
+                        <ic:FluentIcon Icon="Dismiss" IconSize="Resizable" Width="12" Height="12"/>
+                    </Button> 
+                    <!-- History List -->
+                    <TreeView Grid.Row="1" 
+                              Background="{DynamicResource SystemControlBackgroundListMediumBrush}"
+                              ItemsSource="{Binding HistoryTree}" 
+                              Margin="2,4,2,2">
+    
+                        <!-- Parent Nodes: Date Headers (Has Children) -->
+                        <TreeView.DataTemplates>
+                            <TreeDataTemplate DataType="models:DateGroupNode" ItemsSource="{Binding Children}">
+                                <TextBlock Text="{Binding Title}" 
+                                           FontWeight="SemiBold" 
+                                           FontSize="13" 
+                                           Margin="0,4"/>
+                            </TreeDataTemplate>
+
+                            <!-- Leaf Nodes: Individual History Items -->
+                            <DataTemplate DataType="models:HistoryItemNode">
+                                <Grid ColumnDefinitions="*, Auto" 
+                                      Background="Transparent" 
+                                      Margin="0,2" 
+                                      Classes="historyRow">
+                                    <TextBlock Grid.Column="0" 
+                                               Text="{Binding Title}" 
+                                               FontSize="14" 
+                                               VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Margin="8,0,0,0">
+                                        <ic:FluentIcon Icon="Dismiss" IconSize="Resizable" Width="12" Height="12"/>
+                                    </Button>
+                                    <Grid.Styles>
+                                        <Style Selector="Grid.historyRow:pointerover Button.deleteBtn">
+                                            <Setter Property="Opacity" Value="1"/>
+                                        </Style>
+                                        <Style Selector="Button.deleteBtn">
+                                            <Setter Property="Transitions">
+                                                <Transitions>
+                                                    <DoubleTransition Property="Opacity" Duration="0:0:0.15"/>
+                                                </Transitions>
+                                            </Setter>
+                                        </Style>
+                                    </Grid.Styles>
+                                </Grid>
+                            </DataTemplate>
+                        </TreeView.DataTemplates>
+                    </TreeView>
+                </Grid>
+            </Border>
 
             <!-- TabControl -->
             <Grid Grid.Column="2" RowDefinitions="Auto, *" Margin="0,0,0,0">

@@ -8,7 +8,9 @@ using SimpleBrowser.Models;
 using SimpleBrowser.Services.Abstractions;
 using SimpleBrowser.Views;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SimpleBrowser.ViewModels;
@@ -20,7 +22,7 @@ public record MainServicesContext(
     IBookmarksService BookmarkService
 );
 
-public partial class MainViewModel : ViewModelBase
+public partial class MainViewModel : ObservableObject
 {
     public MainServicesContext Services;
 
@@ -62,6 +64,11 @@ public partial class MainViewModel : ViewModelBase
     public ObservableCollection<HistoryItemModel> RecentHistory { get; } = [];
     public ObservableCollection<BookmarkModel> Bookmarks { get; } = [];
     public ObservableCollection<TabViewModel> Tabs { get; } = [];
+    public IEnumerable<ITreeNode> HistoryTree =>
+        RecentHistory
+            .OrderByDescending(x => x.DateVisited)
+            .GroupBy(x => x.DateVisited.Date)
+            .Select(group => new DateGroupNode(group.Key, group));
 
     public bool HasHistory => RecentHistory.Count > 0;
     #endregion
@@ -135,8 +142,12 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public async Task AddBookmark(Window owner)
+    public async Task AddBookmark()
     {
+        Window? owner = null;
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            owner = desktop.MainWindow;
+
         var dialog = new AddBookmarkDialog(AddressBarUrl, SelectedTab?.Title ?? AddressBarUrl);
         BookmarkModel? newBookmark = await dialog.ShowDialog<BookmarkModel?>(owner);
 
@@ -145,6 +156,42 @@ public partial class MainViewModel : ViewModelBase
             Bookmarks.Add(newBookmark);
             await Services.BookmarksRepository.SaveAsync(newBookmark);
         }
+    }
+
+    [RelayCommand]
+    public async Task EditBookmark(BookmarkModel bookmark)
+    {
+        if (bookmark == null) return;
+
+        Window? owner = null;
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            owner = desktop.MainWindow;
+        if (owner == null) return;
+
+        var dialog = new AddBookmarkDialog(bookmark);
+        BookmarkModel? updatedBookmark = await dialog.ShowDialog<BookmarkModel?>(owner);
+
+        if(updatedBookmark != null)
+        {
+            bookmark.Name = updatedBookmark.Name;
+            bookmark.Url = updatedBookmark.Url;
+
+            await Services.BookmarksRepository.SaveAsync(bookmark);
+        }
+    }
+
+    [RelayCommand]
+    public async Task DeleteBookmark(BookmarkModel bookmark)
+    {
+        if (bookmark == null) return;
+
+        Window? owner = null;
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            owner = desktop.MainWindow;
+        if (owner == null) return;
+
+        Bookmarks.Remove(bookmark);
+        await Services.BookmarksRepository.DeleteAsync(bookmark);
     }
 
     [RelayCommand]

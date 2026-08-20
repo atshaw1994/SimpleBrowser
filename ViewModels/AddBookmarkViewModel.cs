@@ -34,5 +34,11 @@ namespace SimpleBrowser.ViewModels
             BookmarkName = title;
             BookmarkUrl = url;
         }
+
+        public AddBookmarkViewModel(BookmarkModel bookmark)
+        {
+            BookmarkName = bookmark.Name;
+            BookmarkUrl = bookmark.Url;
+        }
     }
 }

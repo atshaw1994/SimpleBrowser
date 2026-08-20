@@ -17,6 +17,11 @@
     </Application.Styles>
 
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Assets/DesignData.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        
         <MenuFlyout x:Key="MainMenuFlyout" Placement="BottomEdgeAlignedRight">
             <MenuItem Header="New Tab" Command="{ReflectionBinding $parent[Window].DataContext.AddTabCommand}">
                 <MenuItem.Icon>
@@ -76,6 +81,9 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuFlyout>
+
+        </ResourceDictionary>        
+
     </Application.Resources>
 
 </Application>

@@ -1,0 +1,31 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:viewModels="using:SimpleBrowser.ViewModels"
+                    xmlns:models="using:SimpleBrowser.Models">
+    
+    <viewModels:MainViewModel x:Key="DesignMainViewModel" 
+                             IsHistoryShown="True" 
+                             IsBookmarksShown="True">
+        <viewModels:MainViewModel.Tabs>
+            <viewModels:TabViewModel Title="Design Tab" IsSelected="True" />
+        </viewModels:MainViewModel.Tabs>
+        <viewModels:MainViewModel.RecentHistory>
+            <models:HistoryItemModel Title="Design History Item" Url="https://example.com">
+                <models:HistoryItemModel.DateVisited>
+                    <sys:DateTime>2026-08-18T12:00:00</sys:DateTime>
+                </models:HistoryItemModel.DateVisited>
+            </models:HistoryItemModel>
+            <models:HistoryItemModel Title="Design History Item" Url="https://example.com">
+                <models:HistoryItemModel.DateVisited>
+                    <sys:DateTime>2024-01-01T12:30:00</sys:DateTime>
+                </models:HistoryItemModel.DateVisited>
+            </models:HistoryItemModel>
+        </viewModels:MainViewModel.RecentHistory>
+        <viewModels:MainViewModel.Bookmarks>
+            <models:BookmarkModel Name="Design Bookmark" Url="https://example.com" />
+            <models:BookmarkModel Name="Design Bookmark" Url="https://example.com" />
+        </viewModels:MainViewModel.Bookmarks>
+    </viewModels:MainViewModel>
+
+</ResourceDictionary>
